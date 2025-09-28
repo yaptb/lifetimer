@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="LifeTimer.Controls.Settings.SettingsSwitchesControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LifeTimer.Controls.Settings"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+        xmlns:layoutcontrols="using:LifeTimer.Controls.Layout"
+    xmlns:settingscontrols="using:LifeTimer.Controls.Settings"
+    xmlns:componentcontrols="using:LifeTimer.Controls.Settings.Components"
+    >
+
+    <layoutcontrols:SettingsGroupControl HorizontalContentAlignment="Stretch">
+        <layoutcontrols:SettingsGroupControl.CustomContent>
+
+            <StackPanel VerticalAlignment="Center" Spacing="16">
+
+                <componentcontrols:SettingsToggleControl 
+              x:Name="SystemStartup"
+              x:Uid="SettingsSwitchesControl_SystemStartup"
+              ToggledChanged="SystemStartup_ToggledChanged"
+              >
+                </componentcontrols:SettingsToggleControl>
+
+
+                <componentcontrols:SettingsToggleControl 
+                        x:Name="InteractiveStartup"
+                        x:Uid="SettingsSwitchesControl_InteractiveStartup"
+                        ToggledChanged="InteractiveStartup_ToggledChanged"
+                        >
+                </componentcontrols:SettingsToggleControl>
+
+                <componentcontrols:SettingsToggleControl 
+                        x:Name="SettingsStartup"
+                        x:Uid="SettingsSwitchesControl_SettingsStartup"
+                        ToggledChanged="SettingsStartup_ToggledChanged"
+                        >
+                </componentcontrols:SettingsToggleControl>
+
+                <componentcontrols:SettingsToggleControl 
+                  x:Name="SettingsAllowInput"
+                  x:Uid="SettingsSwitchesControl_SettingsAllowInput"
+                  ToggledChanged="SettingsAllowInput_ToggledChanged"
+                  >
+                </componentcontrols:SettingsToggleControl>
+
+                <componentcontrols:SettingsSliderControl 
+                  x:Name="SettingsOpacity"
+                  x:Uid="SettingsSwitchesControl_SettingsOpacity"
+                       Minimum="0" Maximum="255"
+                  OnValueChanged="SettingsOpacity_OnValueChanged"
+                  >
+                </componentcontrols:SettingsSliderControl>
+
+
+               <!-- <settingscontrols:SettingsPositionControl></settingscontrols:SettingsPositionControl> -->
+            </StackPanel>
+
+        </layoutcontrols:SettingsGroupControl.CustomContent>
+    </layoutcontrols:SettingsGroupControl>
+
+</UserControl>

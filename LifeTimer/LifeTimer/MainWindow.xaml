@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="LifeTimer.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LifeTimer"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:tb="using:H.NotifyIcon"
+    mc:Ignorable="d"
+    >
+    
+
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+ 
+        
+        <Grid x:Name="ContentGrid" >
+            
+            
+            
+            <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+
+            </Grid.RowDefinitions>
+
+            <Grid.Resources>
+                <!-- Fade In Storyboard -->
+                <Storyboard x:Name="FadeInStoryboard">
+                    <DoubleAnimation Storyboard.TargetName="FreeVersionNagOverlay"
+                         Storyboard.TargetProperty="Opacity"
+                         From="0" To="1" Duration="0:0:1"/>
+                </Storyboard>
+
+                <!-- Fade Out Storyboard -->
+                <Storyboard x:Name="FadeOutStoryboard">
+                    <DoubleAnimation Storyboard.TargetName="FreeVersionNagOverlay"
+                         Storyboard.TargetProperty="Opacity"
+                         From="1" To="0" Duration="0:0:1"/>
+                </Storyboard>
+
+            </Grid.Resources>
+
+
+            <StackPanel x:Name="NoTimerDefifned" Grid.Row="0" Visibility="Collapsed">
+                <TextBlock x:Name="NoTimer">
+                    No Timer Defined
+                </TextBlock>
+            </StackPanel>
+
+
+            <StackPanel x:Name="TimerDisplay" Grid.Row="0">
+                <TextBlock x:Name="TimerTitle">
+                    Title
+                </TextBlock>
+                <TextBlock x:Name="Time">
+                    00 : 00 : 00
+                </TextBlock>
+            </StackPanel>
+                      
+
+            <StackPanel x:Name="FreeVersionNagOverlay" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="2" Background="Transparent" Padding="2">
+
+                <Border CornerRadius="15" Background="Black" BorderBrush="DarkGray" BorderThickness="2" Padding="2"  >
+
+                    <StackPanel Spacing="10">
+                        <TextBlock x:Uid="MainWindow_NagOverlayTextBlock"
+                           FontSize="8"
+                           Foreground="White"
+                            />
+             
+                    </StackPanel>
+                </Border>
+
+            </StackPanel>
+
+        </Grid>
+
+        <tb:TaskbarIcon
+             x:Name="AppNotifyIcon"
+             MenuActivation="LeftOrRightClick"
+             IconSource="/Resources/app_icon.ico"
+        >
+            <tb:TaskbarIcon.ContextFlyout>
+                <MenuFlyout AreOpenCloseAnimationsEnabled="False">
+                    <MenuFlyoutItem x:Name="ContextInteractive" Command="{x:Bind Interactive}"  />
+                    <MenuFlyoutSeparator />
+                    <MenuFlyoutItem Command="{x:Bind Settings}" x:Uid="MainWindow_NotificationSettings" />
+                    <MenuFlyoutSeparator />
+                    <MenuFlyoutItem Command="{x:Bind Exit}"  x:Uid="MainWindow_NotificationExit" />
+                </MenuFlyout>
+            </tb:TaskbarIcon.ContextFlyout>
+
+        </tb:TaskbarIcon>
+
+
+    </Grid>
+
+    <!-- NotifyIcon for system tray-->
+
+
+  
+</Window>

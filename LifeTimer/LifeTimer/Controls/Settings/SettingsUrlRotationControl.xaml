@@ -1,0 +1,52 @@
+<UserControl
+    x:Class="LifeTimer.Controls.Settings.SettingsUrlRotationControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:componentcontrols="using:LifeTimer.Controls.Settings.Components"
+    >
+
+
+    <StackPanel VerticalAlignment="Center">
+        
+        <StackPanel x:Name="LinkRotationDisabledUI" HorizontalAlignment="Center">
+            <StackPanel VerticalAlignment="Center">
+                <TextBlock  FontWeight="Medium" x:Uid="SettingsUrlRotationControl_LinkRotationDisabledText"/>
+                <TextBlock FontSize="10" x:Uid="SettingsUrlRotationControl_LinkRotationDisabledSubtext"/>
+            </StackPanel>
+        </StackPanel>
+
+
+        <Grid x:Name="LinkRotationEnabledUI">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+
+
+        <componentcontrols:SettingsToggleControl 
+            Grid.Column="0"
+            x:Name="RotationToggle"
+            x:Uid="SettingsUrlRotationControl_RotationToggle"
+            ToggledChanged="RotationToggle_ToggledChanged"  
+            >
+            
+        </componentcontrols:SettingsToggleControl>
+
+        <componentcontrols:SettingsNumericFieldControl 
+   Grid.Column="1"
+            x:Name="RotationDelay"
+            x:Uid="SettingsUrlRotationControl_RotationDelay"
+            Minimum="0"
+            Maximum="86400"
+            OnValueChanged="RotationDelay_OnValueChanged"
+            >
+
+        </componentcontrols:SettingsNumericFieldControl>
+
+
+    </Grid>
+
+    </StackPanel>
+
+
+</UserControl>

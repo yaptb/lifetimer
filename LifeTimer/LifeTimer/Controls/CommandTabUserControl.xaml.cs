@@ -1,0 +1,74 @@
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using LifeTimer.Logic;
+
+namespace LifeTimer.Controls
+{
+    public sealed partial class CommandTabUserControl : UserControl
+    {
+        private readonly ILogger<CommandTabUserControl> _logger;
+        private readonly ApplicationController _applicationController;
+
+        public CommandTabUserControl()
+        {
+            InitializeComponent();
+            
+            _logger = App.Services.GetRequiredService<ILogger<CommandTabUserControl>>();
+            _applicationController = App.Services.GetRequiredService<ApplicationController>();
+            
+            Loaded += CommandTabUserControl_Loaded;
+            _logger.LogDebug("CommandTabUserControl initialized");
+        }
+
+        private void CommandTabUserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            UpdateState();
+        }
+
+
+        private void UpdateState()
+        {
+            if(_applicationController.IsInteractiveMode)
+            {
+                InteractiveMode.Visibility = Visibility.Collapsed;
+                BackgroundMode.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                InteractiveMode.Visibility = Visibility.Visible;
+                BackgroundMode.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        private void BackgroundMode_Click(object sender, RoutedEventArgs e)
+        {
+            _logger.LogInformation("User requested background mode");
+            _applicationController.RequestBackgroundMode();
+            UpdateState();
+        }
+
+        private void InteractiveMode_Click(object sender, RoutedEventArgs e)
+        {
+            _logger.LogInformation("User requested interactive mode");
+            _applicationController.RequestInteractiveMode();
+            UpdateState();
+        }
+
+        private void SaveSettings_Click(object sender, RoutedEventArgs e)
+        {
+            _logger.LogInformation("User requested save settings");
+            _applicationController.RequestSaveSettings();
+            UpdateState();
+        }
+
+        private void ApplicationExit_Click(object sender, RoutedEventArgs e)
+        {
+            _logger.LogInformation("User requested application exit");
+            _applicationController.RequestApplicationExit();
+        }
+
+
+    }
+}

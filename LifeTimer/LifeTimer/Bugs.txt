@@ -1,0 +1,11 @@
+﻿
+
+Bug:
+User can run multiple versions - FIXED
+Browser can open new windows - FIXED
+
+Known Issue:
+Background window covers desktop icons - BY DESIGN
+
+Idea:
+Optional keysequence on browse

@@ -1,0 +1,33 @@
+<UserControl
+    x:Class="LifeTimer.Controls.Settings.Components.SettingsToggleControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="100" />
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="4">
+            <TextBlock x:Name="TitleTextBlock"
+                       x:Uid="SettingsToggleControl_TitleTextBlock"
+                       FontWeight="Medium" 
+                       FontSize="12"
+                       Margin="0"
+                       />
+            <TextBlock x:Name="DescriptionTextBlock"
+                       x:Uid="SettingsToggleControl_DescriptionTextBlock"
+                       Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                       FontSize="10"
+                       Margin="2,0,8,0"
+
+                       />
+        </StackPanel>
+        
+        <ToggleSwitch x:Name="ToggleSwitch"
+                      Grid.Column="1"
+                      VerticalAlignment="Center"
+                      Toggled="ToggleSwitch_Toggled" />
+    </Grid>
+</UserControl>

@@ -1,0 +1,81 @@
+<UserControl
+    x:Class="LifeTimer.Controls.Settings.SettingsURLListControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <StackPanel Spacing="12" HorizontalAlignment="Stretch">
+
+
+        <StackPanel HorizontalAlignment="Center">
+            
+            <StackPanel x:Name="NewUrlStackPanel" Orientation="Horizontal" Spacing="8">
+
+                <TextBox x:Name="NewUrlTextBox"
+                         x:Uid="SettingsURLListControl_NewUrlTextBox"
+                         Width="500" />
+
+                <Button x:Name="AddButton"
+                        x:Uid="SettingsURLListControl_AddButton"
+                        Click="AddButton_Click" />
+            </StackPanel>
+
+
+            <TextBlock x:Name="UrlListFullFreeBlock"
+                           x:Uid="SettingsURLListControl_UrlListFullFreeBlock" 
+                           FontStyle="Italic"
+                                Visibility="Collapsed">
+            </TextBlock>
+
+
+            <TextBlock x:Name="UrlListFullProBlock"
+                           FontStyle="Italic"
+                           x:Uid="SettingsURLListControl_UrlListFullProBlock" 
+                                Visibility="Collapsed">
+            </TextBlock>
+
+        </StackPanel>
+
+
+        <ListView x:Name="UrlListView"
+                  MinHeight="200"
+                  Width="550"
+                  BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
+                  BorderThickness="1"
+                  CornerRadius="4"
+                  HorizontalAlignment="Stretch"
+                  Margin="0,0,0,0"
+                  >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        
+                        <TextBlock Grid.Column="0"
+                                   Text="{Binding}"
+                                   VerticalAlignment="Center"
+                                                     FontSize="10"
+
+                                   Margin="8,4" />
+
+
+                        <Button Grid.Column="1"
+                             x:Uid="SettingsURLListControl_GoButton"
+                             Click="ListGoButton_Click"
+                             Tag="{Binding}"
+                             Margin="4" />
+
+                        <Button Grid.Column="2"
+                                x:Uid="SettingsURLListControl_DeleteButton"
+                                Click="DeleteButton_Click"
+                                Tag="{Binding}"
+                                Margin="4" />
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackPanel>
+</UserControl>

@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "LifeTimer (Package)": {
+      "commandName": "MsixPackage",
+      "nativeDebugging": true
+    },
+    "LifeTimer (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

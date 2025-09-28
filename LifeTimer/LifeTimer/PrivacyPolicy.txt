@@ -1,0 +1,24 @@
+﻿Privacy Policy
+Effective Date: September 2025
+
+This Privacy Policy outlines how LifeTimer ("the Application") handles data and user privacy. We are committed to maintaining transparency and ensuring that your information remains secure.
+
+What LifeTimer Does
+LifeTimer is built using WinUI 3 and utilizes the runFullTrust capability to enable a startup task. This allows the Application to launch automatically when your system starts, ensuring it is available when needed.
+
+What LifeTimer Does Not Do
+LifeTimer does not collect, store, transmit, or share any personal or private information. Specifically, the Application does not access or process:
+- Names, email addresses, or contact details
+- Location data
+- Usage analytics or behavioral tracking
+- Files, documents, or system data
+
+System Permissions
+The runFullTrust capability is used solely to register and manage the startup task. It does not grant access to personal files, system data, or any sensitive information.
+
+Updates and Changes
+If future updates introduce features that require data collection or internet connectivity, this Privacy Policy will be updated accordingly. Users will be notified prior to any such changes.
+
+Contact
+For questions or concerns regarding this Privacy Policy, please contact:
+support@lifetimer.app

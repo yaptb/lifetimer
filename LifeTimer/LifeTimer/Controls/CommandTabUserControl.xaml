@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="LifeTimer.Controls.CommandTabUserControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LifeTimer.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+
+    xmlns:layoutcontrols="using:LifeTimer.Controls.Layout"
+    mc:Ignorable="d">
+
+
+    <layoutcontrols:SidenavTabLayout>
+        <layoutcontrols:SidenavTabLayout.CustomContent>
+
+
+            <StackPanel HorizontalAlignment="Center" Spacing="16" VerticalAlignment="Center" Width="150">
+        <Button x:Name="BackgroundMode" x:Uid="CommandTabUserControl_BackgroundMode" Click="BackgroundMode_Click" HorizontalAlignment="Stretch"/>
+                    <Button x:Name="InteractiveMode" x:Uid="CommandTabUserControl_InteractiveMode" Click="InteractiveMode_Click" HorizontalAlignment="Stretch"/>
+                <Button x:Name="SaveSettings" x:Uid="CommandTabUserControl_SaveSettings" Click="SaveSettings_Click" HorizontalAlignment="Stretch"/>
+                <Button x:Name="ApplicationExit" x:Uid="CommandTabUserControl_ApplicationExit" Click="ApplicationExit_Click" HorizontalAlignment="Stretch"/>
+</StackPanel>
+
+            </layoutcontrols:SidenavTabLayout.CustomContent>
+         </layoutcontrols:SidenavTabLayout>
+             
+</UserControl>

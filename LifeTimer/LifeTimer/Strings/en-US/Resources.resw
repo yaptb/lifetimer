@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="MainWIndow_Title" xml:space="preserve">
+    <value>LifeTimer Browser</value>
+  </data>
+  <data name="SettingsWindow_CommandItem.Title" xml:space="preserve">
+    <value>Commands</value>
+  </data>
+  <data name="SettingsWindow_HelpItem.Title" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="SettingsWindow_SettingsItem.Title" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="SettingsWindow_Title" xml:space="preserve">
+    <value>LifeTimer Settings</value>
+  </data>
+  <data name="SettingsWindow_WebPagesItem.Title" xml:space="preserve">
+    <value>Web Links</value>
+  </data>
+  <data name="CommandTabUserControl_BackgroundMode.Content" xml:space="preserve">
+    <value>Background Mode</value>
+  </data>
+  <data name="CommandTabUserControl_InteractiveMode.Content" xml:space="preserve">
+    <value>Interactive Mode</value>
+  </data>
+  <data name="CommandTabUserControl_SaveSettings.Content" xml:space="preserve">
+    <value>Save Settings</value>
+  </data>
+  <data name="CommandTabUserControl_ApplicationExit.Content" xml:space="preserve">
+    <value>Quit Application</value>
+  </data>
+  <data name="SettingsStatusControl_BrowserStatus.Text" xml:space="preserve">
+    <value>URL Status</value>
+  </data>
+  <data name="SettingsStatusControl_RotationStatus.Text" xml:space="preserve">
+    <value>Rotation Status</value>
+  </data>
+  <data name="SettingsStatusControl_SettingsStatus.Text" xml:space="preserve">
+    <value>Save Status</value>
+  </data>
+  <data name="SettingsPositionControl_BrowserWindowLabel.Text" xml:space="preserve">
+    <value>Browser Window:</value>
+  </data>
+  <data name="SettingsPositionControl_XLabel.Text" xml:space="preserve">
+    <value>X:</value>
+  </data>
+  <data name="SettingsPositionControl_YLabel.Text" xml:space="preserve">
+    <value>Y:</value>
+  </data>
+  <data name="SettingsPositionControl_WidthLabel.Text" xml:space="preserve">
+    <value>Width:</value>
+  </data>
+  <data name="SettingsPositionControl_HeightLabel.Text" xml:space="preserve">
+    <value>Height:</value>
+  </data>
+  <data name="SettingsURLListControl_NewUrlTextBox.PlaceholderText" xml:space="preserve">
+    <value>Enter URL to add...</value>
+  </data>
+  <data name="SettingsURLListControl_AddButton.Content" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="SettingsURLListControl_GoButton.Content" xml:space="preserve">
+    <value>Go</value>
+  </data>
+  <data name="SettingsURLListControl_DeleteButton.Content" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="SettingsSwitchesControl_InteractiveStartup.Title" xml:space="preserve">
+    <value>Interactive Start</value>
+  </data>
+  <data name="SettingsSwitchesControl_InteractiveStartup.Description" xml:space="preserve">
+    <value>Start the application in interactive mode.</value>
+  </data>
+  <data name="SettingsSwitchesControl_SettingsStartup.Title" xml:space="preserve">
+    <value>Settings On Start</value>
+  </data>
+  <data name="SettingsSwitchesControl_SettingsStartup.Description" xml:space="preserve">
+    <value>Show the settings page at startup.</value>
+  </data>
+  <data name="SettingsSwitchesControl_SettingsAllowInput.Title" xml:space="preserve">
+    <value>Background Input</value>
+  </data>
+  <data name="SettingsSwitchesControl_SettingsAllowInput.Description" xml:space="preserve">
+    <value>Allow user input in background mode.</value>
+  </data>
+  <data name="SettingsSwitchesControl_SettingsOpacity.Title" xml:space="preserve">
+    <value>Window Opacity</value>
+  </data>
+  <data name="SettingsSwitchesControl_SettingsOpacity.Subtitle" xml:space="preserve">
+    <value>Set the opacity of the browser window.</value>
+  </data>
+  <data name="SettingsUrlRotationControl_LinkRotationDisabledText.Text" xml:space="preserve">
+    <value>Link Rotation Is Disabled</value>
+  </data>
+  <data name="SettingsUrlRotationControl_LinkRotationDisabledSubtext.Text" xml:space="preserve">
+    <value>Add URLs to enable link rotation</value>
+  </data>
+  <data name="SettingsUrlRotationControl_RotationToggle.Title" xml:space="preserve">
+    <value>URL Rotation</value>
+  </data>
+  <data name="SettingsUrlRotationControl_RotationToggle.Description" xml:space="preserve">
+    <value>Enable automatic rotation of URLS</value>
+  </data>
+  <data name="SettingsUrlRotationControl_RotationDelay.Title" xml:space="preserve">
+    <value>Rotation Delay</value>
+  </data>
+  <data name="SettingsUrlRotationControl_RotationDelay.Subtitle" xml:space="preserve">
+    <value>Number of seconds to display each page</value>
+  </data>
+  <data name="SettingsToggleControl_TitleTextBlock.Text" xml:space="preserve">
+    <value>Interactive Startup</value>
+  </data>
+  <data name="SettingsToggleControl_DescriptionTextBlock.Text" xml:space="preserve">
+    <value>Enable interactive startup mode</value>
+  </data>
+  <data name="SettingsSliderControl_TitleTextBlock.Text" xml:space="preserve">
+    <value>Setting Title</value>
+  </data>
+  <data name="SettingsSliderControl_SubtitleTextBlock.Text" xml:space="preserve">
+    <value>Setting subtitle</value>
+  </data>
+  <data name="SettingsNumericFieldControl_TitleTextBlock.Text" xml:space="preserve">
+    <value>Numeric Setting</value>
+  </data>
+  <data name="SettingsNumericFieldControl_SubtitleTextBlock.Text" xml:space="preserve">
+    <value>Enter a numeric value</value>
+  </data>
+  <data name="ApplicationController_SettingsSaved" xml:space="preserve">
+    <value>Settings saved</value>
+  </data>
+  <data name="ApplicationController_RotationDisabled" xml:space="preserve">
+    <value>URL rotation is disabled</value>
+  </data>
+  <data name="ApplicationController_RotationStopped" xml:space="preserve">
+    <value>URL rotation is not active</value>
+  </data>
+  <data name="ApplicationController_RotationActive" xml:space="preserve">
+    <value>URL rotation is active</value>
+  </data>
+  <data name="MainWindow_NotificationSettings.Text" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="MainWindow_NotificationExit.Text" xml:space="preserve">
+    <value>Exit</value>
+  </data>
+  <data name="MainWindow_NotificationInteractive" xml:space="preserve">
+    <value>Interactive Mode</value>
+  </data>
+  <data name="MainWindow_NotificationBackground" xml:space="preserve">
+    <value>Background Mode</value>
+  </data>
+  <data name="HelpTabUserControl_HelpTitle.Text" xml:space="preserve">
+    <value>Help and Support</value>
+  </data>
+  <data name="HelpTabUserControl_HelpSubtitle.Text" xml:space="preserve">
+    <value>Visit the LifeTimer website for help and support information</value>
+  </data>
+  <data name="SettingsSwitchesControl_SystemStartup.Title" xml:space="preserve">
+    <value>System Startup</value>
+  </data>
+  <data name="SettingsSwitchesControl_SystemStartup.Description" xml:space="preserve">
+    <value>Launch LifeTimer automatically after signing in</value>
+  </data>
+  <data name="SettingsURLListControl_UrlListFullFreeBlock.Text" xml:space="preserve">
+    <value>The maximum number of URLs for this version has been reached</value>
+  </data>
+  <data name="MainWindow_NagOverlayTextBlock.Text" xml:space="preserve">
+    <value>LifeTimer Free Version</value>
+  </data>
+  <data name="SettingsURLListControl_UrlListFullProBlock.Text" xml:space="preserve">
+    <value>The maximum number of URLs has been reached</value>
+  </data>
+  <data name="HelpTabUserControl_UpgradeTitle.Text" xml:space="preserve">
+    <value>Upgrade to LifeTimer Pro</value>
+  </data>
+  <data name="HelpTabUserControl_UpgradeSubtitle.Text" xml:space="preserve">
+    <value>Upgrading to LifeTimer Pro removes the free version overlay and increases the maximum number of URLs that can be added.</value>
+  </data>
+  <data name="HelpTabUserControl_UpgradeButton.Content" xml:space="preserve">
+    <value>Upgrade To Pro</value>
+  </data>
+  <data name="HelpTabUserControl_ProVersionTitle.Text" xml:space="preserve">
+    <value>LifeTimer Pro Version</value>
+  </data>
+  <data name="HelpTabUserControl_ProVersionSubtitle.Text" xml:space="preserve">
+    <value>Thank you for supporting LifeTimer!</value>
+  </data>
+  <data name="WindowsStoreHelper_RenewalText" xml:space="preserve">
+    <value>Renews every</value>
+  </data>
+</root>
