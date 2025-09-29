@@ -1,6 +1,10 @@
+using LifeTimer.Logic.Models;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using Windows.Storage;
+using Newtonsoft.Json;
+using System;
+using WinRT.LifeTimerVtableClasses;
 
 namespace LifeTimer.Logic;
 
@@ -15,6 +19,56 @@ public class SettingsManager
         _logger.LogInformation("SettingsManager initialized");
     }
 
+    private const string SETTINGS_KEY = "LifeTimerSettings";
+
+
+    public void SaveSettings(SettingsViewModel settingsModel)
+    {
+        try
+        {
+            var serialized = JsonConvert.SerializeObject(settingsModel);
+            _localSettings.Values[SETTINGS_KEY] = serialized;
+            _logger.LogInformation("SaveSettings() - settings saved");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError("SaveSettings() - error saving settings "+ex.Message);
+        }
+    }
+
+
+    public SettingsViewModel LoadSettings()
+    {
+          var settingsString = _localSettings.Values[SETTINGS_KEY]?.ToString() ?? string.Empty;
+
+        //var settingsString = String.Empty;
+
+        if (!string.IsNullOrEmpty(settingsString))
+        {
+            try
+            {
+                var model = JsonConvert.DeserializeObject<SettingsViewModel>(settingsString);
+                if (model != null)
+                {
+                    _logger.LogInformation("LoadSettings() settings loaded");
+                    return model;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("LoadSettings() Error deserializing saved settings "+ex.Message);
+            }
+        }
+
+        _logger.LogWarning("Could not load saved settings - returning defaults");
+        var defaultSettings = SettingsViewModel.CreateDefaultSettings();
+        return defaultSettings;
+
+    }
+
+
+
+    /*
     private const string URL_LIST_KEY = "UrlList";
     private const string ROTATE_LINKS_KEY = "RotateLinks";
     private const string LINK_ROTATION_DELAY_KEY = "LinkRotationDelaySecs";
@@ -94,5 +148,6 @@ public class SettingsManager
         return _localSettings.Values[key] as int? ?? defaultValue;
     }
 
+    */
 
 }

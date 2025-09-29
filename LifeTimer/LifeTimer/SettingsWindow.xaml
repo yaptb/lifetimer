@@ -35,7 +35,8 @@
 
             <!-- define our navigation items. Events are wired up in code behind-->
             <layoutcontrols:SidenavItemControl x:Name="CommandsItem" x:Uid="SettingsWindow_CommandItem"></layoutcontrols:SidenavItemControl>
-            <layoutcontrols:SidenavItemControl x:Name="WebPagesItem" x:Uid="SettingsWindow_WebPagesItem" ></layoutcontrols:SidenavItemControl>
+            <layoutcontrols:SidenavItemControl x:Name="TimersItem" x:Uid="SettingsWindow_TimersItem" ></layoutcontrols:SidenavItemControl>
+            <layoutcontrols:SidenavItemControl x:Name="AppearanceItem" x:Uid="SettingsWindow_AppearanceItem" ></layoutcontrols:SidenavItemControl>
             <layoutcontrols:SidenavItemControl x:Name="SettingsItem" x:Uid="SettingsWindow_SettingsItem"  ></layoutcontrols:SidenavItemControl>
             <layoutcontrols:SidenavItemControl x:Name="HelpItem"     x:Uid="SettingsWindow_HelpItem"  ></layoutcontrols:SidenavItemControl>
 
@@ -51,7 +52,11 @@
             
             <!--define the navigation tabs. items are mapped to tabs in the code behind -->
             <usercontrols:CommandTabUserControl x:Name="CommandsTab"></usercontrols:CommandTabUserControl>
-            <usercontrols:WebTabUserControl x:Name="WebPagesTab"></usercontrols:WebTabUserControl>
+
+            <usercontrols:TimerTabUserControl x:Name="TimersTab"></usercontrols:TimerTabUserControl>
+
+            <usercontrols:AppearanceTabUserControl x:Name="AppearanceTab"></usercontrols:AppearanceTabUserControl>
+
             <usercontrols:SettingsTabUserControl x:Name="SettingsTab"></usercontrols:SettingsTabUserControl>
             <!--<usercontrols:HelpTabUserControl x:Name="HelpTab"></usercontrols:HelpTabUserControl> -->
             <usercontrols:DummyUserControl x:Name="HelpTab"></usercontrols:DummyUserControl> 

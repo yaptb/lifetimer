@@ -29,8 +29,6 @@ namespace LifeTimer.Controls.Settings
         {
             this.InteractiveStartup.IsToggled = _applicationController.CurrentSettings.InteractiveStartup;
             this.SettingsStartup.IsToggled = _applicationController.CurrentSettings.ShowSettingsOnStartup;
-            this.SettingsAllowInput.IsToggled = _applicationController.CurrentSettings.AllowBackgroundInput;
-            this.SettingsOpacity.Value = _applicationController.CurrentSettings.WindowOpacity;
 
             GetSystemStartupStatus();
 
@@ -104,16 +102,7 @@ namespace LifeTimer.Controls.Settings
             _applicationController.RequestSettingsShowSettingsOnStartup(isToggled);
         }
 
-        private void SettingsAllowInput_ToggledChanged(object sender, bool e)
-        {
-            bool isToggled = this.SettingsAllowInput.IsToggled;
-            _applicationController.RequestSettingsAllowInput(isToggled);
-        }
+   
 
-        private void SettingsOpacity_OnValueChanged(object sender, double e)
-        {
-            int opacity = Convert.ToInt32(SettingsOpacity.Value);
-            _applicationController.RequestSettingsBrowserWindowOpacity(opacity);
-        }
     }
 }

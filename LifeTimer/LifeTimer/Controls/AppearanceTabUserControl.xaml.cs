@@ -5,9 +5,9 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace LifeTimer.Controls
 {
-    public sealed partial class WebTabUserControl : UserControl
+    public sealed partial class AppearanceTabUserControl : UserControl
     {
-        public WebTabUserControl()
+        public AppearanceTabUserControl()
         {
             InitializeComponent();
         }

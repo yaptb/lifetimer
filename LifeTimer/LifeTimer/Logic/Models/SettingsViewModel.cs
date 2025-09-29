@@ -4,44 +4,55 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Windows.UI;
 
-namespace LifeTimer.Logic;
+namespace LifeTimer.Logic.Models;
 
 public class SettingsViewModel : INotifyPropertyChanged
 {
-    private List<string> _urlList = new() { "https://lifetimer.app/docs" };
-    private bool _rotateLinks = false;
-    private int _linkRotationDelaySecs = 30;
+
+    private List<TimerDefinition> _timers = new List<TimerDefinition>() { };
+    private AppearanceViewModel _appearance = new AppearanceViewModel();
+
+
+    private bool _rotateTimers = false;
+    private int _timerRotationDelaySecs = 30;
     private Color _windowColor = Colors.Black;
     private int _windowOpacity = 128;
     private bool _interactiveStartup = true;
     private bool _showSettingsOnStartup = true;
-    private bool _allowBackgroundInput = false;
     private int _windowPosX = 100;
     private int _windowPosY = 100;
     private int _windowWidth = -1; //we want this calculated for current dpi on first run
     private int _windowHeight = -1; // ditto
     private bool _windowMaximized = false;
 
-    private string _currentLink = string.Empty;
+
+    private string _currentTimerName= string.Empty;
     private int _currentRotationIndex = 0;
 
 
-    public List<string> UrlList
+
+    public List<TimerDefinition> Timers
     {
-        get => _urlList;
-        set => SetProperty(ref _urlList, value);
+        get => _timers;
+        set => SetProperty(ref _timers, value);
     }
 
-    public bool RotateLinks
+    public AppearanceViewModel Appearance
     {
-        get => _rotateLinks;
-        set => SetProperty(ref _rotateLinks, value);
+        get => _appearance;
+        set => SetProperty(ref _appearance, value);
     }
 
-    public int LinkRotationDelaySecs
+    public bool RotateTimers
     {
-        get => _linkRotationDelaySecs;
-        set => SetProperty(ref _linkRotationDelaySecs, value);
+        get => _rotateTimers;
+        set => SetProperty(ref _rotateTimers, value);
+    }
+
+    public int TimerRotationDelaySecs
+    {
+        get => _timerRotationDelaySecs;
+        set => SetProperty(ref _timerRotationDelaySecs, value);
     }
 
     public int WindowOpacity
@@ -69,33 +80,6 @@ public class SettingsViewModel : INotifyPropertyChanged
         get => _showSettingsOnStartup;
         set => SetProperty(ref _showSettingsOnStartup, value);
     }
-
-
-    public bool AllowBackgroundInput
-    {
-        get => _allowBackgroundInput;
-        set => SetProperty(ref _allowBackgroundInput, value);
-    }
-
-    /*
-    public bool PreProcessMediaLinks
-    {
-        get => _preProcessMediaLinks;
-        set => SetProperty(ref _preProcessMediaLinks, value);
-    }
-
-    public int MediaWidth
-    {
-        get => _mediaWidth;
-        set => SetProperty(ref _mediaWidth, value);
-    }
-
-    public int MediaHeight
-    {
-        get => _mediaHeight;
-        set => SetProperty(ref _mediaHeight, value);
-    }
-    */
 
     public int WindowPosX
     {
@@ -127,10 +111,10 @@ public class SettingsViewModel : INotifyPropertyChanged
         set => SetProperty(ref _windowMaximized, value);
     }
 
-    public string CurrentUrl
+    public string CurrentTimerName
     {
-        get => _currentLink;
-        set => SetProperty(ref _currentLink, value);
+        get => _currentTimerName;
+        set => SetProperty(ref _currentTimerName, value);
     }
 
     public int CurrentRotationIndex
@@ -138,7 +122,6 @@ public class SettingsViewModel : INotifyPropertyChanged
         get => _currentRotationIndex;
         set => SetProperty(ref _currentRotationIndex, value);
     }
-
 
     public event PropertyChangedEventHandler PropertyChanged;
 
@@ -151,11 +134,22 @@ public class SettingsViewModel : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         return true;
     }
+
+    protected static TimerDefinition CreateDefaultTimer()
+    {
+        return new TimerDefinition()
+        {
+            Title = "Unix Epoch",
+            TargetDateTime = new System.DateTime(1970,1,1,0,0,0,0,0,System.DateTimeKind.Utc)
+        };
+    }
+
+    public static SettingsViewModel CreateDefaultSettings()
+    {
+        var model = new SettingsViewModel();
+        model.Timers.Add(CreateDefaultTimer());
+        model.Appearance = AppearanceViewModel.CreateDefaultAppearance();
+        return model;
+    }
 }
 
-public enum VizWindowOperationMode
-{
-    Interactive = 1,
-    Background = 2,
-    ScreenSaver = 3
-}

@@ -39,23 +39,8 @@
                         >
                 </componentcontrols:SettingsToggleControl>
 
-                <componentcontrols:SettingsToggleControl 
-                  x:Name="SettingsAllowInput"
-                  x:Uid="SettingsSwitchesControl_SettingsAllowInput"
-                  ToggledChanged="SettingsAllowInput_ToggledChanged"
-                  >
-                </componentcontrols:SettingsToggleControl>
+         
 
-                <componentcontrols:SettingsSliderControl 
-                  x:Name="SettingsOpacity"
-                  x:Uid="SettingsSwitchesControl_SettingsOpacity"
-                       Minimum="0" Maximum="255"
-                  OnValueChanged="SettingsOpacity_OnValueChanged"
-                  >
-                </componentcontrols:SettingsSliderControl>
-
-
-               <!-- <settingscontrols:SettingsPositionControl></settingscontrols:SettingsPositionControl> -->
             </StackPanel>
 
         </layoutcontrols:SettingsGroupControl.CustomContent>

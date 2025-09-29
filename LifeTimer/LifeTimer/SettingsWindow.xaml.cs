@@ -62,7 +62,8 @@ namespace LifeTimer
             // Update this mapping if the navigatio menu changes
             //
             _tabMapping.Add(CommandsItem, CommandsTab);
-            _tabMapping.Add(WebPagesItem, WebPagesTab);
+            _tabMapping.Add(TimersItem, TimersTab);
+            _tabMapping.Add(AppearanceItem, AppearanceTab);
             _tabMapping.Add(SettingsItem, SettingsTab);
             _tabMapping.Add(HelpItem, HelpTab);
 

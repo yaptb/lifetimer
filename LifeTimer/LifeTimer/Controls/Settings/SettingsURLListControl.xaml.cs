@@ -72,6 +72,7 @@ namespace LifeTimer.Controls.Settings
 
         private void InitializeURLListFromSettings()
         {
+            /*
 
             if (_applicationController == null)
                 throw new InvalidOperationException("Application Controller is null");
@@ -87,6 +88,7 @@ namespace LifeTimer.Controls.Settings
                         Urls.Add(item);
                     }
              CheckAndUpdateUIForListMaximum();
+            */
 
         }
 

@@ -8,7 +8,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid>
+    <StackPanel VerticalAlignment="Center">
 
-    </Grid>
+            <TextBlock>
+                Dummy Tab Works
+            </TextBlock>
+
+        </StackPanel>
 </UserControl>

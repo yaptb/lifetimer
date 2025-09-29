@@ -132,9 +132,6 @@
   <data name="SettingsWindow_Title" xml:space="preserve">
     <value>LifeTimer Settings</value>
   </data>
-  <data name="SettingsWindow_WebPagesItem.Title" xml:space="preserve">
-    <value>Web Links</value>
-  </data>
   <data name="CommandTabUserControl_BackgroundMode.Content" xml:space="preserve">
     <value>Background Mode</value>
   </data>
@@ -305,5 +302,11 @@
   </data>
   <data name="WindowsStoreHelper_RenewalText" xml:space="preserve">
     <value>Renews every</value>
+  </data>
+  <data name="SettingsWindow_AppearanceItem.Title" xml:space="preserve">
+    <value>Appearance</value>
+  </data>
+  <data name="SettingsWindow_TimersItem.Title" xml:space="preserve">
+    <value>Timers</value>
   </data>
 </root>

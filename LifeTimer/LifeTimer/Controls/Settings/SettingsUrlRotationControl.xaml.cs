@@ -33,8 +33,8 @@ namespace LifeTimer.Controls.Settings
 
         void UpdateControl()
         {
-            this.RotationToggle.IsToggled = _applicationController.CurrentSettings.RotateLinks;
-            this.RotationDelay.Value = _applicationController.CurrentSettings.LinkRotationDelaySecs;
+            this.RotationToggle.IsToggled = _applicationController.CurrentSettings.RotateTimers;
+            this.RotationDelay.Value = _applicationController.CurrentSettings.TimerRotationDelaySecs;
 
             if (_applicationController.IsLinkRotationDisabled)
             {

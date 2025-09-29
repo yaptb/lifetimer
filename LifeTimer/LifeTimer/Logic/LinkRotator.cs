@@ -85,6 +85,7 @@ namespace LifeTimer.Logic
 
         public void RotateLinks()
         {
+            /*
             var urlList = _applicationController.CurrentSettings.UrlList;
             var currentRotationIndex = _applicationController.CurrentSettings.CurrentRotationIndex;
 
@@ -105,6 +106,7 @@ namespace LifeTimer.Logic
             
             _logger.LogInformation("Rotating to URL: {Url} (index: {Index})", urlString, currentRotationIndex);
             _applicationController.RequestPerformLinkRotation(urlString, currentRotationIndex);
+            */
         }
 
         public void Dispose()

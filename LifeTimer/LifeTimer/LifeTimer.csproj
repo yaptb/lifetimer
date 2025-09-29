@@ -41,6 +41,7 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Configuration" Version="9.0.8" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="9.0.8" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.8" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.2" />
     <PackageReference Include="Serilog.Sinks.Debug" Version="3.0.0" />
     <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
@@ -48,6 +49,9 @@
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.7.250606001" />
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Controls\TimerTabUserControl.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Controls\Settings\SettingsPositionControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -67,10 +71,35 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Settings\SettingsTimerListControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Settings\TimerEditDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Settings\Components\SettingsColorPickerControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Settings\Components\SettingsFontPicker.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Controls\Settings\SettingsAppearanceControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
   
   
   <ItemGroup>
-    <Page Update="Controls\WebTabUserControl.xaml">
+    <Page Update="Controls\AppearanceTabUserControl.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Controls\SettingsTabUserControl.xaml">

@@ -126,11 +126,12 @@ namespace LifeTimer
             WindowHelper.SendToBack(this);
             WindowHelper.RecalcWindowSize(this);
 
-
+            /*
             if (AppController.CurrentSettings.AllowBackgroundInput)
                 WindowHelper.SetClickThrough(this, false);
             else
                 WindowHelper.SetClickThrough(this, true);
+            */
 
             ContextInteractive.Text = ResourceHelper.GetString("MainWindow_NotificationInteractive");
 

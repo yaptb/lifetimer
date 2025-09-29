@@ -1,0 +1,111 @@
+<ContentDialog
+    x:Class="LifeTimer.Controls.Settings.TimerEditDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    PrimaryButtonText="Save"
+    SecondaryButtonText="Cancel"
+    DefaultButton="Primary"
+    IsPrimaryButtonEnabled="{x:Bind IsValid, Mode=OneWay}">
+
+    <StackPanel Spacing="16" Width="400">
+
+        <!-- Timer Title -->
+        <StackPanel Spacing="4">
+            <TextBlock Text="Timer Title"
+                       FontWeight="SemiBold" />
+            <TextBox x:Name="TitleTextBox"
+                     PlaceholderText="Enter timer title"
+                     Text="{x:Bind TimerTitle, Mode=TwoWay}"
+                     TextChanged="TitleTextBox_TextChanged" />
+            <TextBlock x:Name="TitleErrorText"
+                       Text="Title is required"
+                       Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                       FontSize="12"
+                       Visibility="Collapsed" />
+        </StackPanel>
+
+        <!-- Target Date -->
+        <StackPanel Spacing="4">
+            <TextBlock Text="Target Date"
+                       FontWeight="SemiBold" />
+            <DatePicker x:Name="TargetDatePicker"
+                        Date="{x:Bind TargetDate, Mode=TwoWay}"
+                        DateChanged="TargetDatePicker_DateChanged" />
+        </StackPanel>
+
+        <!-- Target Time -->
+        <StackPanel Spacing="4">
+            <TextBlock Text="Target Time"
+                       FontWeight="SemiBold" />
+            <TimePicker x:Name="TargetTimePicker"
+                        Time="{x:Bind TargetTime, Mode=TwoWay}"
+                        TimeChanged="TargetTimePicker_TimeChanged" />
+        </StackPanel>
+
+        <!-- Display Options -->
+        <StackPanel Spacing="8">
+            <TextBlock Text="Display Options"
+                       FontWeight="SemiBold" />
+
+            <StackPanel Orientation="Horizontal">
+                
+            <CheckBox x:Name="DisplayDaysOnlyCheckBox"
+                      Content="Days only"
+                      IsChecked="{x:Bind DisplayDaysOnly, Mode=TwoWay}"
+                      Checked="DisplayOptionsCheckBox_Changed"
+                      Unchecked="DisplayOptionsCheckBox_Changed" />
+
+    
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+
+                <CheckBox x:Name="DisplayHoursCheckBox"
+                  Content="Hours"
+                  IsChecked="{x:Bind DisplayHours, Mode=TwoWay}"
+                  Checked="DisplayOptionsCheckBox_Changed"
+                  Unchecked="DisplayOptionsCheckBox_Changed" />
+
+                <CheckBox x:Name="DisplayMinutesCheckBox"
+                      Content="Minutes"
+                      IsChecked="{x:Bind DisplayMinutes, Mode=TwoWay}"
+                      IsEnabled="{x:Bind IsMinutesEnabled, Mode=OneWay}"
+                      Checked="DisplayOptionsCheckBox_Changed"
+                      Unchecked="DisplayOptionsCheckBox_Changed" />
+
+            <CheckBox x:Name="DisplaySecondsCheckBox"
+                      Content="Seconds"
+                      IsChecked="{x:Bind DisplaySeconds, Mode=TwoWay}"
+                      IsEnabled="{x:Bind IsSecondsEnabled, Mode=OneWay}"
+                      Checked="DisplayOptionsCheckBox_Changed"
+                      Unchecked="DisplayOptionsCheckBox_Changed" />
+            </StackPanel>
+
+        </StackPanel>
+
+        <!-- Preview -->
+        <StackPanel Spacing="4">
+            <TextBlock Text="Preview"
+                       FontWeight="SemiBold" />
+            <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="4"
+                    Padding="12,8">
+                <StackPanel HorizontalAlignment="Center">
+                    <TextBlock x:Name="PreviewTitleText"
+                               HorizontalAlignment="Center"
+                               Text="{x:Bind TimerTitle, Mode=OneWay}"
+                               FontSize="12" />
+                    <TextBlock x:Name="PreviewDateText"
+                               HorizontalAlignment="Center"
+                               Text="{x:Bind PreviewText, Mode=OneWay}"
+                               FontSize="16"
+                               FontWeight="SemiBold"
+                               Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                </StackPanel>
+            </Border>
+        </StackPanel>
+
+    </StackPanel>
+</ContentDialog>

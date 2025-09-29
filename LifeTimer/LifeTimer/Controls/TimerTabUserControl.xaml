@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <UserControl
-    x:Class="LifeTimer.Controls.WebTabUserControl"
+    x:Class="LifeTimer.Controls.TimerTabUserControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:LifeTimer.Controls"
@@ -16,12 +16,14 @@
 
             <StackPanel VerticalAlignment="Center">
 
-                <!--
                 <layoutcontrols:SettingsGroupControl HorizontalContentAlignment="Stretch">
                     <layoutcontrols:SettingsGroupControl.CustomContent>
-                        <settingscontrols:SettingsURLListControl></settingscontrols:SettingsURLListControl>
+                        <settingscontrols:SettingsTimerListControl></settingscontrols:SettingsTimerListControl>
                     </layoutcontrols:SettingsGroupControl.CustomContent>
                 </layoutcontrols:SettingsGroupControl>
+
+                
+                <!--
 
                 <layoutcontrols:SettingsGroupControl HorizontalContentAlignment="Stretch">
                     <layoutcontrols:SettingsGroupControl.CustomContent>

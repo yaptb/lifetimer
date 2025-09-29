@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using LifeTimer.Helpers;
+using LifeTimer.Logic.Models;
 
 namespace LifeTimer.Logic
 {
@@ -22,6 +23,7 @@ namespace LifeTimer.Logic
         private readonly LinkRotator _linkRotator;
         private readonly NagTimer _nagTimer;
         private readonly WindowsStoreHelper _storeHelper;
+        private DispatcherTimer _globalTimer;
 
 
         public ApplicationController(ILogger<ApplicationController> logger)
@@ -41,6 +43,7 @@ namespace LifeTimer.Logic
             _nagTimer.Initialize(this);
 
             LoadSettings();
+            InitializeGlobalTimer();
             _logger.LogInformation("ApplicationController initialized");
         }
 
@@ -62,6 +65,7 @@ namespace LifeTimer.Logic
         public event EventHandler<string> NotifyBrowserStatusChange;
         public event EventHandler<string> NotifySettingsStatusChange;
         public event EventHandler<EventArgs> NotifyVersionChange;
+        public event EventHandler<EventArgs> OnTimer;
 
 
         /// <summary>
@@ -119,9 +123,10 @@ namespace LifeTimer.Logic
             if (MainWindow == null)
                 throw new InvalidOperationException("MainWindow is null");
 
-            if (!String.IsNullOrEmpty(CurrentSettings.CurrentUrl))
+            /*
+            if (!String.IsNullOrEmpty(CurrentSettings.CurrentTimerName))
             {
-                RequestBrowseToNewUrl(CurrentSettings.CurrentUrl);
+                RequestBrowseToNewUrl(CurrentSettings.CurrentTimerName);
             }
             else
             {
@@ -129,6 +134,7 @@ namespace LifeTimer.Logic
                     if (CurrentSettings.UrlList.Count > 0)
                         RequestBrowseToNewUrl(CurrentSettings.UrlList[0]);
             }
+            */
 
 
             if (!CurrentSettings.InteractiveStartup)
@@ -159,7 +165,6 @@ namespace LifeTimer.Logic
         }
 
 
-
         public void RequestApplicationExit()
         {
             MainWindow.ShutdownMainWindow();
@@ -183,6 +188,8 @@ namespace LifeTimer.Logic
                 _linkRotator.Stop();
             }
 
+            _globalTimer?.Stop();
+            _globalTimer = null;
             _nagTimer.Stop();
         }
 
@@ -286,6 +293,7 @@ namespace LifeTimer.Logic
             ProcessSettingsChange();
         }
 
+        /*
         public void RequestSettingsAllowInput(bool allowInput)
         {
             this.CurrentSettings.AllowBackgroundInput = allowInput;
@@ -299,6 +307,7 @@ namespace LifeTimer.Logic
 
             ProcessSettingsChange();
         }
+        */
 
         public void RequestSettingsBrowserWindowOpacity(int opacity)
         {
@@ -310,21 +319,23 @@ namespace LifeTimer.Logic
 
         public void RequestSettingsUpdateUrlList(List<string> urlList)
         {
+            /*
             CurrentSettings.UrlList = urlList;
             UpdateLinkRotation();
             ProcessSettingsChange();
+            */
         }
 
         public void RequestChangeLinkRotationDelay(int delaySecs)
         {
-            this.CurrentSettings.LinkRotationDelaySecs = delaySecs;
+            this.CurrentSettings.TimerRotationDelaySecs = delaySecs;
             this._linkRotator.IntervalSeconds = delaySecs;
             ProcessSettingsChange();
         }
 
         public void RequestChangeLinkRotationStatus(bool newStatus)
         {
-            this.CurrentSettings.RotateLinks = newStatus;
+            this.CurrentSettings.RotateTimers = newStatus;
             UpdateLinkRotation();
             ProcessSettingsChange();
         }
@@ -438,6 +449,14 @@ namespace LifeTimer.Logic
 
         #endregion
 
+        private void InitializeGlobalTimer()
+        {
+            _globalTimer = new DispatcherTimer();
+            _globalTimer.Interval = TimeSpan.FromSeconds(1);
+            _globalTimer.Tick += (sender, e) => OnTimer?.Invoke(this, EventArgs.Empty);
+            _globalTimer.Start();
+        }
+
         private void LoadSettings()
         {
             var settings = SettingsManager.LoadSettings();
@@ -545,13 +564,13 @@ namespace LifeTimer.Logic
 
         private void InitializeLinkRotation()
         {
-            _linkRotator.IntervalSeconds = CurrentSettings.LinkRotationDelaySecs;
+            _linkRotator.IntervalSeconds = CurrentSettings.TimerRotationDelaySecs;
             UpdateLinkRotation();
         }
 
         private void UpdateLinkRotation()
         {
-
+            /*
             string rotationDisabledStr = ResourceHelper.GetString("ApplicationController_RotationDisabled");
             string rotationStoppedStr = ResourceHelper.GetString("ApplicationController_RotationStopped");
             string rotationActiveStr = ResourceHelper.GetString("ApplicationController_RotationActive");
@@ -560,7 +579,7 @@ namespace LifeTimer.Logic
             {
                 _linkRotator.Stop();
                 IsLinkRotationDisabled = true;
-                CurrentSettings.RotateLinks = false;
+                CurrentSettings.RotateTimers = false;
                 ProcessRotationStatusChange(rotationDisabledStr);
             }
             else
@@ -568,20 +587,20 @@ namespace LifeTimer.Logic
             {
                 IsLinkRotationDisabled = false;
 
-                if (CurrentSettings.RotateLinks == true)
+                if (CurrentSettings.RotateTimers == true)
                 {
                     _linkRotator.Start();
                     ProcessRotationStatusChange(rotationActiveStr);
                 }
 
-                if (CurrentSettings.RotateLinks == false)
+                if (CurrentSettings.RotateTimers == false)
                 {
                     _linkRotator.Stop();
                     ProcessRotationStatusChange(rotationStoppedStr);
                 }
 
             }
-
+            */
         }
 
         /// <summary>
