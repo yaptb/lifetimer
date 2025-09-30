@@ -14,11 +14,13 @@ namespace LifeTimer.Controls.Settings.Components
         private bool _isUpdating = false;
         private bool _isHueDragging = false;
         private bool _isSvDragging = false;
+        private bool _isAlphaDragging = false;
 
         // HSV values
         private double _currentHue = 0;
         private double _currentSaturation = 1;
         private double _currentValue = 1;
+        private double _currentAlpha = 1;
 
 
         public static readonly DependencyProperty SelectedColorProperty =
@@ -42,12 +44,15 @@ namespace LifeTimer.Controls.Settings.Components
         {
             this.InitializeComponent();
 
-            // Initialize with red color (Hue=0, Saturation=1, Value=1)
+            // Initialize with red color (Hue=0, Saturation=1, Value=1, Alpha=1)
             _currentHue = 0;
             _currentSaturation = 1;
             _currentValue = 1;
+            _currentAlpha = 1;
 
-            UpdateUI(ColorHelperUtil.HsvToRgb(_currentHue, _currentSaturation, _currentValue));
+            var rgb = ColorHelperUtil.HsvToRgb(_currentHue, _currentSaturation, _currentValue);
+            var color = Color.FromArgb((byte)(_currentAlpha * 255), rgb.R, rgb.G, rgb.B);
+            UpdateUI(color);
             UpdateSelectorPositions();
 
      
@@ -81,17 +86,24 @@ namespace LifeTimer.Controls.Settings.Components
                 _currentHue = hue;
                 _currentSaturation = saturation;
                 _currentValue = value;
+                _currentAlpha = color.A / 255.0;
 
                 // Update SV panel hue color
                 SvHueStop.Color = ColorHelperUtil.GetHueColor(_currentHue);
 
-                // Update RGB inputs
+                // Update alpha gradient colors
+                var currentRgb = ColorHelperUtil.HsvToRgb(_currentHue, _currentSaturation, _currentValue);
+                AlphaStartStop.Color = Color.FromArgb(255, currentRgb.R, currentRgb.G, currentRgb.B);
+                AlphaEndStop.Color = Color.FromArgb(0, currentRgb.R, currentRgb.G, currentRgb.B);
+
+                // Update RGBA inputs
                 RedNumberBox.Value = color.R;
                 GreenNumberBox.Value = color.G;
                 BlueNumberBox.Value = color.B;
+                AlphaNumberBox.Value = color.A;
 
-                // Update hex input
-                HexColorTextBox.Text = $"#{color.R:X2}{color.G:X2}{color.B:X2}";
+                // Update hex input (include alpha)
+                HexColorTextBox.Text = $"#{color.A:X2}{color.R:X2}{color.G:X2}{color.B:X2}";
 
                 // Update selector positions
                 UpdateSelectorPositions();
@@ -120,11 +132,17 @@ namespace LifeTimer.Controls.Settings.Components
             double svY = (1 - _currentValue) * 150; // 150 is the height, inverted for Y
             Canvas.SetLeft(SvSelector, Math.Max(-6, Math.Min(194, svX - 6))); // Center the 12px wide selector
             Canvas.SetTop(SvSelector, Math.Max(-6, Math.Min(144, svY - 6))); // Center the 12px high selector
+
+            // Update alpha selector position (vertical bar)
+            double alphaY = (1 - _currentAlpha) * 150; // 150 is the height, inverted so top = opaque (alpha = 1)
+            Canvas.SetTop(AlphaSelector, Math.Max(0, Math.Min(147, alphaY - 1.5))); // Center the 3px tall selector
+            Canvas.SetLeft(AlphaSelector, -1); // Fixed horizontal position
         }
 
         private void UpdateColorFromHsv()
         {
-            var newColor = ColorHelperUtil.HsvToRgb(_currentHue, _currentSaturation, _currentValue);
+            var rgb = ColorHelperUtil.HsvToRgb(_currentHue, _currentSaturation, _currentValue);
+            var newColor = Color.FromArgb((byte)(_currentAlpha * 255), rgb.R, rgb.G, rgb.B);
             SelectedColor = newColor;
         }
 
@@ -186,6 +204,34 @@ namespace LifeTimer.Controls.Settings.Components
             }
         }
 
+        // Alpha bar pointer events
+        private void AlphaCanvas_PointerPressed(object sender, PointerRoutedEventArgs e)
+        {
+            if (sender is Canvas canvas)
+            {
+                _isAlphaDragging = true;
+                canvas.CapturePointer(e.Pointer);
+                UpdateAlphaFromPosition(e.GetCurrentPoint(canvas).Position.Y);
+            }
+        }
+
+        private void AlphaCanvas_PointerMoved(object sender, PointerRoutedEventArgs e)
+        {
+            if (_isAlphaDragging && sender is Canvas canvas)
+            {
+                UpdateAlphaFromPosition(e.GetCurrentPoint(canvas).Position.Y);
+            }
+        }
+
+        private void AlphaCanvas_PointerReleased(object sender, PointerRoutedEventArgs e)
+        {
+            if (sender is Canvas canvas)
+            {
+                _isAlphaDragging = false;
+                canvas.ReleasePointerCapture(e.Pointer);
+            }
+        }
+
         private void UpdateHueFromPosition(double y)
         {
             // Clamp y to canvas bounds
@@ -196,6 +242,11 @@ namespace LifeTimer.Controls.Settings.Components
 
             // Update SV panel hue color
             SvHueStop.Color = ColorHelperUtil.GetHueColor(_currentHue);
+
+            // Update alpha gradient colors
+            var currentRgb = ColorHelperUtil.HsvToRgb(_currentHue, _currentSaturation, _currentValue);
+            AlphaStartStop.Color = Color.FromArgb(255, currentRgb.R, currentRgb.G, currentRgb.B);
+            AlphaEndStop.Color = Color.FromArgb(0, currentRgb.R, currentRgb.G, currentRgb.B);
 
             // Update selector position
             Canvas.SetTop(HueSelector, Math.Max(0, Math.Min(147, y - 1.5)));
@@ -215,6 +266,11 @@ namespace LifeTimer.Controls.Settings.Components
             _currentSaturation = x / 200.0;
             _currentValue = 1.0 - (y / 150.0); // Invert Y so top is bright
 
+            // Update alpha gradient colors
+            var currentRgb = ColorHelperUtil.HsvToRgb(_currentHue, _currentSaturation, _currentValue);
+            AlphaStartStop.Color = Color.FromArgb(255, currentRgb.R, currentRgb.G, currentRgb.B);
+            AlphaEndStop.Color = Color.FromArgb(0, currentRgb.R, currentRgb.G, currentRgb.B);
+
             // Update selector position
             Canvas.SetLeft(SvSelector, Math.Max(-6, Math.Min(194, x - 6)));
             Canvas.SetTop(SvSelector, Math.Max(-6, Math.Min(144, y - 6)));
@@ -223,7 +279,28 @@ namespace LifeTimer.Controls.Settings.Components
             UpdateColorFromHsv();
         }
 
-        private void RgbNumberBox_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        private void UpdateAlphaFromPosition(double y)
+        {
+            // Clamp y to canvas bounds
+            y = Math.Max(0, Math.Min(150, y));
+
+            // Calculate alpha (0-1), inverted so top is opaque
+            _currentAlpha = 1.0 - (y / 150.0);
+
+            // Update alpha gradient colors
+            var currentRgb = ColorHelperUtil.HsvToRgb(_currentHue, _currentSaturation, _currentValue);
+            AlphaStartStop.Color = Color.FromArgb(255, currentRgb.R, currentRgb.G, currentRgb.B);
+            AlphaEndStop.Color = Color.FromArgb(0, currentRgb.R, currentRgb.G, currentRgb.B);
+
+            // Update selector position
+            Canvas.SetTop(AlphaSelector, Math.Max(0, Math.Min(147, y - 1.5)));
+            Canvas.SetLeft(AlphaSelector, -1);
+
+            // Update the final color
+            UpdateColorFromHsv();
+        }
+
+        private void RgbaNumberBox_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
             if (_isUpdating) return;
 
@@ -232,8 +309,9 @@ namespace LifeTimer.Controls.Settings.Components
                 var r = (byte)Math.Clamp(RedNumberBox.Value, 0, 255);
                 var g = (byte)Math.Clamp(GreenNumberBox.Value, 0, 255);
                 var b = (byte)Math.Clamp(BlueNumberBox.Value, 0, 255);
+                var a = (byte)Math.Clamp(AlphaNumberBox.Value, 0, 255);
 
-                var newColor = Color.FromArgb(255, r, g, b);
+                var newColor = Color.FromArgb(a, r, g, b);
                 SelectedColor = newColor;
             }
             catch (Exception)
@@ -283,11 +361,12 @@ namespace LifeTimer.Controls.Settings.Components
             }
             else if (hex.Length == 8)
             {
-                // ARGB format (AARRGGBB) - ignore alpha, use RGB only
+                // ARGB format (AARRGGBB)
+                var a = byte.Parse(hex.Substring(0, 2), NumberStyles.HexNumber);
                 var r = byte.Parse(hex.Substring(2, 2), NumberStyles.HexNumber);
                 var g = byte.Parse(hex.Substring(4, 2), NumberStyles.HexNumber);
                 var b = byte.Parse(hex.Substring(6, 2), NumberStyles.HexNumber);
-                return Color.FromArgb(255, r, g, b);
+                return Color.FromArgb(a, r, g, b);
             }
             else if (hex.Length == 3)
             {
@@ -303,22 +382,34 @@ namespace LifeTimer.Controls.Settings.Components
             }
         }
 
-        // Helper method to get RGB components as separate values
+        // Helper method to get RGBA components as separate values
+        public (byte R, byte G, byte B, byte A) GetRgbaValues()
+        {
+            return (SelectedColor.R, SelectedColor.G, SelectedColor.B, SelectedColor.A);
+        }
+
+        // Helper method to get RGB components as separate values (for backward compatibility)
         public (byte R, byte G, byte B) GetRgbValues()
         {
             return (SelectedColor.R, SelectedColor.G, SelectedColor.B);
         }
 
-        // Helper method to set color from RGB values
+        // Helper method to set color from RGBA values
+        public void SetRgbaColor(byte r, byte g, byte b, byte a)
+        {
+            SelectedColor = Color.FromArgb(a, r, g, b);
+        }
+
+        // Helper method to set color from RGB values (for backward compatibility)
         public void SetRgbColor(byte r, byte g, byte b)
         {
             SelectedColor = Color.FromArgb(255, r, g, b);
         }
 
-        // Helper method to get hex color string
+        // Helper method to get hex color string (including alpha)
         public string GetHexColor()
         {
-            return $"#{SelectedColor.R:X2}{SelectedColor.G:X2}{SelectedColor.B:X2}";
+            return $"#{SelectedColor.A:X2}{SelectedColor.R:X2}{SelectedColor.G:X2}{SelectedColor.B:X2}";
         }
 
         // Helper method to set color from hex string

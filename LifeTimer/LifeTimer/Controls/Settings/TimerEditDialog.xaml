@@ -24,13 +24,25 @@
                        Visibility="Collapsed" />
         </StackPanel>
 
+        <!-- Timer Type -->
+        <StackPanel  Orientation="Horizontal"  Spacing="8">
+
+            <StackPanel Orientation="Vertical" VerticalAlignment="Center" >
+            <TextBlock>Use Current Time</TextBlock>
+            </StackPanel>
+            <ToggleSwitch x:Name="IsCurrentTimeToggle"
+                          IsOn="{x:Bind IsCurrentTime, Mode=TwoWay}"
+                          Toggled="IsCurrentTimeToggle_Toggled" />
+        </StackPanel>
+
         <!-- Target Date -->
         <StackPanel Spacing="4">
             <TextBlock Text="Target Date"
                        FontWeight="SemiBold" />
             <DatePicker x:Name="TargetDatePicker"
                         Date="{x:Bind TargetDate, Mode=TwoWay}"
-                        DateChanged="TargetDatePicker_DateChanged" />
+                        DateChanged="TargetDatePicker_DateChanged"
+                        IsEnabled="{x:Bind IsTargetDateTimeEnabled, Mode=OneWay}" />
         </StackPanel>
 
         <!-- Target Time -->
@@ -39,7 +51,8 @@
                        FontWeight="SemiBold" />
             <TimePicker x:Name="TargetTimePicker"
                         Time="{x:Bind TargetTime, Mode=TwoWay}"
-                        TimeChanged="TargetTimePicker_TimeChanged" />
+                        TimeChanged="TargetTimePicker_TimeChanged"
+                        IsEnabled="{x:Bind IsTargetDateTimeEnabled, Mode=OneWay}" />
         </StackPanel>
 
         <!-- Display Options -->
@@ -52,6 +65,7 @@
             <CheckBox x:Name="DisplayDaysOnlyCheckBox"
                       Content="Days only"
                       IsChecked="{x:Bind DisplayDaysOnly, Mode=TwoWay}"
+                      IsEnabled="{x:Bind IsDaysOnlyEnabled, Mode=OneWay}"
                       Checked="DisplayOptionsCheckBox_Changed"
                       Unchecked="DisplayOptionsCheckBox_Changed" />
 

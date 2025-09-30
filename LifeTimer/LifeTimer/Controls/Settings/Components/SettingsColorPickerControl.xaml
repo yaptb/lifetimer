@@ -156,9 +156,42 @@
                     </Border>
                 </StackPanel>
 
-                <!-- RGB Values -->
+                <!-- Alpha Bar -->
                 <StackPanel Spacing="8">
-                    <TextBlock Text="RGB Values (0-255)" FontSize="11" FontWeight="Medium" />
+                    <TextBlock Text="Alpha" FontSize="11" FontWeight="Medium" />
+                    <Border x:Name="AlphaBarBorder"
+                            Width="20"
+                            Height="150"
+                            BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
+                            BorderThickness="1"
+                            CornerRadius="4">
+                        <Canvas x:Name="AlphaCanvas"
+                                PointerPressed="AlphaCanvas_PointerPressed"
+                                PointerMoved="AlphaCanvas_PointerMoved"
+                                PointerReleased="AlphaCanvas_PointerReleased">
+                            <!-- Alpha gradient background -->
+                            <Canvas.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop x:Name="AlphaStartStop" Color="#FFFF0000" Offset="0.0" />
+                                    <GradientStop x:Name="AlphaEndStop" Color="Transparent" Offset="1.0" />
+                                </LinearGradientBrush>
+                            </Canvas.Background>
+                            <!-- Alpha Selection Indicator -->
+                            <Rectangle x:Name="AlphaSelector"
+                                       Width="22"
+                                       Height="3"
+                                       Fill="White"
+                                       Stroke="Black"
+                                       StrokeThickness="1"
+                                       Canvas.Left="-1"
+                                       Canvas.Top="0" />
+                        </Canvas>
+                    </Border>
+                </StackPanel>
+
+                <!-- RGBA Values -->
+                <StackPanel Spacing="8">
+                    <TextBlock Text="RGBA Values (0-255)" FontSize="11" FontWeight="Medium" />
                     <StackPanel Spacing="8">
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <TextBlock Text="R:" VerticalAlignment="Center" FontSize="11" Width="12" />
@@ -168,7 +201,7 @@
                                        Maximum="255"
                                        IsTabStop="False"
                                        SpinButtonPlacementMode="Compact"
-                                       ValueChanged="RgbNumberBox_ValueChanged"
+                                       ValueChanged="RgbaNumberBox_ValueChanged"
                                        FontSize="11" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Spacing="8">
@@ -179,7 +212,7 @@
                                        Maximum="255"
                                        IsTabStop="False"
                                        SpinButtonPlacementMode="Compact"
-                                       ValueChanged="RgbNumberBox_ValueChanged"
+                                       ValueChanged="RgbaNumberBox_ValueChanged"
                                        FontSize="11" />
                         </StackPanel>
                         <StackPanel Orientation="Horizontal" Spacing="8">
@@ -190,7 +223,18 @@
                                        Maximum="255"
                                        IsTabStop="False"
                                        SpinButtonPlacementMode="Compact"
-                                       ValueChanged="RgbNumberBox_ValueChanged"
+                                       ValueChanged="RgbaNumberBox_ValueChanged"
+                                       FontSize="11" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock Text="A:" VerticalAlignment="Center" FontSize="11" Width="12" />
+                            <NumberBox x:Name="AlphaNumberBox"
+                                       Width="120"
+                                       Minimum="0"
+                                       Maximum="255"
+                                       IsTabStop="False"
+                                       SpinButtonPlacementMode="Compact"
+                                       ValueChanged="RgbaNumberBox_ValueChanged"
                                        FontSize="11" />
                         </StackPanel>
 
@@ -199,7 +243,7 @@
                             <TextBlock Text="Hex Color" FontSize="11" FontWeight="Medium" />
                             <TextBox x:Name="HexColorTextBox"
                        
-                                     PlaceholderText="#FFFFFF"
+                                     PlaceholderText="#FFFFFFFF"
                                      Width="120"
                                      TextChanged="HexColorTextBox_TextChanged"
                                      FontSize="11" 

@@ -9,8 +9,9 @@ namespace LifeTimer.Logic.Models
 
         public Color ForegroundColor { get; set; } = Color.FromArgb(255, 255, 255, 255);
         public Color BackgroundColor { get; set; } = Color.FromArgb(255, 0, 0, 0);
-
-        public int Opacity { get; set; } = 128;
+        public Color BorderColor { get; set; } = Color.FromArgb(255, 255, 255, 255);
+        public int BorderThickness { get; set; } = 1;
+        public int BorderRadius { get; set; } = 20;
 
         public static AppearanceViewModel CreateDefaultAppearance()
         {
@@ -20,7 +21,6 @@ namespace LifeTimer.Logic.Models
                 TimerFontDefinition = FontDefinitionViewModel.CreateDefault("Segoe UI", 48),
                 ForegroundColor = Color.FromArgb(255, 255, 255, 255),
                 BackgroundColor = Color.FromArgb(255, 0, 0, 0),
-                Opacity = 128
             };
             return model;
         }

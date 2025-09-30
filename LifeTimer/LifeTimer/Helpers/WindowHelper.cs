@@ -30,7 +30,12 @@ public static class WindowHelper
     private const int WS_EX_NOACTIVATE = 0x08000000;
     private const int WS_THICKFRAME = 0x00040000;
     private const int WS_BORDER = 0x00800000;
+    private const int WS_MAXIMIZEBOX = 0x00010000;
+    private const int WS_MINIMIZEBOX = 0x00020000;
+
+    private const int LWA_COLORKEY = 0x00000001;
     public const int WS_CAPTION = 0x00C00000;
+
 
     public const int WS_EX_DLGMODALFRAME = 0x00000001;
     public const int WS_EX_CLIENTEDGE = 0x00000200;
@@ -92,6 +97,27 @@ public static class WindowHelper
 
 
 
+    public static void SetWindowTransparentColorKey(Window window)
+    {
+        var hWnd = WindowNative.GetWindowHandle(window);
+
+        var windowId = Win32Interop.GetWindowIdFromWindow(hWnd);
+        var appWindow = AppWindow.GetFromWindowId(windowId);
+        appWindow.SetPresenter(AppWindowPresenterKind.Overlapped);
+        appWindow.TitleBar.ExtendsContentIntoTitleBar = true;
+
+
+        // Set window as layered
+        var exStyle = GetWindowLong(hWnd, GWL_EXSTYLE);
+        SetWindowLong(hWnd, GWL_EXSTYLE, exStyle | WS_EX_LAYERED );
+
+        // Set transparency using a color key (e.g., magenta)
+        //   SetLayeredWindowAttributes(hWnd, 0x00FF00FF, 0, LWA_COLORKEY);
+        
+        var result = SetLayeredWindowAttributes(hWnd, 0x00FF00FF, 128, LWA_COLORKEY);
+
+    }
+
 
 
     public static void SetWindowTransparency(Window window, int opacity)
@@ -100,7 +126,7 @@ public static class WindowHelper
         
         // Set window as layered
         var exStyle = GetWindowLong(hWnd, GWL_EXSTYLE);
-        SetWindowLong(hWnd, GWL_EXSTYLE, exStyle | WS_EX_LAYERED);
+        SetWindowLong(hWnd, GWL_EXSTYLE, exStyle | WS_EX_LAYERED );
         
         // Set transparency
         byte alpha = (byte)Math.Max(1, Math.Min(255, opacity));
@@ -241,6 +267,8 @@ public static class WindowHelper
         // Restore standard window styles
         int style = GetWindowLong(hWnd, GWL_STYLE);
         style |= WS_CAPTION | WS_THICKFRAME;
+        style &= ~WS_MAXIMIZEBOX;
+        style &= ~WS_MINIMIZEBOX;
         SetWindowLong(hWnd, GWL_STYLE, style);
 
         int exStyle = GetWindowLong(hWnd, GWL_EXSTYLE);
@@ -296,4 +324,33 @@ public static class WindowHelper
 
         return new Tuple<int, int>(widthPx, heightPx);
     }
+
+    /*
+    [DllImport("CoreMessaging.dll")]
+    private static extern int CreateDispatcherQueueController(
+    DispatcherQueueOptions options,
+    out IntPtr dispatcherQueueController);
+
+    [StructLayout(LayoutKind.Sequential)]
+    struct DispatcherQueueOptions
+    {
+        public int dwSize;
+        public int threadType;
+        public int apartmentType;
+    }
+
+    public static void EnsureDispatcherQueue()
+    {
+        if (Windows.System.DispatcherQueue.GetForCurrentThread() == null)
+        {
+            DispatcherQueueOptions options;
+            options.dwSize = Marshal.SizeOf(typeof(DispatcherQueueOptions));
+            options.threadType = 2;      // DQTYPE_THREAD_CURRENT
+            options.apartmentType = 2;   // DQTAT_COM_STA
+
+            CreateDispatcherQueueController(options, out _);
+        }
+    }*/
+
+
 }

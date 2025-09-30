@@ -116,7 +116,7 @@ namespace LifeTimer.Controls.Settings
         {
             if (sender is Button button && button.Tag is string url)
             {
-                _applicationController.RequestBrowseToNewUrl(url);
+                _applicationController.RequestDisplayTimer(url);
             }
         }
 

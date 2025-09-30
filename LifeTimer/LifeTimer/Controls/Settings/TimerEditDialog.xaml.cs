@@ -19,6 +19,7 @@ namespace LifeTimer.Controls.Settings
         private bool _displayHours = true;
         private bool _displayMinutes = true;
         private bool _displaySeconds = true;
+        private bool _isCurrentTime = false;
         private bool _isValid = false;
         private ApplicationController _applicationController;
 
@@ -43,6 +44,7 @@ namespace LifeTimer.Controls.Settings
                 DisplayHours = timerToEdit.DisplayHours;
                 DisplayMinutes = timerToEdit.DisplayMinutes;
                 DisplaySeconds = timerToEdit.DisplaySeconds;
+                IsCurrentTime = timerToEdit.IsCurrentTime;
             }
         }
 
@@ -88,6 +90,16 @@ namespace LifeTimer.Controls.Settings
             set => SetProperty(ref _displaySeconds, value);
         }
 
+        public bool IsCurrentTime
+        {
+            get => _isCurrentTime;
+            set => SetProperty(ref _isCurrentTime, value);
+        }
+
+        public bool IsTargetDateTimeEnabled => !IsCurrentTime;
+
+        public bool IsDaysOnlyEnabled => !IsCurrentTime;
+
         public bool IsValid
         {
             get => _isValid;
@@ -98,18 +110,26 @@ namespace LifeTimer.Controls.Settings
         {
             get
             {
-                var targetDateTime = GetCombinedDateTime();
-                var now = DateTime.Now;
-
-                if (targetDateTime > now)
+                if (IsCurrentTime)
                 {
-                    // Countdown to target
-                    return DateTimeFormatHelper.FormatCountdown(targetDateTime, DisplayDaysOnly, DisplayHours, DisplayMinutes, DisplaySeconds);
+                    // Show current time
+                    return DateTimeFormatHelper.FormatCurrentTime(DisplayDaysOnly, DisplayHours, DisplayMinutes, DisplaySeconds);
                 }
                 else
                 {
-                    // Countup from target
-                    return DateTimeFormatHelper.FormatCountup(targetDateTime, DisplayDaysOnly, DisplayHours, DisplayMinutes, DisplaySeconds);
+                    var targetDateTime = GetCombinedDateTime();
+                    var now = DateTime.Now;
+
+                    if (targetDateTime > now)
+                    {
+                        // Countdown to target
+                        return DateTimeFormatHelper.FormatCountdown(targetDateTime, DisplayDaysOnly, DisplayHours, DisplayMinutes, DisplaySeconds);
+                    }
+                    else
+                    {
+                        // Countup from target
+                        return DateTimeFormatHelper.FormatCountup(targetDateTime, DisplayDaysOnly, DisplayHours, DisplayMinutes, DisplaySeconds);
+                    }
                 }
             }
         }
@@ -120,6 +140,7 @@ namespace LifeTimer.Controls.Settings
             {
                 Title = TimerTitle.Trim(),
                 TargetDateTime = GetCombinedDateTime(),
+                IsCurrentTime = IsCurrentTime,
                 DisplayDaysOnly = DisplayDaysOnly,
                 DisplayHours = DisplayHours,
                 DisplayMinutes = DisplayMinutes,
@@ -172,6 +193,13 @@ namespace LifeTimer.Controls.Settings
             // Preview updates handled by global timer
         }
 
+        private void IsCurrentTimeToggle_Toggled(object sender, RoutedEventArgs e)
+        {
+            // Trigger updates for enabled state changes
+            OnPropertyChanged(nameof(IsTargetDateTimeEnabled));
+            OnPropertyChanged(nameof(IsDaysOnlyEnabled));
+        }
+
         private void TimerEditDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
         {
             if (_applicationController != null)
@@ -199,9 +227,24 @@ namespace LifeTimer.Controls.Settings
             else if (propertyName == nameof(DisplayMinutes))
                 UpdateHierarchicalCheckboxes();
 
+            // Handle IsCurrentTime changes
+            if (propertyName == nameof(IsCurrentTime))
+            {
+                OnPropertyChanged(nameof(IsTargetDateTimeEnabled));
+                OnPropertyChanged(nameof(IsDaysOnlyEnabled));
+
+                // If switching to current time mode, disable days only
+                if (IsCurrentTime && DisplayDaysOnly)
+                {
+                    _displayDaysOnly = false;
+                    OnPropertyChanged(nameof(DisplayDaysOnly));
+                }
+            }
+
             // Trigger preview updates for display option changes
             if (propertyName == nameof(DisplayDaysOnly) || propertyName == nameof(DisplayHours) ||
-                propertyName == nameof(DisplayMinutes) || propertyName == nameof(DisplaySeconds))
+                propertyName == nameof(DisplayMinutes) || propertyName == nameof(DisplaySeconds) ||
+                propertyName == nameof(IsCurrentTime))
             {
                 UpdatePreview();
             }

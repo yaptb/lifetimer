@@ -182,23 +182,6 @@
 
 
 
-        <!-- Opacity-->
-     
-
-
-        <StackPanel Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="4" Margin="4" HorizontalAlignment="Stretch" VerticalAlignment="Center">
-
-            <components:SettingsSliderControl x:Name="OpacitySlider"
-                                        Title="Transparency Level"
-                                        Subtitle="Controls the transparency of the timer window"
-                                        OnValueChanged="OpacitySlider_ValueChanged" />
-
-        </StackPanel>
-
-
-
-
-
 
 
 

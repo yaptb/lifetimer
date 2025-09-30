@@ -14,10 +14,11 @@
     xmlns:layoutcontrols="using:LifeTimer.Controls.Layout"
     >
 
+    <!--
     <Window.SystemBackdrop>
         <MicaBackdrop />
     </Window.SystemBackdrop>
-
+    -->
     
     <Grid >
 

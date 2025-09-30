@@ -1,11 +1,14 @@
 using LifeTimer.Helpers;
 using LifeTimer.Logic;
+using LifeTimer.Logic.Models;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.Web.WebView2.Core;
 using System;
@@ -53,10 +56,14 @@ namespace LifeTimer
 
             AppController.RegisterMainWindow(this);
             AppController.InitialisePreMain();
-            AppController.InitialisePostMain();
 
             _logger.LogInformation("MainWindow initialized successfully");
+
+            
         }
+
+
+
 
         private async void MainWindow_ActivatedHandler(object sender, WindowActivatedEventArgs args)
         {
@@ -64,7 +71,9 @@ namespace LifeTimer
             {
                 _activedFlag = true;
                 await AppController.InitialisePostMain();
+                SetTransparentBackground();
             }
+
         }
 
         private void _appWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
@@ -94,10 +103,11 @@ namespace LifeTimer
 
 
 
+      
 
         #region public interface
 
-        
+
 
 
 
@@ -110,9 +120,9 @@ namespace LifeTimer
             WindowHelper.SetNoActivate(this, false);
             WindowHelper.SetClickThrough(this, false);
 
-            ContextInteractive.Text = ResourceHelper.GetString("MainWindow_NotificationBackground");
+           //ContextInteractive.Text = ResourceHelper.GetString("MainWindow_NotificationBackground");
 
-
+            SetTransparentBackground();
         }
 
 
@@ -126,15 +136,10 @@ namespace LifeTimer
             WindowHelper.SendToBack(this);
             WindowHelper.RecalcWindowSize(this);
 
-            /*
-            if (AppController.CurrentSettings.AllowBackgroundInput)
-                WindowHelper.SetClickThrough(this, false);
-            else
-                WindowHelper.SetClickThrough(this, true);
-            */
 
-            ContextInteractive.Text = ResourceHelper.GetString("MainWindow_NotificationInteractive");
+            //ContextInteractive.Text = ResourceHelper.GetString("MainWindow_NotificationInteractive");
 
+            SetTransparentBackground();
         }
 
 
@@ -143,9 +148,35 @@ namespace LifeTimer
             WindowHelper.SetWindowBounds(_appWindow, x, y, width, height); ;
         }
 
-        public void SetWindowOpacity(int opacity)
+
+
+        public void SetWindowAppearance(AppearanceViewModel viewModel)
         {
-            WindowHelper.SetWindowTransparency(this, opacity);
+
+            this.TimerTitle.Foreground = new SolidColorBrush(viewModel.ForegroundColor);
+
+            this.TimerTitle.FontFamily = viewModel.TitleFontDefinition.GetWinUIFontFamily();
+            this.TimerTitle.FontSize = viewModel.TitleFontDefinition.FontSize;
+            this.TimerTitle.FontWeight = viewModel.TitleFontDefinition.FontWeight;
+            this.TimerTitle.FontStyle = viewModel.TitleFontDefinition.FontStyle;
+
+            this.TimerTime.Foreground = new SolidColorBrush(viewModel.ForegroundColor);
+            this.TimerTime.FontFamily = viewModel.TimerFontDefinition.GetWinUIFontFamily();
+            this.TimerTime.FontSize = viewModel.TimerFontDefinition.FontSize;
+            this.TimerTime.FontWeight = viewModel.TimerFontDefinition.FontWeight;
+            this.TimerTime.FontStyle = viewModel.TimerFontDefinition.FontStyle;
+
+            this.WindowBorder.Background = new SolidColorBrush(viewModel.BackgroundColor);
+
+        }
+
+
+        private void SetTransparentBackground()
+
+        {
+            this.SystemBackdrop = null;
+            WindowHelper.SetWindowTransparentColorKey(this);
+           this.WindowGrid.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 255, 0, 255)); // Magenta
         }
 
 

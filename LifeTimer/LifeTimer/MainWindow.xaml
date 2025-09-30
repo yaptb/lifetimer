@@ -9,13 +9,16 @@
     xmlns:tb="using:H.NotifyIcon"
     mc:Ignorable="d"
     >
-    
 
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
- 
-        
-        <Grid x:Name="ContentGrid" >
-            
+     <Grid x:Name="WindowGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+
+        <Border x:Name="WindowBorder" 
+           BorderThickness="3"
+           CornerRadius="20"
+           Padding="6"
+               Margin="4"
+           >
+            <Grid x:Name="ContentGrid" >
             
             
             <Grid.RowDefinitions>
@@ -49,11 +52,12 @@
             </StackPanel>
 
 
-            <StackPanel x:Name="TimerDisplay" Grid.Row="0">
-                <TextBlock x:Name="TimerTitle">
+            
+            <StackPanel x:Name="TimerDisplay" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock x:Name="TimerTitle" HorizontalAlignment="Center">
                     Title
                 </TextBlock>
-                <TextBlock x:Name="Time">
+                <TextBlock x:Name="TimerTime" HorizontalAlignment="Center">
                     00 : 00 : 00
                 </TextBlock>
             </StackPanel>
@@ -75,7 +79,9 @@
             </StackPanel>
 
         </Grid>
+        </Border>
 
+         <!--
         <tb:TaskbarIcon
              x:Name="AppNotifyIcon"
              MenuActivation="LeftOrRightClick"
@@ -92,12 +98,12 @@
             </tb:TaskbarIcon.ContextFlyout>
 
         </tb:TaskbarIcon>
-
+        -->
 
     </Grid>
 
     <!-- NotifyIcon for system tray-->
 
 
-  
+
 </Window>

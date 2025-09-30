@@ -189,5 +189,43 @@ namespace LifeTimer.Helpers
         {
             return dateTime.ToString("MMM dd, yyyy");
         }
+
+        /// <summary>
+        /// Formats the current time using Year:Month:Day:Hours:Minutes:Seconds format
+        /// </summary>
+        /// <param name="daysOnly">Ignored for current time - always uses full date format</param>
+        /// <param name="showHours">Include hours in display</param>
+        /// <param name="showMinutes">Include minutes in display</param>
+        /// <param name="showSeconds">Include seconds in display</param>
+        /// <returns>Formatted current time string</returns>
+        public static string FormatCurrentTime(bool daysOnly = false, bool showHours = true, bool showMinutes = true, bool showSeconds = true)
+        {
+            var now = DateTime.Now;
+
+            // Format: Year : Month : Day : Hours : Minutes : Seconds
+            var parts = new System.Collections.Generic.List<string>
+            {
+                now.Year.ToString("D4"),
+                now.Month.ToString("D2"),
+                now.Day.ToString("D2")
+            };
+
+            if (showHours)
+            {
+                parts.Add($"{now.Hour:D2}");
+
+                if (showMinutes)
+                {
+                    parts.Add($"{now.Minute:D2}");
+
+                    if (showSeconds)
+                    {
+                        parts.Add($"{now.Second:D2}");
+                    }
+                }
+            }
+
+            return string.Join(":", parts);
+        }
     }
 }

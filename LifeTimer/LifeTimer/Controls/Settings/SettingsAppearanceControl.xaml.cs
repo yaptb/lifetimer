@@ -15,26 +15,12 @@ namespace LifeTimer.Controls.Settings
     {
         private readonly ILogger<SettingsAppearanceControl> _logger;
         private readonly ApplicationController _applicationController;
+
         private AppearanceViewModel _appearanceViewModel;
 
         private const int PreviewTitleFontSize = 14;
-
         private const int PreviewTimerFontSize = 24;
 
-        public static readonly DependencyProperty AppearanceViewModelProperty =
-            DependencyProperty.Register(
-                nameof(AppearanceViewModel),
-                typeof(AppearanceViewModel),
-                typeof(SettingsAppearanceControl),
-                new PropertyMetadata(null, OnAppearanceViewModelChanged));
-
-        public event EventHandler<AppearanceViewModel> AppearanceChanged;
-
-        public AppearanceViewModel AppearanceViewModel
-        {
-            get => (AppearanceViewModel)GetValue(AppearanceViewModelProperty);
-            set => SetValue(AppearanceViewModelProperty, value);
-        }
 
         public SettingsAppearanceControl()
         {
@@ -43,31 +29,17 @@ namespace LifeTimer.Controls.Settings
             _logger = App.Services.GetRequiredService<ILogger<SettingsAppearanceControl>>();
             _applicationController = App.Services.GetRequiredService<ApplicationController>();
 
-            // Initialize with default if none provided
-            if (AppearanceViewModel == null)
-            {
-                AppearanceViewModel = AppearanceViewModel.CreateDefaultAppearance();
-            }
+            _appearanceViewModel = _applicationController.CurrentSettings.Appearance;
 
             InitializeControls();
+            UpdateUI();
             _logger.LogInformation("SettingsAppearanceUserControl initialized");
         }
 
-        private static void OnAppearanceViewModelChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is SettingsAppearanceControl control)
-            {
-                control._appearanceViewModel = e.NewValue as AppearanceViewModel;
-                control.UpdateUI();
-            }
-        }
 
         private void InitializeControls()
         {
-            // Initialize opacity slider
-            OpacitySlider.Minimum = 0;
-            OpacitySlider.Maximum = 255;
-            OpacitySlider.Value = AppearanceViewModel?.Opacity ?? 128;
+           
         }
 
         private void UpdateUI()
@@ -78,14 +50,9 @@ namespace LifeTimer.Controls.Settings
             ForegroundColorBrush.Color = _appearanceViewModel.ForegroundColor;
             BackgroundColorBrush.Color = _appearanceViewModel.BackgroundColor;
 
-            // Update opacity slider
-            OpacitySlider.Value = _appearanceViewModel.Opacity;
-
             // Update font previews
             UpdateFontPreviews();
 
-            // Update main preview
-            UpdateMainPreview();
         }
 
         private void UpdateFontPreviews()
@@ -111,34 +78,6 @@ namespace LifeTimer.Controls.Settings
             }
         }
 
-        private void UpdateMainPreview()
-        {
-            /*
-            if (_appearanceViewModel == null) return;
-
-            // Update preview colors
-            PreviewBackgroundBrush.Color = _appearanceViewModel.BackgroundColor;
-            PreviewForegroundBrush.Color = _appearanceViewModel.ForegroundColor;
-            PreviewTimerBrush.Color = _appearanceViewModel.ForegroundColor;
-
-            // Update preview area fonts
-            if (_appearanceViewModel.TitleFontDefinition != null)
-            {
-                PreviewTitleText.FontFamily = _appearanceViewModel.TitleFontDefinition.GetWinUIFontFamily();
-                PreviewTitleText.FontSize = _appearanceViewModel.TitleFontDefinition.FontSize;
-                PreviewTitleText.FontWeight = _appearanceViewModel.TitleFontDefinition.FontWeight;
-                PreviewTitleText.FontStyle = _appearanceViewModel.TitleFontDefinition.FontStyle;
-            }
-
-            if (_appearanceViewModel.TimerFontDefinition != null)
-            {
-                PreviewTimerText.FontFamily = _appearanceViewModel.TimerFontDefinition.GetWinUIFontFamily();
-                PreviewTimerText.FontSize = _appearanceViewModel.TimerFontDefinition.FontSize;
-                PreviewTimerText.FontWeight = _appearanceViewModel.TimerFontDefinition.FontWeight;
-                PreviewTimerText.FontStyle = _appearanceViewModel.TimerFontDefinition.FontStyle;
-            }
-            */
-        }
 
         private async void TitleFontButton_Click(object sender, RoutedEventArgs e)
         {
@@ -167,9 +106,8 @@ namespace LifeTimer.Controls.Settings
                     if (_appearanceViewModel != null)
                     {
                         _appearanceViewModel.TitleFontDefinition = fontPicker.GetFontDefinition();
-                        UpdateFontPreviews();
-                        UpdateMainPreview();
-                        AppearanceChanged?.Invoke(this, _appearanceViewModel);
+                        UpdateUI();
+                        ProcessAppearanceChanged();
                     }
                 }
             }
@@ -206,9 +144,8 @@ namespace LifeTimer.Controls.Settings
                     if (_appearanceViewModel != null)
                     {
                         _appearanceViewModel.TimerFontDefinition = fontPicker.GetFontDefinition();
-                        UpdateFontPreviews();
-                        UpdateMainPreview();
-                        AppearanceChanged?.Invoke(this, _appearanceViewModel);
+                        UpdateUI();
+                        ProcessAppearanceChanged();
                     }
                 }
             }
@@ -245,8 +182,8 @@ namespace LifeTimer.Controls.Settings
                     {
                         _appearanceViewModel.ForegroundColor = colorPicker.SelectedColor;
                         ForegroundColorBrush.Color = colorPicker.SelectedColor;
-                        UpdateMainPreview();
-                        AppearanceChanged?.Invoke(this, _appearanceViewModel);
+                        UpdateUI();
+                        ProcessAppearanceChanged();
                     }
                 }
             }
@@ -283,8 +220,8 @@ namespace LifeTimer.Controls.Settings
                     {
                         _appearanceViewModel.BackgroundColor = colorPicker.SelectedColor;
                         BackgroundColorBrush.Color = colorPicker.SelectedColor;
-                        UpdateMainPreview();
-                        AppearanceChanged?.Invoke(this, _appearanceViewModel);
+                        UpdateUI();
+                        ProcessAppearanceChanged();
                     }
                 }
             }
@@ -294,25 +231,13 @@ namespace LifeTimer.Controls.Settings
             }
         }
 
-        private void OpacitySlider_ValueChanged(object sender, double newValue)
+   
+
+        private void ProcessAppearanceChanged()
         {
-            if (_appearanceViewModel != null)
-            {
-                _appearanceViewModel.Opacity = (int)newValue;
-                AppearanceChanged?.Invoke(this, _appearanceViewModel);
-            }
+            _applicationController.RequestChangeMainWindowAppearance(this._appearanceViewModel);
         }
 
-        // Public method to set the appearance view model
-        public void SetAppearanceViewModel(AppearanceViewModel viewModel)
-        {
-            AppearanceViewModel = viewModel;
-        }
 
-        // Public method to get the current appearance view model
-        public AppearanceViewModel GetAppearanceViewModel()
-        {
-            return _appearanceViewModel ?? AppearanceViewModel.CreateDefaultAppearance();
-        }
     }
 }

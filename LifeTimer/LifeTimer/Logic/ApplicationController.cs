@@ -240,7 +240,7 @@ namespace LifeTimer.Logic
             MarshallToUIThread(() =>
             {
                 this.CurrentSettings.CurrentRotationIndex = rotationIndex;
-                this.RequestBrowseToNewUrl(urlString);
+                this.RequestDisplayTimer(urlString);
             });
 
         }
@@ -253,7 +253,7 @@ namespace LifeTimer.Logic
             });
         }
 
-        public void RequestBrowseToNewUrl(string urlString)
+        public void RequestDisplayTimer(string urlString)
         {
             /*
             try
@@ -280,6 +280,7 @@ namespace LifeTimer.Logic
             NotifyBrowserBoundsChange?.Invoke(this, EventArgs.Empty);
         }
 
+
         public void RequestSettingsStartInteractiveModeChange(bool interactiveStartup)
         {
 
@@ -293,28 +294,17 @@ namespace LifeTimer.Logic
             ProcessSettingsChange();
         }
 
+    
         /*
-        public void RequestSettingsAllowInput(bool allowInput)
-        {
-            this.CurrentSettings.AllowBackgroundInput = allowInput;
-
-            if (!IsInteractiveMode)
-            {
-                //if the window is in background mode, reconfigure it with the 
-                //new suppress input settings
-                this.MainWindow.ConfigureForBackgroundMode();
-            }
-
-            ProcessSettingsChange();
-        }
-        */
-
         public void RequestSettingsBrowserWindowOpacity(int opacity)
         {
             this.CurrentSettings.WindowOpacity = opacity;
             this.MainWindow.SetWindowOpacity(opacity);
             ProcessSettingsChange();
         }
+        */
+
+
 
 
         public void RequestSettingsUpdateUrlList(List<string> urlList)
@@ -338,6 +328,13 @@ namespace LifeTimer.Logic
             this.CurrentSettings.RotateTimers = newStatus;
             UpdateLinkRotation();
             ProcessSettingsChange();
+        }
+
+
+        public void RequestChangeMainWindowAppearance(AppearanceViewModel appearance)
+        {
+            this.CurrentSettings.Appearance = appearance;
+            this.MainWindow.SetWindowAppearance(appearance);
         }
 
 
@@ -508,7 +505,7 @@ namespace LifeTimer.Logic
             MainWindow.SetWindowBounds(CurrentSettings.WindowPosX, CurrentSettings.WindowPosY,
                CurrentSettings.WindowWidth, CurrentSettings.WindowHeight);
 
-            MainWindow.SetWindowOpacity(CurrentSettings.WindowOpacity);
+            MainWindow.SetWindowAppearance(CurrentSettings.Appearance);
         }
 
         private void ShowSettingsWindow()
