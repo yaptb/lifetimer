@@ -1,6 +1,7 @@
 using LifeTimer.Helpers;
 using LifeTimer.Logic;
 using LifeTimer.Logic.Models;
+using LifeTimer.Transparency;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -12,6 +13,7 @@ using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.Web.WebView2.Core;
 using System;
+using Windows.System;
 using WinRT.Interop;
 
 namespace LifeTimer
@@ -59,6 +61,7 @@ namespace LifeTimer
 
             _logger.LogInformation("MainWindow initialized successfully");
 
+            InitializeTransparency();
             
         }
 
@@ -71,7 +74,7 @@ namespace LifeTimer
             {
                 _activedFlag = true;
                 await AppController.InitialisePostMain();
-                SetTransparentBackground();
+                //SetTransparentBackground();
             }
 
         }
@@ -122,7 +125,7 @@ namespace LifeTimer
 
            //ContextInteractive.Text = ResourceHelper.GetString("MainWindow_NotificationBackground");
 
-            SetTransparentBackground();
+           // SetTransparentBackground();
         }
 
 
@@ -139,7 +142,7 @@ namespace LifeTimer
 
             //ContextInteractive.Text = ResourceHelper.GetString("MainWindow_NotificationInteractive");
 
-            SetTransparentBackground();
+           // SetTransparentBackground();
         }
 
 
@@ -243,5 +246,47 @@ namespace LifeTimer
         {
             this.FreeVersionNagOverlay.Visibility = Visibility.Collapsed;
         }
+
+
+        private void InitializeTransparency()
+        {
+            var windowHandle = new IntPtr((long)this.AppWindow.Id.Value);
+
+            var rgn = TransparencyInterop.CreateRectRgn(-2, -2, -1, -1);
+
+            var blur = new TransparencyInterop.DWM_BLURBEHIND()
+            {
+                dwFlags = TransparencyInterop.DwmBlurBehindFlags.DWM_BB_ENABLE | TransparencyInterop.DwmBlurBehindFlags.DWM_BB_BLURREGION,
+                fEnable = true,
+                hRgnBlur = rgn,
+            };
+
+            TransparencyInterop.DwmEnableBlurBehindWindow(windowHandle,ref blur);
+            
+            TransparentHelper.SetTransparent(this, true);
+
+            wndProcHandler = new TransparencyInterop.SUBCLASSPROC(WndProc);
+
+            TransparencyInterop.SetWindowSubclass(windowHandle, wndProcHandler, 1, IntPtr.Zero);
+        }
+
+        private IntPtr WndProc(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam, IntPtr uIdSubclass, IntPtr dwRefData)
+        {
+            if (uMsg == (uint)TransparencyInterop.WM_PAINT)
+            {
+                var hdc = TransparencyInterop.BeginPaint(hWnd, out var ps);
+
+                if (hdc== 0 ) return new IntPtr(0);
+
+                var brush = TransparencyInterop.GetStockObject(TransparencyInterop.StockObjectType.BLACK_BRUSH);
+                TransparencyInterop.FillRect(hdc, ref ps.rcPaint, brush);
+                return new IntPtr(1);
+            }
+
+            return TransparencyInterop.DefSubclassProc(hWnd, uMsg, wParam, lParam);
+
+        }
+
+        TransparencyInterop.SUBCLASSPROC wndProcHandler;
     }
 }

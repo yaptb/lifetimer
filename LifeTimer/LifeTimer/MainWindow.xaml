@@ -10,7 +10,7 @@
     mc:Ignorable="d"
     >
 
-     <Grid x:Name="WindowGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+    <Grid x:Name="WindowGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent">
 
         <Border x:Name="WindowBorder" 
            BorderThickness="3"
