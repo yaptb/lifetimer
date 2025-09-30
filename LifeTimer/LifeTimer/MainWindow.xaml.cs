@@ -2,7 +2,6 @@ using LifeTimer.Helpers;
 using LifeTimer.Logic;
 using LifeTimer.Logic.Models;
 using LifeTimer.Transparency;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI;
@@ -11,9 +10,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
-using Microsoft.Web.WebView2.Core;
 using System;
-using Windows.System;
 using WinRT.Interop;
 
 namespace LifeTimer
@@ -62,9 +59,11 @@ namespace LifeTimer
             _logger.LogInformation("MainWindow initialized successfully");
 
             InitializeTransparency();
-            
-        }
 
+            AppController.OnTimer += AppController_TimerTick;
+
+
+        }
 
 
 
@@ -73,10 +72,9 @@ namespace LifeTimer
             if (!_activedFlag)
             {
                 _activedFlag = true;
+                UpdateDisplay();
                 await AppController.InitialisePostMain();
-                //SetTransparentBackground();
             }
-
         }
 
         private void _appWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
@@ -106,10 +104,37 @@ namespace LifeTimer
 
 
 
-      
+
 
         #region public interface
 
+
+        private void AppController_TimerTick(object? sender, EventArgs e)
+        {
+
+            UpdateDisplay();
+
+        }
+
+
+        private void UpdateDisplay()
+        {
+            var currentTimer = AppController.CurrentTimer;
+
+            if(currentTimer == null)
+            {
+                this.NoTimer.Visibility = Visibility.Visible;
+                this.TimerDisplay.Visibility = Visibility.Collapsed;
+                return;
+            }
+
+            this.NoTimer.Visibility = Visibility.Collapsed;
+            this.TimerDisplay.Visibility = Visibility.Visible;
+
+            var timerText = DateTimeFormatHelper.GetTimeDisplayForTimer(currentTimer);            
+            this.TimerTitle.Text= currentTimer.Title;
+            this.TimerTime.Text = timerText;
+        }
 
 
 
@@ -123,9 +148,8 @@ namespace LifeTimer
             WindowHelper.SetNoActivate(this, false);
             WindowHelper.SetClickThrough(this, false);
 
-           //ContextInteractive.Text = ResourceHelper.GetString("MainWindow_NotificationBackground");
+            ContextInteractive.Text = ResourceHelper.GetString("MainWindow_NotificationBackground");
 
-           // SetTransparentBackground();
         }
 
 
@@ -140,9 +164,7 @@ namespace LifeTimer
             WindowHelper.RecalcWindowSize(this);
 
 
-            //ContextInteractive.Text = ResourceHelper.GetString("MainWindow_NotificationInteractive");
-
-           // SetTransparentBackground();
+            ContextInteractive.Text = ResourceHelper.GetString("MainWindow_NotificationInteractive");
         }
 
 
@@ -179,7 +201,7 @@ namespace LifeTimer
         {
             this.SystemBackdrop = null;
             WindowHelper.SetWindowTransparentColorKey(this);
-           this.WindowGrid.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 255, 0, 255)); // Magenta
+            this.WindowGrid.Background = new SolidColorBrush(Windows.UI.Color.FromArgb(255, 255, 0, 255)); // Magenta
         }
 
 
@@ -248,45 +270,14 @@ namespace LifeTimer
         }
 
 
+
+
         private void InitializeTransparency()
         {
-            var windowHandle = new IntPtr((long)this.AppWindow.Id.Value);
-
-            var rgn = TransparencyInterop.CreateRectRgn(-2, -2, -1, -1);
-
-            var blur = new TransparencyInterop.DWM_BLURBEHIND()
-            {
-                dwFlags = TransparencyInterop.DwmBlurBehindFlags.DWM_BB_ENABLE | TransparencyInterop.DwmBlurBehindFlags.DWM_BB_BLURREGION,
-                fEnable = true,
-                hRgnBlur = rgn,
-            };
-
-            TransparencyInterop.DwmEnableBlurBehindWindow(windowHandle,ref blur);
-            
             TransparentHelper.SetTransparent(this, true);
-
-            wndProcHandler = new TransparencyInterop.SUBCLASSPROC(WndProc);
-
-            TransparencyInterop.SetWindowSubclass(windowHandle, wndProcHandler, 1, IntPtr.Zero);
         }
 
-        private IntPtr WndProc(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam, IntPtr uIdSubclass, IntPtr dwRefData)
-        {
-            if (uMsg == (uint)TransparencyInterop.WM_PAINT)
-            {
-                var hdc = TransparencyInterop.BeginPaint(hWnd, out var ps);
 
-                if (hdc== 0 ) return new IntPtr(0);
 
-                var brush = TransparencyInterop.GetStockObject(TransparencyInterop.StockObjectType.BLACK_BRUSH);
-                TransparencyInterop.FillRect(hdc, ref ps.rcPaint, brush);
-                return new IntPtr(1);
-            }
-
-            return TransparencyInterop.DefSubclassProc(hWnd, uMsg, wParam, lParam);
-
-        }
-
-        TransparencyInterop.SUBCLASSPROC wndProcHandler;
     }
 }

@@ -1,3 +1,4 @@
+using LifeTimer.Logic.Models;
 using System;
 
 namespace LifeTimer.Helpers
@@ -226,6 +227,32 @@ namespace LifeTimer.Helpers
             }
 
             return string.Join(":", parts);
+        }
+
+        public static string GetTimeDisplayForTimer(TimerDefinition timer)
+        {
+            if (timer.IsCurrentTime)
+            {
+                // Show current time
+                return DateTimeFormatHelper.FormatCurrentTime(timer.DisplayDaysOnly, timer.DisplayHours, timer.DisplayMinutes, timer.DisplaySeconds);
+            }
+            else
+            {
+                var targetDateTime = timer.TargetDateTime;
+                var now = DateTime.Now;
+
+                if (targetDateTime > now)
+                {
+                    // Countdown to target
+                    return DateTimeFormatHelper.FormatCountdown(targetDateTime, timer.DisplayDaysOnly, timer.DisplayHours, timer.DisplayMinutes, timer.DisplaySeconds);
+                }
+                else
+                {
+                    // Countup from target
+                    return DateTimeFormatHelper.FormatCountup(targetDateTime, timer.DisplayDaysOnly, timer.DisplayHours, timer.DisplayMinutes, timer.DisplaySeconds);
+                }
+            }
+
         }
     }
 }

@@ -47,12 +47,10 @@
 
             <StackPanel x:Name="NoTimerDefifned" Grid.Row="0" Visibility="Collapsed">
                 <TextBlock x:Name="NoTimer">
-                    No Timer Defined
+                    No Timer Active
                 </TextBlock>
             </StackPanel>
 
-
-            
             <StackPanel x:Name="TimerDisplay" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
                 <TextBlock x:Name="TimerTitle" HorizontalAlignment="Center">
                     Title
@@ -81,7 +79,6 @@
         </Grid>
         </Border>
 
-         <!--
         <tb:TaskbarIcon
              x:Name="AppNotifyIcon"
              MenuActivation="LeftOrRightClick"
@@ -98,11 +95,9 @@
             </tb:TaskbarIcon.ContextFlyout>
 
         </tb:TaskbarIcon>
-        -->
 
     </Grid>
 
-    <!-- NotifyIcon for system tray-->
 
 
 

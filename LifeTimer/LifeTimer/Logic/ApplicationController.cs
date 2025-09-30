@@ -43,7 +43,6 @@ namespace LifeTimer.Logic
             _nagTimer.Initialize(this);
 
             LoadSettings();
-            InitializeGlobalTimer();
             _logger.LogInformation("ApplicationController initialized");
         }
 
@@ -123,6 +122,10 @@ namespace LifeTimer.Logic
             if (MainWindow == null)
                 throw new InvalidOperationException("MainWindow is null");
 
+
+            //HACK - temporary
+            this.CurrentTimer = CurrentSettings.Timers[0];
+
             /*
             if (!String.IsNullOrEmpty(CurrentSettings.CurrentTimerName))
             {
@@ -157,6 +160,8 @@ namespace LifeTimer.Logic
 
 
             InitializeLinkRotation();
+
+            InitializeGlobalTimer();
 
             _logger.LogInformation("AppController InitalizePostBrowser Finished");
             _logger.LogInformation("AppController *** Initialization Complete ***");
@@ -639,5 +644,6 @@ namespace LifeTimer.Logic
         public bool IsLinkRotationDisabled { get; private set; }
         public bool IsLinkRotationActive { get { return _linkRotator.IsRunning; } }
 
+        public TimerDefinition? CurrentTimer { get; private set; }
     }
 }
