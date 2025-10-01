@@ -7,6 +7,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+        xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+
     xmlns:layoutcontrols="using:LifeTimer.Controls.Layout"
     xmlns:settingscontrols="using:LifeTimer.Controls.Settings"
     >
@@ -14,9 +16,30 @@
     <layoutcontrols:SidenavTabLayout>
         <layoutcontrols:SidenavTabLayout.CustomContent>
 
-            
-      
-            
+
+            <controls:TabView x:Name="MyTabView" IsAddTabButtonVisible="False">
+                <controls:TabView.TabItems>
+                    <controls:TabViewItem Header="Appearance" IsClosable="False">
+
+                        <layoutcontrols:SettingsGroupControl HorizontalContentAlignment="Stretch">
+                            <layoutcontrols:SettingsGroupControl.CustomContent>
+                                <settingscontrols:SettingsAppearanceControl></settingscontrols:SettingsAppearanceControl>
+                            </layoutcontrols:SettingsGroupControl.CustomContent>
+                        </layoutcontrols:SettingsGroupControl>
+
+                    </controls:TabViewItem>
+                    <controls:TabViewItem Header="Border" IsClosable="False">
+                        <layoutcontrols:SettingsGroupControl HorizontalContentAlignment="Stretch">
+                            <layoutcontrols:SettingsGroupControl.CustomContent>
+                                <settingscontrols:SettingsAppearanceBorderControl></settingscontrols:SettingsAppearanceBorderControl>
+                            </layoutcontrols:SettingsGroupControl.CustomContent>
+                        </layoutcontrols:SettingsGroupControl>
+                    </controls:TabViewItem>
+                </controls:TabView.TabItems>
+            </controls:TabView>
+
+
+            <!--
             <StackPanel>
 
                 <layoutcontrols:SettingsGroupControl HorizontalContentAlignment="Stretch">
@@ -25,16 +48,8 @@
                     </layoutcontrols:SettingsGroupControl.CustomContent>
                 </layoutcontrols:SettingsGroupControl>
 
-               <!--
-                <layoutcontrols:SettingsGroupControl HorizontalContentAlignment="Stretch">
-                    <layoutcontrols:SettingsGroupControl.CustomContent>
-                        <settingscontrols:SettingsUrlRotationControl></settingscontrols:SettingsUrlRotationControl>
-                    </layoutcontrols:SettingsGroupControl.CustomContent>
-                </layoutcontrols:SettingsGroupControl>
-
-                               -->
-
             </StackPanel>
+            -->
 
         </layoutcontrols:SidenavTabLayout.CustomContent>
     </layoutcontrols:SidenavTabLayout>

@@ -132,12 +132,6 @@
   <data name="SettingsWindow_Title" xml:space="preserve">
     <value>LifeTimer Settings</value>
   </data>
-  <data name="CommandTabUserControl_BackgroundMode.Content" xml:space="preserve">
-    <value>Background Mode</value>
-  </data>
-  <data name="CommandTabUserControl_InteractiveMode.Content" xml:space="preserve">
-    <value>Interactive Mode</value>
-  </data>
   <data name="CommandTabUserControl_SaveSettings.Content" xml:space="preserve">
     <value>Save Settings</value>
   </data>
@@ -145,7 +139,7 @@
     <value>Quit Application</value>
   </data>
   <data name="SettingsStatusControl_BrowserStatus.Text" xml:space="preserve">
-    <value>URL Status</value>
+    <value>Timer Status</value>
   </data>
   <data name="SettingsStatusControl_RotationStatus.Text" xml:space="preserve">
     <value>Rotation Status</value>
@@ -167,18 +161,6 @@
   </data>
   <data name="SettingsPositionControl_HeightLabel.Text" xml:space="preserve">
     <value>Height:</value>
-  </data>
-  <data name="SettingsURLListControl_NewUrlTextBox.PlaceholderText" xml:space="preserve">
-    <value>Enter URL to add...</value>
-  </data>
-  <data name="SettingsURLListControl_AddButton.Content" xml:space="preserve">
-    <value>Add</value>
-  </data>
-  <data name="SettingsURLListControl_GoButton.Content" xml:space="preserve">
-    <value>Go</value>
-  </data>
-  <data name="SettingsURLListControl_DeleteButton.Content" xml:space="preserve">
-    <value>Delete</value>
   </data>
   <data name="SettingsSwitchesControl_InteractiveStartup.Title" xml:space="preserve">
     <value>Interactive Start</value>
@@ -244,13 +226,13 @@
     <value>Settings saved</value>
   </data>
   <data name="ApplicationController_RotationDisabled" xml:space="preserve">
-    <value>URL rotation is disabled</value>
+    <value>Timer rotation is disabled</value>
   </data>
   <data name="ApplicationController_RotationStopped" xml:space="preserve">
-    <value>URL rotation is not active</value>
+    <value>Timer rotation is not active</value>
   </data>
   <data name="ApplicationController_RotationActive" xml:space="preserve">
-    <value>URL rotation is active</value>
+    <value>Timer rotation is active</value>
   </data>
   <data name="MainWindow_NotificationSettings.Text" xml:space="preserve">
     <value>Settings</value>
@@ -276,20 +258,14 @@
   <data name="SettingsSwitchesControl_SystemStartup.Description" xml:space="preserve">
     <value>Launch LifeTimer automatically after signing in</value>
   </data>
-  <data name="SettingsURLListControl_UrlListFullFreeBlock.Text" xml:space="preserve">
-    <value>The maximum number of URLs for this version has been reached</value>
-  </data>
   <data name="MainWindow_NagOverlayTextBlock.Text" xml:space="preserve">
     <value>LifeTimer Free Version</value>
-  </data>
-  <data name="SettingsURLListControl_UrlListFullProBlock.Text" xml:space="preserve">
-    <value>The maximum number of URLs has been reached</value>
   </data>
   <data name="HelpTabUserControl_UpgradeTitle.Text" xml:space="preserve">
     <value>Upgrade to LifeTimer Pro</value>
   </data>
   <data name="HelpTabUserControl_UpgradeSubtitle.Text" xml:space="preserve">
-    <value>Upgrading to LifeTimer Pro removes the free version overlay and increases the maximum number of URLs that can be added.</value>
+    <value>Upgrading to LifeTimer Pro removes the free version overlay and increases the maximum number of timers that can be added.</value>
   </data>
   <data name="HelpTabUserControl_UpgradeButton.Content" xml:space="preserve">
     <value>Upgrade To Pro</value>
@@ -308,5 +284,11 @@
   </data>
   <data name="SettingsWindow_TimersItem.Title" xml:space="preserve">
     <value>Timers</value>
+  </data>
+  <data name="CommandTabUserControl_OperatingModeToggle.Title" xml:space="preserve">
+    <value>Interactive Mode</value>
+  </data>
+  <data name="CommandTabUserControl_OperatingModeToggle.Description" xml:space="preserve">
+    <value>Switch the application to interactive mode</value>
   </data>
 </root>

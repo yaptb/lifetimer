@@ -6,7 +6,7 @@
     xmlns:local="using:LifeTimer.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-
+     xmlns:componentcontrols="using:LifeTimer.Controls.Settings.Components"
     xmlns:layoutcontrols="using:LifeTimer.Controls.Layout"
     mc:Ignorable="d">
 
@@ -14,15 +14,30 @@
     <layoutcontrols:SidenavTabLayout>
         <layoutcontrols:SidenavTabLayout.CustomContent>
 
+            <StackPanel VerticalAlignment="Center">
 
-            <StackPanel HorizontalAlignment="Center" Spacing="16" VerticalAlignment="Center" Width="150">
-        <Button x:Name="BackgroundMode" x:Uid="CommandTabUserControl_BackgroundMode" Click="BackgroundMode_Click" HorizontalAlignment="Stretch"/>
-                    <Button x:Name="InteractiveMode" x:Uid="CommandTabUserControl_InteractiveMode" Click="InteractiveMode_Click" HorizontalAlignment="Stretch"/>
-                <Button x:Name="SaveSettings" x:Uid="CommandTabUserControl_SaveSettings" Click="SaveSettings_Click" HorizontalAlignment="Stretch"/>
+                <StackPanel HorizontalAlignment="Center" Spacing="16"  >
+
+                    <componentcontrols:SettingsToggleControl 
+                     x:Name="OperatingMode"
+                     x:Uid="CommandTabUserControl_OperatingModeToggle"
+                     ToggledChanged="OperatingMode_ToggledChanged"  
+                     >
+                    </componentcontrols:SettingsToggleControl>
+
+
+                </StackPanel>
+
+
+                <StackPanel HorizontalAlignment="Center" Spacing="16" VerticalAlignment="Center" Width="150" Margin="0,24,0,0">
+
+                    
+                    <Button x:Name="SaveSettings" x:Uid="CommandTabUserControl_SaveSettings" Click="SaveSettings_Click" HorizontalAlignment="Stretch"/>
                 <Button x:Name="ApplicationExit" x:Uid="CommandTabUserControl_ApplicationExit" Click="ApplicationExit_Click" HorizontalAlignment="Stretch"/>
-</StackPanel>
+            </StackPanel>
+            </StackPanel>
 
-            </layoutcontrols:SidenavTabLayout.CustomContent>
+        </layoutcontrols:SidenavTabLayout.CustomContent>
          </layoutcontrols:SidenavTabLayout>
              
 </UserControl>

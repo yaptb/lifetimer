@@ -156,11 +156,7 @@ namespace LifeTimer.Controls.Settings
 
         private void UpdateValidation()
         {
-            var titleValid = !string.IsNullOrWhiteSpace(TimerTitle);
-
-            IsValid = titleValid;
-
-            TitleErrorText.Visibility = titleValid ? Visibility.Collapsed : Visibility.Visible;
+            IsValid = true;
         }
 
         private void OnGlobalTimer(object sender, EventArgs e)

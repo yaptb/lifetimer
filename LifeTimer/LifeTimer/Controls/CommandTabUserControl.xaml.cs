@@ -30,31 +30,39 @@ namespace LifeTimer.Controls
 
         private void UpdateState()
         {
-            if(_applicationController.IsInteractiveMode)
+            if (_applicationController.IsInteractiveMode)
             {
-                InteractiveMode.Visibility = Visibility.Collapsed;
-                BackgroundMode.Visibility = Visibility.Visible;
+                this.OperatingMode.IsToggled = true;
             }
             else
             {
-                InteractiveMode.Visibility = Visibility.Visible;
-                BackgroundMode.Visibility = Visibility.Collapsed;
+                this.OperatingMode.IsToggled = false;
+            }
+
+        }
+
+   
+
+
+        private void OperatingMode_ToggledChanged(object sender, bool e)
+        {
+            var toggled = this.OperatingMode.IsToggled;
+
+            if (toggled)
+            {
+                _logger.LogInformation("User requested interactive mode");
+                _applicationController.RequestInteractiveMode();
+                UpdateState();
+            }
+            else
+            {
+                _logger.LogInformation("User requested background mode");
+                _applicationController.RequestBackgroundMode();
+                UpdateState();
             }
         }
 
-        private void BackgroundMode_Click(object sender, RoutedEventArgs e)
-        {
-            _logger.LogInformation("User requested background mode");
-            _applicationController.RequestBackgroundMode();
-            UpdateState();
-        }
 
-        private void InteractiveMode_Click(object sender, RoutedEventArgs e)
-        {
-            _logger.LogInformation("User requested interactive mode");
-            _applicationController.RequestInteractiveMode();
-            UpdateState();
-        }
 
         private void SaveSettings_Click(object sender, RoutedEventArgs e)
         {

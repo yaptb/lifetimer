@@ -42,17 +42,9 @@
 
             </Grid.Resources>
 
+                <StackPanel Name="TimerRegion" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
 
-
-                <StackPanel x:Name="TimerRegion" Grid.Row="0" VerticalAlignment="Stretch">
-                
-                       <StackPanel x:Name="NoTimerDefined"  Visibility="Collapsed" HorizontalAlignment="Center" >
-                                  <TextBlock x:Name="NoTimer" HorizontalAlignment="Center" VerticalAlignment="Center" >
-                                        No Active Timer
-                                   </TextBlock>
-                       </StackPanel>
-
-                    <StackPanel x:Name="TimerDisplay"  HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <StackPanel x:Name="TimerDisplay"  HorizontalAlignment="Center" VerticalAlignment="Center" >
                         <TextBlock x:Name="TimerTitle" HorizontalAlignment="Center">
                             Title
                         </TextBlock>
@@ -61,7 +53,16 @@
                         </TextBlock>
                     </StackPanel>
 
+
+                <StackPanel x:Name="NoTimerDefined" Grid.Row="0" Visibility="Collapsed" HorizontalAlignment="Center" >
+                    <TextBlock x:Name="NoTimer" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                        No Active Timer
+                    </TextBlock>
                 </StackPanel>
+
+                </StackPanel>
+
+
 
                 <StackPanel x:Name="FreeVersionNagOverlay" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="2" Background="Transparent" Padding="2">
 

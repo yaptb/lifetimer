@@ -7,7 +7,7 @@
     DefaultButton="Primary"
     IsPrimaryButtonEnabled="{x:Bind IsValid, Mode=OneWay}">
 
-    <StackPanel Spacing="16" Width="400">
+    <StackPanel Spacing="16" Width="500">
 
         <!-- Timer Title -->
         <StackPanel Spacing="4">
@@ -16,12 +16,9 @@
             <TextBox x:Name="TitleTextBox"
                      PlaceholderText="Enter timer title"
                      Text="{x:Bind TimerTitle, Mode=TwoWay}"
-                     TextChanged="TitleTextBox_TextChanged" />
-            <TextBlock x:Name="TitleErrorText"
-                       Text="Title is required"
-                       Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-                       FontSize="12"
-                       Visibility="Collapsed" />
+                     TextChanged="TitleTextBox_TextChanged" 
+                                               Margin="0,0,0,4"
+                     />
         </StackPanel>
 
         <!-- Timer Type -->
@@ -38,7 +35,9 @@
         <!-- Target Date -->
         <StackPanel Spacing="4">
             <TextBlock Text="Target Date"
-                       FontWeight="SemiBold" />
+                       FontWeight="SemiBold"
+                                               Margin="0,0,0,4"
+                       />
             <DatePicker x:Name="TargetDatePicker"
                         Date="{x:Bind TargetDate, Mode=TwoWay}"
                         DateChanged="TargetDatePicker_DateChanged"
@@ -48,7 +47,10 @@
         <!-- Target Time -->
         <StackPanel Spacing="4">
             <TextBlock Text="Target Time"
-                       FontWeight="SemiBold" />
+                       FontWeight="SemiBold" 
+                                               Margin="0,0,0,4"
+
+                       />
             <TimePicker x:Name="TargetTimePicker"
                         Time="{x:Bind TargetTime, Mode=TwoWay}"
                         TimeChanged="TargetTimePicker_TimeChanged"
@@ -56,7 +58,7 @@
         </StackPanel>
 
         <!-- Display Options -->
-        <StackPanel Spacing="8">
+        <StackPanel Spacing="4">
             <TextBlock Text="Display Options"
                        FontWeight="SemiBold" />
 
@@ -69,11 +71,7 @@
                       Checked="DisplayOptionsCheckBox_Changed"
                       Unchecked="DisplayOptionsCheckBox_Changed" />
 
-    
-            </StackPanel>
-
-            <StackPanel Orientation="Horizontal">
-
+  
                 <CheckBox x:Name="DisplayHoursCheckBox"
                   Content="Hours"
                   IsChecked="{x:Bind DisplayHours, Mode=TwoWay}"
@@ -100,7 +98,9 @@
         <!-- Preview -->
         <StackPanel Spacing="4">
             <TextBlock Text="Preview"
-                       FontWeight="SemiBold" />
+                       FontWeight="SemiBold"
+                       Margin="0,0,0,4"
+                       />
             <Border Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
                     BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
                     BorderThickness="1"

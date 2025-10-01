@@ -13,7 +13,7 @@
         <!-- Add New Timer Button -->
         <StackPanel HorizontalAlignment="Center">
             <Button x:Name="AddTimerButton"
-                    Content="Add New Timer"
+                    Content="Add Timer"
                     Click="AddTimerButton_Click"
                     Style="{StaticResource AccentButtonStyle}"
                     FontSize="12"

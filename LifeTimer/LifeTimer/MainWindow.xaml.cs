@@ -197,6 +197,10 @@ namespace LifeTimer
             this.TimerTime.FontStyle = viewModel.TimerFontDefinition.FontStyle;
 
             this.WindowBorder.Background = new SolidColorBrush(viewModel.BackgroundColor);
+            this.WindowBorder.BorderThickness = new Thickness( viewModel.BorderThickness );
+            this.WindowBorder.BorderBrush = new SolidColorBrush(viewModel.BorderColor);
+            this.WindowBorder.CornerRadius = new CornerRadius(viewModel.BorderRadius);
+
 
         }
 
