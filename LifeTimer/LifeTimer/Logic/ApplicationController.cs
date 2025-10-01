@@ -9,18 +9,19 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using LifeTimer.Helpers;
 using LifeTimer.Logic.Models;
+using System.Linq;
 
 namespace LifeTimer.Logic
 {
     public class ApplicationController
     {
 
-        private const int MaxURLCountFreeVersion = 3;
-        private const int MaxURLCountProVersion = 15;
+        private const int MaxTimerCountFreeVersion = 3;
+        private const int MaxTimerCountProVersion = 15;
 
         private readonly ILogger<ApplicationController> _logger;
         private readonly SettingsManager _settingsManager;
-        private readonly LinkRotator _linkRotator;
+        private readonly TimerRotator _timerRotator;
         private readonly NagTimer _nagTimer;
         private readonly WindowsStoreHelper _storeHelper;
         private DispatcherTimer _globalTimer;
@@ -36,8 +37,8 @@ namespace LifeTimer.Logic
 
             _storeHelper = App.Services.GetRequiredService<WindowsStoreHelper>();
 
-            _linkRotator = App.Services.GetRequiredService<LinkRotator>();
-            _linkRotator.Initialize(this);
+            _timerRotator = App.Services.GetRequiredService<TimerRotator>();
+            _timerRotator.Initialize(this);
 
             _nagTimer = App.Services.GetRequiredService<NagTimer>();
             _nagTimer.Initialize(this);
@@ -123,23 +124,6 @@ namespace LifeTimer.Logic
                 throw new InvalidOperationException("MainWindow is null");
 
 
-            //HACK - temporary
-            this.CurrentTimer = CurrentSettings.Timers[0];
-
-            /*
-            if (!String.IsNullOrEmpty(CurrentSettings.CurrentTimerName))
-            {
-                RequestBrowseToNewUrl(CurrentSettings.CurrentTimerName);
-            }
-            else
-            {
-                if (CurrentSettings.UrlList != null)
-                    if (CurrentSettings.UrlList.Count > 0)
-                        RequestBrowseToNewUrl(CurrentSettings.UrlList[0]);
-            }
-            */
-
-
             if (!CurrentSettings.InteractiveStartup)
             {
                 //HACK - set to background mode a second time
@@ -147,8 +131,6 @@ namespace LifeTimer.Logic
                 //when first loading
                 SetToBackgroundMode();
             }
-
-
 
 
             //HACK - ensure settings window is shown after the
@@ -188,9 +170,9 @@ namespace LifeTimer.Logic
             HideSettingsWindow();
 
             //clean up link rotation
-            if (_linkRotator.IsRunning)
+            if (_timerRotator.IsRunning)
             {
-                _linkRotator.Stop();
+                _timerRotator.Stop();
             }
 
             _globalTimer?.Stop();
@@ -236,16 +218,54 @@ namespace LifeTimer.Logic
         }
 
 
+        public void RequestSetCurrentTimerId(string? timerGuid)
+        {
+            if (CurrentSettings==null)
+                throw new InvalidOperationException("Current settings in not defined");
+
+            CurrentSettings.CurrentTimerId=timerGuid;
+        }
+
+
+        public TimerDefinition? GetCurrentTimer()
+        {
+
+            if (CurrentSettings == null)
+                throw new InvalidOperationException("Current settings in not defined");
+
+            TimerDefinition? timer = null;
+
+            if(CurrentSettings.CurrentTimerId!=null)
+            {
+                string timerId = CurrentSettings.CurrentTimerId;
+                timer = CurrentSettings.Timers.Where(x => x.Id.ToString() == timerId).FirstOrDefault();
+            }
+
+            return timer;
+        }
+
+        public void RequestUpdateTimerList(List<TimerDefinition> timers)
+        {
+            if (CurrentSettings == null)
+                throw new InvalidOperationException("Current settings in not defined");
+
+            this.CurrentSettings.Timers = timers;
+
+            UpdateLinkRotation();
+            ProcessSettingsChange();
+        }
+
+
         //
         //called by the link rotation helper to browser to a new link
         // NOTE - the link rotator runs on a NON UI THREAD
         //
-        public void RequestPerformLinkRotation(string urlString, int rotationIndex)
+        public void RequestPerformTimerRotation(string timerId, int rotationIndex)
         {
             MarshallToUIThread(() =>
             {
                 this.CurrentSettings.CurrentRotationIndex = rotationIndex;
-                this.RequestDisplayTimer(urlString);
+                this.RequestSetCurrentTimerId(timerId);
             });
 
         }
@@ -258,21 +278,6 @@ namespace LifeTimer.Logic
             });
         }
 
-        public void RequestDisplayTimer(string urlString)
-        {
-            /*
-            try
-            {
-                MainWindow?.BrowseToUrl(urlString);
-                CurrentSettings.CurrentUrl = urlString;
-                ProcessBrowserStatusChange(urlString);
-            }
-            catch (Exception ex)
-            {
-                //TODO - raise error;
-            }
-            */
-        }
 
         public void RegisterMainWindowBoundsChange(int x, int y, int width, int height)
         {
@@ -299,32 +304,12 @@ namespace LifeTimer.Logic
             ProcessSettingsChange();
         }
 
-    
-        /*
-        public void RequestSettingsBrowserWindowOpacity(int opacity)
-        {
-            this.CurrentSettings.WindowOpacity = opacity;
-            this.MainWindow.SetWindowOpacity(opacity);
-            ProcessSettingsChange();
-        }
-        */
 
-
-
-
-        public void RequestSettingsUpdateUrlList(List<string> urlList)
-        {
-            /*
-            CurrentSettings.UrlList = urlList;
-            UpdateLinkRotation();
-            ProcessSettingsChange();
-            */
-        }
 
         public void RequestChangeLinkRotationDelay(int delaySecs)
         {
             this.CurrentSettings.TimerRotationDelaySecs = delaySecs;
-            this._linkRotator.IntervalSeconds = delaySecs;
+            this._timerRotator.IntervalSeconds = delaySecs;
             ProcessSettingsChange();
         }
 
@@ -397,16 +382,16 @@ namespace LifeTimer.Logic
         }
 
 
-        public bool CheckURLCountExceeded(int urlCount)
+        public bool CheckTimerCountExceeded(int timerCount)
         {
             if (CheckIsFreeVersion())
             {
-                if (urlCount >= MaxURLCountFreeVersion)
+                if (timerCount >= MaxTimerCountFreeVersion)
                     return true;
             }
             else
             {
-                if (urlCount >= MaxURLCountProVersion)
+                if (timerCount >= MaxTimerCountProVersion)
                     return true;
 
             }
@@ -566,43 +551,46 @@ namespace LifeTimer.Logic
 
         private void InitializeLinkRotation()
         {
-            _linkRotator.IntervalSeconds = CurrentSettings.TimerRotationDelaySecs;
+            _timerRotator.IntervalSeconds = CurrentSettings.TimerRotationDelaySecs;
             UpdateLinkRotation();
         }
 
+
         private void UpdateLinkRotation()
         {
-            /*
+            if (CurrentSettings == null)
+                throw new InvalidOperationException("Current settings are null");
+
             string rotationDisabledStr = ResourceHelper.GetString("ApplicationController_RotationDisabled");
             string rotationStoppedStr = ResourceHelper.GetString("ApplicationController_RotationStopped");
             string rotationActiveStr = ResourceHelper.GetString("ApplicationController_RotationActive");
 
-            if (CurrentSettings.UrlList.Count == 0)
+
+            if (CurrentSettings.Timers.Count == 0)
             {
-                _linkRotator.Stop();
-                IsLinkRotationDisabled = true;
+                _timerRotator.Stop();
+                IsTimerRotationDisabled = true;
                 CurrentSettings.RotateTimers = false;
                 ProcessRotationStatusChange(rotationDisabledStr);
             }
             else
 
             {
-                IsLinkRotationDisabled = false;
+                IsTimerRotationDisabled = false;
 
                 if (CurrentSettings.RotateTimers == true)
                 {
-                    _linkRotator.Start();
+                    _timerRotator.Start();
                     ProcessRotationStatusChange(rotationActiveStr);
                 }
 
                 if (CurrentSettings.RotateTimers == false)
                 {
-                    _linkRotator.Stop();
+                    _timerRotator.Stop();
                     ProcessRotationStatusChange(rotationStoppedStr);
                 }
 
             }
-            */
         }
 
         /// <summary>
@@ -628,7 +616,6 @@ namespace LifeTimer.Logic
             });
         }
 
-
         private DispatcherQueue _dispatcherQueue;
         private Window _settingsWindow;
 
@@ -641,9 +628,8 @@ namespace LifeTimer.Logic
         public string LastRotationStatus { get; private set; }
         public string LastBrowserStatus { get; private set; }
 
-        public bool IsLinkRotationDisabled { get; private set; }
-        public bool IsLinkRotationActive { get { return _linkRotator.IsRunning; } }
+        public bool IsTimerRotationDisabled { get; private set; } = true;
+        public bool IsTimerRotationActive { get { return _timerRotator.IsRunning; } }
 
-        public TimerDefinition? CurrentTimer { get; private set; }
     }
 }

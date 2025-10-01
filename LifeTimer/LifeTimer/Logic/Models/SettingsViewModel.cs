@@ -1,4 +1,5 @@
 using Microsoft.UI;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -25,10 +26,8 @@ public class SettingsViewModel : INotifyPropertyChanged
     private int _windowHeight = -1; // ditto
     private bool _windowMaximized = false;
 
-
-    private string _currentTimerName= string.Empty;
-    private int _currentRotationIndex = 0;
-
+    private string? _currentTimerId= null;
+    private int? _currentRotationIndex = null;
 
 
     public List<TimerDefinition> Timers
@@ -111,13 +110,14 @@ public class SettingsViewModel : INotifyPropertyChanged
         set => SetProperty(ref _windowMaximized, value);
     }
 
-    public string CurrentTimerName
+    public string? CurrentTimerId
     {
-        get => _currentTimerName;
-        set => SetProperty(ref _currentTimerName, value);
+        get => _currentTimerId;
+        set => SetProperty(ref _currentTimerId, value);
     }
 
-    public int CurrentRotationIndex
+
+    public int? CurrentRotationIndex
     {
         get => _currentRotationIndex;
         set => SetProperty(ref _currentRotationIndex, value);
@@ -135,20 +135,40 @@ public class SettingsViewModel : INotifyPropertyChanged
         return true;
     }
 
-    protected static TimerDefinition CreateDefaultTimer()
+    protected static TimerDefinition CreateDefaultCurrentTimer()
     {
         return new TimerDefinition()
         {
-            Title = "Unix Epoch",
-            TargetDateTime = new System.DateTime(1970,1,1,0,0,0,0,0,System.DateTimeKind.Utc)
+            Id = Guid.NewGuid(),
+            Title = "Current Time",
+            IsCurrentTime = true,
+            DisplayHours = true,
+            DisplayMinutes = true,
+            DisplaySeconds = true,
+         };
+    }
+
+    protected static TimerDefinition CreateDefaultTargetTimer()
+    {
+        return new TimerDefinition()
+        {
+            Id = Guid.NewGuid(),
+            Title = "Time Since Unix Epoch",
+            TargetDateTime = new DateTime(1970,1,1,0,0,0,0),
+            IsCurrentTime = false,
+            DisplayHours = true,
+            DisplayMinutes = true,
+            DisplaySeconds = true,
         };
     }
+
 
     public static SettingsViewModel CreateDefaultSettings()
     {
         var model = new SettingsViewModel();
-        model.Timers.Add(CreateDefaultTimer());
+        model.Timers.Add(CreateDefaultCurrentTimer());
         model.Appearance = AppearanceViewModel.CreateDefaultAppearance();
+        model.CurrentTimerId = model.Timers[0].Id.ToString();
         return model;
     }
 }

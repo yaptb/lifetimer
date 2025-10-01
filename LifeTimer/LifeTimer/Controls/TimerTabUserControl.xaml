@@ -22,16 +22,12 @@
                     </layoutcontrols:SettingsGroupControl.CustomContent>
                 </layoutcontrols:SettingsGroupControl>
 
-                
-                <!--
-
                 <layoutcontrols:SettingsGroupControl HorizontalContentAlignment="Stretch">
                     <layoutcontrols:SettingsGroupControl.CustomContent>
-                        <settingscontrols:SettingsUrlRotationControl></settingscontrols:SettingsUrlRotationControl>
+                        <settingscontrols:SettingsTimerRotationControl></settingscontrols:SettingsTimerRotationControl>
                     </layoutcontrols:SettingsGroupControl.CustomContent>
                 </layoutcontrols:SettingsGroupControl>
 
-                               -->
 
             </StackPanel>
 

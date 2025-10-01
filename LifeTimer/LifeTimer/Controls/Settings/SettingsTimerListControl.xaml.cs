@@ -63,7 +63,7 @@ namespace LifeTimer.Controls.Settings
                 {
                     var newTimer = dialog.GetTimerDefinition();
                     Timers.Add(newTimer);
-                    UpdateSettingsFromTimerList();
+                    UpdateControllerTimerList();
                     _logger.LogInformation($"Added new timer: {newTimer.Title}");
                 }
             }
@@ -94,7 +94,7 @@ namespace LifeTimer.Controls.Settings
                         if (index >= 0)
                         {
                             Timers[index] = editedTimer;
-                            UpdateSettingsFromTimerList();
+                            UpdateControllerTimerList();
                             _logger.LogInformation($"Edited timer: {editedTimer.Title}");
                         }
                     }
@@ -106,48 +106,18 @@ namespace LifeTimer.Controls.Settings
             }
         }
 
-        private async void ViewTimerButton_Click(object sender, RoutedEventArgs e)
+        private void ViewTimerButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (sender is Button button && button.Tag is TimerDefinition timer)
                 {
-                    var dialog = new ContentDialog
-                    {
-                       // Title = timer.Title,
-                        CloseButtonText = "Close",
-                        XamlRoot = this.XamlRoot
-                    };
-
-                    var timeRemaining = timer.TargetDateTime - DateTime.Now;
-                    var timeRemainingText = DateTimeFormatHelper.FormatTimeRemaining(timeRemaining, timer.DisplayDaysOnly, timer.DisplaySeconds);
-
-                    var content = new StackPanel { Spacing = 12 };
-                    content.Children.Add(new TextBlock
-                    {
-                        Text = $"Target: {timer.TargetDateTime:MMM dd, yyyy HH:mm:ss}",
-                        FontSize = 14
-                    });
-                    content.Children.Add(new TextBlock
-                    {
-                        Text = $"Time Remaining: {timeRemainingText}",
-                        FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
-                        FontSize = 16
-                    });
-                    content.Children.Add(new TextBlock
-                    {
-                        Text = $"Display Options: Days Only: {timer.DisplayDaysOnly}, Show Seconds: {timer.DisplaySeconds}",
-                        FontSize = 12,
-                        Foreground = (Microsoft.UI.Xaml.Media.Brush)Application.Current.Resources["TextFillColorSecondaryBrush"]
-                    });
-
-                    dialog.Content = content;
-                    await dialog.ShowAsync();
+                    _applicationController.RequestSetCurrentTimerId(timer.Id.ToString());
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Error viewing timer");
+                _logger.LogError(ex, "Error activating timer");
             }
         }
 
@@ -172,7 +142,7 @@ namespace LifeTimer.Controls.Settings
                     if (result == ContentDialogResult.Primary)
                     {
                         Timers.Remove(timer);
-                        UpdateSettingsFromTimerList();
+                        UpdateControllerTimerList();
                         _logger.LogInformation($"Deleted timer: {timer.Title}");
                     }
                 }
@@ -183,10 +153,12 @@ namespace LifeTimer.Controls.Settings
             }
         }
 
-        private void UpdateSettingsFromTimerList()
+        private void UpdateControllerTimerList()
         {
+
             if (_applicationController?.CurrentSettings != null)
             {
+                /*
                 _applicationController.CurrentSettings.Timers.Clear();
                 foreach (var timer in Timers)
                 {
@@ -194,6 +166,11 @@ namespace LifeTimer.Controls.Settings
                 }
 
                 _applicationController.RequestSaveSettings();
+                */
+
+                var timers = Timers.ToList();
+                _applicationController.RequestUpdateTimerList(timers);
+
                 CheckAndUpdateUIForListMaximum();
             }
         }
@@ -207,7 +184,7 @@ namespace LifeTimer.Controls.Settings
         {
             var timerCount = Timers.Count;
 
-            if (_applicationController.CheckURLCountExceeded(timerCount))
+            if (_applicationController.CheckTimerCountExceeded(timerCount))
             {
                 AddTimerButton.Visibility = Visibility.Collapsed;
                 if (_applicationController.CheckIsFreeVersion())

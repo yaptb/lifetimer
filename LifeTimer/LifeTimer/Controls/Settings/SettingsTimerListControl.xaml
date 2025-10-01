@@ -82,7 +82,7 @@
 
                             <!-- View Button -->
                             <Button Grid.Column="1"
-                                    Content="View"
+                                    Content="Activate"
                                     Click="ViewTimerButton_Click"
                                     Tag="{Binding}"
                                     Margin="4,0" 

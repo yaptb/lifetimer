@@ -5,6 +5,7 @@ namespace LifeTimer.Logic.Models
 
     public class TimerDefinition
     {
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string Title { get; set; } = string.Empty;
         public DateTime TargetDateTime { get; set; } = DateTime.Now;
         public bool IsCurrentTime {get;set;}

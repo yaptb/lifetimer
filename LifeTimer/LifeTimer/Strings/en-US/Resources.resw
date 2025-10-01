@@ -204,23 +204,23 @@
   <data name="SettingsSwitchesControl_SettingsOpacity.Subtitle" xml:space="preserve">
     <value>Set the opacity of the browser window.</value>
   </data>
-  <data name="SettingsUrlRotationControl_LinkRotationDisabledText.Text" xml:space="preserve">
-    <value>Link Rotation Is Disabled</value>
+  <data name="SettingsTimerRotationControl_LinkRotationDisabledText.Text" xml:space="preserve">
+    <value>Timer Rotation Is Disabled</value>
   </data>
-  <data name="SettingsUrlRotationControl_LinkRotationDisabledSubtext.Text" xml:space="preserve">
-    <value>Add URLs to enable link rotation</value>
+  <data name="SettingsTimerRotationControl_LinkRotationDisabledSubtext.Text" xml:space="preserve">
+    <value>Add timers to enable rotation</value>
   </data>
-  <data name="SettingsUrlRotationControl_RotationToggle.Title" xml:space="preserve">
-    <value>URL Rotation</value>
+  <data name="SettingsTimerRotationControl_RotationToggle.Title" xml:space="preserve">
+    <value>Timer Rotation</value>
   </data>
-  <data name="SettingsUrlRotationControl_RotationToggle.Description" xml:space="preserve">
-    <value>Enable automatic rotation of URLS</value>
+  <data name="SettingsTimerRotationControl_RotationToggle.Description" xml:space="preserve">
+    <value>Enable automatic rotation of Timers</value>
   </data>
-  <data name="SettingsUrlRotationControl_RotationDelay.Title" xml:space="preserve">
+  <data name="SettingsTimerRotationControl_RotationDelay.Title" xml:space="preserve">
     <value>Rotation Delay</value>
   </data>
-  <data name="SettingsUrlRotationControl_RotationDelay.Subtitle" xml:space="preserve">
-    <value>Number of seconds to display each page</value>
+  <data name="SettingsTimerRotationControl_RotationDelay.Subtitle" xml:space="preserve">
+    <value>Number of seconds to display each timer</value>
   </data>
   <data name="SettingsToggleControl_TitleTextBlock.Text" xml:space="preserve">
     <value>Interactive Startup</value>

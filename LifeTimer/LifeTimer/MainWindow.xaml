@@ -22,9 +22,7 @@
             
             
             <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <Grid.Resources>
@@ -45,23 +43,27 @@
             </Grid.Resources>
 
 
-            <StackPanel x:Name="NoTimerDefifned" Grid.Row="0" Visibility="Collapsed">
-                <TextBlock x:Name="NoTimer">
-                    No Timer Active
-                </TextBlock>
-            </StackPanel>
 
-            <StackPanel x:Name="TimerDisplay" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <TextBlock x:Name="TimerTitle" HorizontalAlignment="Center">
-                    Title
-                </TextBlock>
-                <TextBlock x:Name="TimerTime" HorizontalAlignment="Center">
-                    00 : 00 : 00
-                </TextBlock>
-            </StackPanel>
-                      
+                <StackPanel x:Name="TimerRegion" Grid.Row="0" VerticalAlignment="Stretch">
+                
+                       <StackPanel x:Name="NoTimerDefined"  Visibility="Collapsed" HorizontalAlignment="Center" >
+                                  <TextBlock x:Name="NoTimer" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                                        No Active Timer
+                                   </TextBlock>
+                       </StackPanel>
 
-            <StackPanel x:Name="FreeVersionNagOverlay" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="2" Background="Transparent" Padding="2">
+                    <StackPanel x:Name="TimerDisplay"  HorizontalAlignment="Center" VerticalAlignment="Center">
+                        <TextBlock x:Name="TimerTitle" HorizontalAlignment="Center">
+                            Title
+                        </TextBlock>
+                        <TextBlock x:Name="TimerTime" HorizontalAlignment="Center">
+                            00 : 00 : 00
+                        </TextBlock>
+                    </StackPanel>
+
+                </StackPanel>
+
+                <StackPanel x:Name="FreeVersionNagOverlay" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="2" Background="Transparent" Padding="2">
 
                 <Border CornerRadius="15" Background="Black" BorderBrush="DarkGray" BorderThickness="2" Padding="2"  >
 

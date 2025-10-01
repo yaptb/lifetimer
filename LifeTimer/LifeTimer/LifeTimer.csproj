@@ -67,11 +67,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="Controls\Settings\SettingsURLListControl.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
     <Page Update="Controls\Settings\SettingsTimerListControl.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

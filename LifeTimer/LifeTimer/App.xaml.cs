@@ -62,7 +62,7 @@ namespace LifeTimer
 
                     services.AddSingleton<Logic.ApplicationController>();
                     services.AddSingleton<Logic.SettingsManager>();
-                    services.AddSingleton<Logic.LinkRotator>();
+                    services.AddSingleton<Logic.TimerRotator>();
                     services.AddSingleton<Logic.NagTimer>();
                     services.AddSingleton<Logic.WindowsStoreHelper>();
 

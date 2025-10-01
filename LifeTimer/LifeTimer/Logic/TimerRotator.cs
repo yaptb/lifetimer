@@ -5,20 +5,20 @@ using System.Threading;
 
 namespace LifeTimer.Logic
 {
-    public class LinkRotator
+    public class TimerRotator
     {
-        private readonly ILogger<LinkRotator> _logger;
+        private readonly ILogger<TimerRotator> _logger;
         private  ApplicationController _applicationController;
         private Timer _timer;
         private int _intervalSeconds = 30;
         private int _timeRemaining = 30;
         private bool _isRunning = false;
 
-        public LinkRotator(ILogger<LinkRotator> logger)
+        public TimerRotator(ILogger<TimerRotator> logger)
         {
             _logger = logger;
  //           _applicationController = applicationController;
-            _logger.LogInformation("LinkRotator initialized");
+            _logger.LogInformation("TimerRotator initialized");
         }
 
 
@@ -49,7 +49,7 @@ namespace LifeTimer.Logic
         {
             if (_isRunning) return;
 
-            _logger.LogInformation("Starting LinkRotator with interval: {IntervalSeconds} seconds", _intervalSeconds);
+            _logger.LogInformation("Starting TimerRotator with interval: {IntervalSeconds} seconds", _intervalSeconds);
             _timer = new Timer(OnTimerElapsed, null, TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(1));
             _timeRemaining = _intervalSeconds;
             _isRunning = true;
@@ -61,7 +61,7 @@ namespace LifeTimer.Logic
         {
             if (!_isRunning) return;
 
-            _logger.LogInformation("Stopping LinkRotator");
+            _logger.LogInformation("Stopping TimerRotator");
             _timer?.Dispose();
             _timer = null;
             _isRunning = false;
@@ -75,7 +75,7 @@ namespace LifeTimer.Logic
 
             if (_timeRemaining == 0)
             {
-                RotateLinks();
+                RotateTimers();
                 _timeRemaining = _intervalSeconds;
             }
 
@@ -83,30 +83,34 @@ namespace LifeTimer.Logic
         }
 
 
-        public void RotateLinks()
+        public void RotateTimers()
         {
-            /*
-            var urlList = _applicationController.CurrentSettings.UrlList;
-            var currentRotationIndex = _applicationController.CurrentSettings.CurrentRotationIndex;
+            if (_applicationController.CurrentSettings == null)
+                return;
 
-            if(urlList == null || urlList.Count==0)
+            var timerList = _applicationController.CurrentSettings.Timers;
+            
+            if(timerList == null || timerList.Count==0)
             {
-                _logger.LogWarning("Cannot rotate links: URL list is empty");
+                _logger.LogWarning("Cannot rotate links: timer list is empty");
                 return;
             }
 
-            if (currentRotationIndex == null)
-                currentRotationIndex = -1;
+            int currentRotationIndex = -1;
+
+            if (_applicationController.CurrentSettings.CurrentRotationIndex != null) {
+                currentRotationIndex = _applicationController.CurrentSettings.CurrentRotationIndex.Value;
+            };
 
             currentRotationIndex++;
-            if(currentRotationIndex < 0 || currentRotationIndex >= urlList.Count) 
+            if(currentRotationIndex < 0 || currentRotationIndex >= timerList.Count) 
                 currentRotationIndex = 0;
 
-            string urlString = urlList[currentRotationIndex].ToString();
-            
-            _logger.LogInformation("Rotating to URL: {Url} (index: {Index})", urlString, currentRotationIndex);
-            _applicationController.RequestPerformLinkRotation(urlString, currentRotationIndex);
-            */
+            string timerId = timerList[currentRotationIndex].Id.ToString();
+            string timerName = timerList[currentRotationIndex].Title;
+
+            _logger.LogInformation("Rotating to Timer: {ID} (index: {Index})", timerId, currentRotationIndex);
+            _applicationController.RequestPerformTimerRotation(timerId, currentRotationIndex);
         }
 
         public void Dispose()

@@ -7,27 +7,32 @@ using LifeTimer.Logic;
 
 namespace LifeTimer.Controls.Settings
 {
-    public sealed partial class SettingsUrlRotationControl : UserControl
+    public sealed partial class SettingsTimerRotationControl : UserControl
     {
-        private readonly ILogger<SettingsUrlRotationControl> _logger;
+        private readonly ILogger<SettingsTimerRotationControl> _logger;
         private readonly ApplicationController _applicationController;
 
-        public SettingsUrlRotationControl()
+        public SettingsTimerRotationControl()
         {
             this.InitializeComponent();
             
-            _logger = App.Services.GetRequiredService<ILogger<SettingsUrlRotationControl>>();
+            _logger = App.Services.GetRequiredService<ILogger<SettingsTimerRotationControl>>();
             _applicationController = App.Services.GetRequiredService<ApplicationController>();
             
-            _applicationController.NotifySettingsChange += Instance_NotifySettingsChange;
+            //_applicationController.NotifySettingsChange += Instance_NotifySettingsChange;
+            _applicationController.NotifyLinkRotationStatusChange += _applicationController_NotifyLinkRotationStatusChange;
             UpdateControl();
-            _logger.LogDebug("SettingsUrlRotationControl initialized");
+            _logger.LogDebug("SettingsTimerRotationControl initialized");
+        }
+
+        private void _applicationController_NotifyLinkRotationStatusChange(object? sender, string e)
+        {
+            UpdateControl();
         }
 
         private void Instance_NotifySettingsChange(object? sender, EventArgs e)
         {
             UpdateControl();
-
         }
 
 
@@ -36,7 +41,7 @@ namespace LifeTimer.Controls.Settings
             this.RotationToggle.IsToggled = _applicationController.CurrentSettings.RotateTimers;
             this.RotationDelay.Value = _applicationController.CurrentSettings.TimerRotationDelaySecs;
 
-            if (_applicationController.IsLinkRotationDisabled)
+            if (_applicationController.IsTimerRotationDisabled)
             {
                 LinkRotationDisabledUI.Visibility = Visibility.Visible;
                 LinkRotationEnabledUI.Visibility = Visibility.Collapsed;

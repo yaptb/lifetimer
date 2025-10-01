@@ -119,16 +119,16 @@ namespace LifeTimer
 
         private void UpdateDisplay()
         {
-            var currentTimer = AppController.CurrentTimer;
+            var currentTimer = AppController.GetCurrentTimer();
 
             if(currentTimer == null)
             {
-                this.NoTimer.Visibility = Visibility.Visible;
+                this.NoTimerDefined.Visibility = Visibility.Visible;
                 this.TimerDisplay.Visibility = Visibility.Collapsed;
                 return;
             }
 
-            this.NoTimer.Visibility = Visibility.Collapsed;
+            this.NoTimerDefined.Visibility = Visibility.Collapsed;
             this.TimerDisplay.Visibility = Visibility.Visible;
 
             var timerText = DateTimeFormatHelper.GetTimeDisplayForTimer(currentTimer);            
@@ -179,11 +179,16 @@ namespace LifeTimer
         {
 
             this.TimerTitle.Foreground = new SolidColorBrush(viewModel.ForegroundColor);
-
             this.TimerTitle.FontFamily = viewModel.TitleFontDefinition.GetWinUIFontFamily();
             this.TimerTitle.FontSize = viewModel.TitleFontDefinition.FontSize;
             this.TimerTitle.FontWeight = viewModel.TitleFontDefinition.FontWeight;
             this.TimerTitle.FontStyle = viewModel.TitleFontDefinition.FontStyle;
+
+            this.NoTimer.Foreground= new SolidColorBrush(viewModel.ForegroundColor);
+            this.NoTimer.FontFamily = viewModel.TitleFontDefinition.GetWinUIFontFamily();
+            this.NoTimer.FontSize = viewModel.TitleFontDefinition.FontSize;
+            this.NoTimer.FontWeight = viewModel.TitleFontDefinition.FontWeight;
+            this.NoTimer.FontStyle = viewModel.TitleFontDefinition.FontStyle;
 
             this.TimerTime.Foreground = new SolidColorBrush(viewModel.ForegroundColor);
             this.TimerTime.FontFamily = viewModel.TimerFontDefinition.GetWinUIFontFamily();
