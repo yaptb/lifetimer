@@ -22,6 +22,7 @@ namespace LifeTimer.Controls.Settings
         private bool _isCurrentTime = false;
         private bool _isValid = false;
         private ApplicationController _applicationController;
+        private Guid? _existingTimerId = null;
 
         public TimerEditDialog()
         {
@@ -37,6 +38,7 @@ namespace LifeTimer.Controls.Settings
         {
             if (timerToEdit != null)
             {
+                _existingTimerId = timerToEdit.Id;
                 TimerTitle = timerToEdit.Title;
                 TargetDate = timerToEdit.TargetDateTime;
                 TargetTime = timerToEdit.TargetDateTime.TimeOfDay;
@@ -136,7 +138,7 @@ namespace LifeTimer.Controls.Settings
 
         public TimerDefinition GetTimerDefinition()
         {
-            return new TimerDefinition
+            var timer = new TimerDefinition
             {
                 Title = TimerTitle.Trim(),
                 TargetDateTime = GetCombinedDateTime(),
@@ -146,6 +148,14 @@ namespace LifeTimer.Controls.Settings
                 DisplayMinutes = DisplayMinutes,
                 DisplaySeconds = DisplaySeconds
             };
+
+            // Preserve the existing ID when editing
+            if (_existingTimerId.HasValue)
+            {
+                timer.Id = _existingTimerId.Value;
+            }
+
+            return timer;
         }
 
         private DateTime GetCombinedDateTime()

@@ -116,11 +116,10 @@ namespace LifeTimer.Helpers
         private static readonly object _lockObject = new object();
 
         /// <summary>
-        /// Gets all available font families on the system
+        /// Gets all available font families on the system (excluding symbol fonts)
         /// </summary>
-        /// <param name="includeSymbolFonts">Whether to include symbol/decorative fonts</param>
         /// <returns>List of font family names sorted alphabetically</returns>
-        public static List<string> GetAvailableFontFamilies(bool includeSymbolFonts = false)
+        public static List<string> GetAvailableFontFamilies()
         {
             lock (_lockObject)
             {
@@ -145,19 +144,30 @@ namespace LifeTimer.Helpers
                         EnumFontFamExProc callback = (ref ENUMLOGFONTEX lpelfe, ref NEWTEXTMETRICEX lpntme, uint FontType, IntPtr lParam) =>
                         {
                             var fontName = lpelfe.elfLogFont.lfFaceName;
+                            var charSet = lpelfe.elfLogFont.lfCharSet;
+
+                            //System.Diagnostics.Trace.WriteLine($"FONT {fontName}");
 
                             if (!string.IsNullOrWhiteSpace(fontName) && !fontName.StartsWith("@"))
                             {
+                               
                                 // Filter fonts with empty names or non-ASCII characters
                                 if (string.IsNullOrEmpty(fontName) || !IsAsciiFont(fontName))
                                 {
                                     return 1; // Continue enumeration
                                 }
 
-                                // Skip symbol fonts if not requested
-                                if (!includeSymbolFonts && IsSymbolFont(fontName))
+                                // Skip symbol fonts
+                                if (IsSymbolFont(charSet, ref lpntme))
                                 {
                                     return 1; // Continue enumeration
+                                }
+
+                                //HACK - filter crappy Fritz Chess font
+                                if (fontName.StartsWith("DiagramTT"))
+                                {
+                                    return 1;
+
                                 }
 
                                 // Skip fonts that start with a dot (usually system fonts)
@@ -165,6 +175,8 @@ namespace LifeTimer.Helpers
                                 {
                                     fontFamilies.Add(fontName);
                                 }
+
+                             
                             }
 
                             return 1; // Continue enumeration
@@ -191,7 +203,7 @@ namespace LifeTimer.Helpers
         /// <returns>List of UI-friendly font family names</returns>
         public static List<string> GetRecommendedFontFamilies()
         {
-            var allFonts = GetAvailableFontFamilies(includeSymbolFonts: false);
+            var allFonts = GetAvailableFontFamilies();
             var recommendedFonts = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
 
             // Always include these common UI fonts if available
@@ -235,7 +247,7 @@ namespace LifeTimer.Helpers
             if (string.IsNullOrWhiteSpace(fontFamilyName))
                 return false;
 
-            var availableFonts = GetAvailableFontFamilies(includeSymbolFonts: true);
+            var availableFonts = GetAvailableFontFamilies();
             return availableFonts.Contains(fontFamilyName, StringComparer.OrdinalIgnoreCase);
         }
 
@@ -269,16 +281,36 @@ namespace LifeTimer.Helpers
             }
         }
 
-        private static bool IsSymbolFont(string fontName)
+        private static bool IsSymbolFont(byte charSet, ref NEWTEXTMETRICEX lpntme)
         {
-            var symbolFontNames = new[]
-            {
-                "Symbol", "Webdings", "Wingdings", "Zapf Dingbats", "Marlett",
-                "MS Outlook", "MT Extra", "Monotype Sorts"
-            };
+            // SYMBOL_CHARSET = 2
+            const byte SYMBOL_CHARSET = 2;
 
-            return symbolFontNames.Any(symbolFont =>
-                fontName.Contains(symbolFont, StringComparison.OrdinalIgnoreCase));
+            // Check if the font is explicitly a symbol charset
+            if (charSet == SYMBOL_CHARSET)
+            {
+                return true;
+            }
+            /*
+            // Check the FONTSIGNATURE to see if the font supports basic Latin (ASCII) characters
+            // fsUsb[0] contains Unicode ranges 0-31
+            // Bit 0 = Basic Latin (U+0020 - U+007F) - standard ASCII characters
+            if (lpntme.ntmFontSig.fsUsb != null && lpntme.ntmFontSig.fsUsb.Length > 0)
+            {
+                uint unicodeRange0 = lpntme.ntmFontSig.fsUsb[0];
+
+                // If bit 0 is NOT set, the font doesn't support Basic Latin (ASCII)
+                // This means it's likely a symbol/specialty font
+                bool supportsBasicLatin = (unicodeRange0 & 0x1) != 0;
+
+                if (!supportsBasicLatin)
+                {
+                    return true; // It's a symbol font
+                }
+            }
+            */
+
+            return false;
         }
 
         private static bool IsLikelyReadableFont(string fontName)
