@@ -94,10 +94,7 @@ namespace LifeTimer
                 int x = sender.Position.X;
                 int y = sender.Position.Y;
                 int width = sender.Size.Width;
-                int height = sender.Size.Height;
-
-
-                
+                int height = sender.Size.Height;       
 
                 AppController.RegisterMainWindowBoundsChange(x, y, width, height);
             }
@@ -108,8 +105,6 @@ namespace LifeTimer
         {
             AppController.ProcessMainWindowShutdown();
         }
-
-
 
 
 
@@ -159,8 +154,6 @@ namespace LifeTimer
             WindowHelper.SetNoActivate(this, false);
             WindowHelper.SetClickThrough(this, false);
             //TransparentHelper.SetTransparent(this, false);
-
-
 
             //resize for framed window
             int x = AppController.CurrentSettings.WindowPosX;

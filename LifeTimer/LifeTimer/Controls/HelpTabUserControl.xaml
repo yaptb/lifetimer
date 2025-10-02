@@ -128,13 +128,6 @@
               </Grid>
 
 
-            <!--
-           
-
-            </layoutcontrols:SettingsGroupControl.CustomContent>
-            </layoutcontrols:SettingsGroupControl>
-
-            -->
         </layoutcontrols:SidenavTabLayout.CustomContent>
     </layoutcontrols:SidenavTabLayout>
 

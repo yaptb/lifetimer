@@ -59,10 +59,10 @@ namespace LifeTimer.Logic
 
 
         public event EventHandler<EventArgs> NotifySettingsChange;
-        public event EventHandler<EventArgs> NotifyBrowserBoundsChange;
+        public event EventHandler<EventArgs> NotifyMainWindowBoundsChange;
         public event EventHandler<string> NotifyLinkRotationStatusChange;
         public event EventHandler<string> NotifyLinkRotationTimerChange;
-        public event EventHandler<string> NotifyBrowserStatusChange;
+        public event EventHandler<string> NotifyTimerStatusChange;
         public event EventHandler<string> NotifySettingsStatusChange;
         public event EventHandler<EventArgs> NotifyVersionChange;
         public event EventHandler<EventArgs> OnTimer;
@@ -224,6 +224,7 @@ namespace LifeTimer.Logic
                 throw new InvalidOperationException("Current settings in not defined");
 
             CurrentSettings.CurrentTimerId=timerGuid;
+
         }
 
 
@@ -235,10 +236,23 @@ namespace LifeTimer.Logic
 
             TimerDefinition? timer = null;
 
+ 
             if(CurrentSettings.CurrentTimerId!=null)
             {
                 string timerId = CurrentSettings.CurrentTimerId;
                 timer = CurrentSettings.Timers.Where(x => x.Id.ToString() == timerId).FirstOrDefault();
+            }
+
+            if (timer== null)
+            {
+                ProcessTimerStatusChange("No Active Timer");
+            }
+            else
+            {
+                var title = timer.Title;
+                if (String.IsNullOrEmpty(title))
+                    title = "(untitled timer)";
+                ProcessTimerStatusChange($"Active Timer: {title}");
             }
 
             return timer;
@@ -287,7 +301,7 @@ namespace LifeTimer.Logic
             CurrentSettings.WindowWidth = width;
             CurrentSettings.WindowHeight = height;
 
-            NotifyBrowserBoundsChange?.Invoke(this, EventArgs.Empty);
+            NotifyMainWindowBoundsChange?.Invoke(this, EventArgs.Empty);
         }
 
 
@@ -545,10 +559,10 @@ namespace LifeTimer.Logic
             NotifySettingsStatusChange?.Invoke(this, status);
         }
 
-        private void ProcessBrowserStatusChange(string status)
+        private void ProcessTimerStatusChange(string status)
         {
             this.LastBrowserStatus = status;
-            NotifyBrowserStatusChange?.Invoke(this, status);
+            NotifyTimerStatusChange?.Invoke(this, status);
         }
 
         private void ProcessRotationStatusChange(string status)

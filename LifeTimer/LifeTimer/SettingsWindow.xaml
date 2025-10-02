@@ -59,9 +59,9 @@
             <usercontrols:AppearanceTabUserControl x:Name="AppearanceTab"></usercontrols:AppearanceTabUserControl>
 
             <usercontrols:SettingsTabUserControl x:Name="SettingsTab"></usercontrols:SettingsTabUserControl>
-            <!--<usercontrols:HelpTabUserControl x:Name="HelpTab"></usercontrols:HelpTabUserControl> -->
-            <usercontrols:DummyUserControl x:Name="HelpTab"></usercontrols:DummyUserControl> 
-
+          
+            <usercontrols:HelpTabUserControl x:Name="HelpTab"></usercontrols:HelpTabUserControl> 
+     
         </Grid>
 
         

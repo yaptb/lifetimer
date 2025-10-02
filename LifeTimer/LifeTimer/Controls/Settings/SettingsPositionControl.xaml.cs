@@ -20,7 +20,7 @@ namespace LifeTimer.Controls.Settings
             _applicationController = App.Services.GetRequiredService<ApplicationController>();
 
             UpdateBoundsDisplay();
-            _applicationController.NotifyBrowserBoundsChange += Instance_NotifyBrowserBoundsChange;
+            _applicationController.NotifyMainWindowBoundsChange += Instance_NotifyBrowserBoundsChange;
             _logger.LogDebug("SettingsPositionControl initialized");
         }
 

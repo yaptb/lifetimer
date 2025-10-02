@@ -20,12 +20,9 @@ namespace LifeTimer.Logic
 
         private readonly ILogger<WindowsStoreHelper> _logger;
 
-        // public const string PRO_LIFE_VERSION_PRODUCT_ID = "LifeTimerProfessionalLifetime";
-        public const string PRO_LIFE_VERSION_PRODUCT_ID = "9MVDBFPR658G";
+        public const string PRO_LIFE_VERSION_PRODUCT_ID = "XXVDBFPR65XX";
 
-        //        public const string PRO_SUB_VERSION_PRODUCT_ID = "LifeTimerProfessionalSubscription";
-        public const string PRO_SUB_VERSION_PRODUCT_ID = "9NLGBBCLSHWF";
-        private const string APP_STORE_ID = "9NPLH3CLDSKD";
+        public const string PRO_SUB_VERSION_PRODUCT_ID = "XXXXXXXXX";
 
         private LifeTimerVersionTypes _productVersion = LifeTimerVersionTypes.Free;
         private bool _useCachedProductValues = false;

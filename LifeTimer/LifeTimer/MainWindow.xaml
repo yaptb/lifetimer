@@ -62,22 +62,18 @@
 
                 </Grid>
 
+                <Grid x:Name="FreeVersionNagOverlay" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,4,4,0" Background="Transparent" Padding="2">
 
+                <Border CornerRadius="5" Background="Black" BorderBrush="DarkGray" BorderThickness="1" Padding="2"  >
 
-                <StackPanel x:Name="FreeVersionNagOverlay" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="2" Background="Transparent" Padding="2">
-
-                <Border CornerRadius="15" Background="Black" BorderBrush="DarkGray" BorderThickness="2" Padding="2"  >
-
-                    <StackPanel Spacing="10">
                         <TextBlock x:Uid="MainWindow_NagOverlayTextBlock"
                            FontSize="8"
+                           Padding="8,0,8,0"
                            Foreground="White"
                             />
-             
-                    </StackPanel>
                 </Border>
 
-            </StackPanel>
+            </Grid>
 
         </Grid>
         </Border>

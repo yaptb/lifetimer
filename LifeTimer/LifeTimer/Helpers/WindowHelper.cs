@@ -274,6 +274,7 @@ public static class WindowHelper
 
         int exStyle = GetWindowLong(hWnd, GWL_EXSTYLE);
         exStyle |= WS_EX_DLGMODALFRAME |WS_EX_CLIENTEDGE | WS_EX_STATICEDGE ;
+        exStyle &= ~WS_EX_LAYERED;
         SetWindowLong(hWnd,GWL_EXSTYLE, exStyle);
 
         // Remove extended frame

@@ -22,7 +22,7 @@ namespace LifeTimer.Controls.Settings
             SetLinkRotationStatus(_applicationController.LastRotationStatus);
 
             _applicationController.NotifySettingsStatusChange += Instance_NotifySettingsStatusChange;
-            _applicationController.NotifyBrowserStatusChange += Instance_NotifyBrowserStatusChange;
+            _applicationController.NotifyTimerStatusChange += Instance_NotifyBrowserStatusChange;
             _applicationController.NotifyLinkRotationStatusChange += Instance_NotifyLinkRotationStatusChange;
             _applicationController.NotifyLinkRotationTimerChange += Instance_NotifyLinkRotationTimerChange;
             

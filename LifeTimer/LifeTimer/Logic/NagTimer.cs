@@ -14,7 +14,7 @@ namespace LifeTimer.Logic
 
         private int _nagSleepInitialIntervalSeconds = 10;
         private int _nagSleepIntervalSeconds = 5 * 60; //5 minutes
-        private int _nagVisibilityIntervalSeconds = 30;
+        private int _nagVisibilityIntervalSeconds = 15;
  
         private bool _isRunning = false;
 
