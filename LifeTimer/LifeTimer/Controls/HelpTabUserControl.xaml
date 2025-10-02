@@ -48,8 +48,8 @@
                            />
 
                             <HyperlinkButton 
-                            Content="https://lifetimer.app" 
-                                  NavigateUri="https://lifetimer.app" 
+                            Content="https://parseclifetimer.app" 
+                                  NavigateUri="https://parseclifetimer.app" 
                                           HorizontalAlignment="Center"
                                                       Margin="10"/>
 

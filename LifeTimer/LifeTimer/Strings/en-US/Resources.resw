@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="MainWIndow_Title" xml:space="preserve">
-    <value>LifeTimer Browser</value>
+    <value>LifeTimer Timer</value>
   </data>
   <data name="SettingsWindow_CommandItem.Title" xml:space="preserve">
     <value>Commands</value>
