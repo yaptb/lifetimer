@@ -42,7 +42,7 @@
 
             </Grid.Resources>
 
-                <StackPanel Name="TimerRegion" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                <Grid Name="TimerRegion" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
 
                     <StackPanel x:Name="TimerDisplay"  HorizontalAlignment="Center" VerticalAlignment="Center" >
                         <TextBlock x:Name="TimerTitle" HorizontalAlignment="Center">
@@ -54,13 +54,13 @@
                     </StackPanel>
 
 
-                <StackPanel x:Name="NoTimerDefined" Grid.Row="0" Visibility="Collapsed" HorizontalAlignment="Center" >
+                    <StackPanel x:Name="NoTimerDefined" Grid.Row="0" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center">
                     <TextBlock x:Name="NoTimer" HorizontalAlignment="Center" VerticalAlignment="Center" >
                                         No Active Timer
                     </TextBlock>
                 </StackPanel>
 
-                </StackPanel>
+                </Grid>
 
 
 

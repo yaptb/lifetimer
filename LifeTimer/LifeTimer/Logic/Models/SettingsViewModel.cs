@@ -9,6 +9,8 @@ namespace LifeTimer.Logic.Models;
 
 public class SettingsViewModel : INotifyPropertyChanged
 {
+    public static int InitialWindowWidth = 400;
+    public static int InitialWindowHeight = 200;
 
     private List<TimerDefinition> _timers = new List<TimerDefinition>() { };
     private AppearanceViewModel _appearance = new AppearanceViewModel();

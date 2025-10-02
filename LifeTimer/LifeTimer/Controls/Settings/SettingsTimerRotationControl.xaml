@@ -6,14 +6,14 @@
     >
 
 
-    <StackPanel VerticalAlignment="Center">
+    <StackPanel VerticalAlignment="Center" HorizontalAlignment="Stretch">
         
-        <StackPanel x:Name="LinkRotationDisabledUI" HorizontalAlignment="Center">
-            <StackPanel VerticalAlignment="Center">
-                <TextBlock  FontWeight="Medium" x:Uid="SettingsTimerRotationControl_LinkRotationDisabledText"/>
-                <TextBlock FontSize="10" x:Uid="SettingsTimerRotationControl_LinkRotationDisabledSubtext"/>
+        <Grid x:Name="LinkRotationDisabledUI" HorizontalAlignment="Stretch" >
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                <TextBlock  FontWeight="Medium" x:Uid="SettingsTimerRotationControl_LinkRotationDisabledText" HorizontalAlignment="Center"/>
+                <TextBlock FontSize="10" x:Uid="SettingsTimerRotationControl_LinkRotationDisabledSubtext" HorizontalAlignment="Center"/>
             </StackPanel>
-        </StackPanel>
+        </Grid>
 
 
         <Grid x:Name="LinkRotationEnabledUI">
