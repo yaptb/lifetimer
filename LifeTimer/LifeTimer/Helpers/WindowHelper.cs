@@ -253,6 +253,7 @@ public static class WindowHelper
 
         int exStyle =GetWindowLong(hWnd,GWL_EXSTYLE);
         exStyle &= ~(WS_EX_DLGMODALFRAME | WS_EX_CLIENTEDGE | WS_EX_STATICEDGE);
+        exStyle |= WS_EX_LAYERED;
         SetWindowLong(hWnd, GWL_EXSTYLE, exStyle);
 
         // Extend frame into client area
@@ -272,7 +273,7 @@ public static class WindowHelper
         SetWindowLong(hWnd, GWL_STYLE, style);
 
         int exStyle = GetWindowLong(hWnd, GWL_EXSTYLE);
-        exStyle |= WS_EX_DLGMODALFRAME |WS_EX_CLIENTEDGE | WS_EX_STATICEDGE;
+        exStyle |= WS_EX_DLGMODALFRAME |WS_EX_CLIENTEDGE | WS_EX_STATICEDGE ;
         SetWindowLong(hWnd,GWL_EXSTYLE, exStyle);
 
         // Remove extended frame
@@ -351,6 +352,43 @@ public static class WindowHelper
             CreateDispatcherQueueController(options, out _);
         }
     }*/
+
+    [DllImport("user32.dll")]
+    static extern bool AdjustWindowRectEx(ref RECT lpRect, uint dwStyle, bool bMenu, uint dwExStyle);
+
+    [StructLayout(LayoutKind.Sequential)]
+    public struct RECT
+    {
+        public int Left, Top, Right, Bottom;
+    }
+
+
+    public const uint WS_OVERLAPPED = 0x00000000;
+    public const uint WS_SYSMENU = 0x00080000;
+    public const uint WS_OVERLAPPEDWINDOW = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU |
+                                            WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
+   
+    public const uint WS_EX_WINDOWEDGE = 0x00000100;
+    
+    public const uint WS_EX_OVERLAPPEDWINDOW = WS_EX_WINDOWEDGE | WS_EX_CLIENTEDGE;
+
+
+    public static RECT GetInteractiveWindowBoundsAdjustment(int clientWidth, int clientHeight)
+    {
+        RECT rect = new RECT
+        {
+            Left = 0,
+            Top = 0,
+            Right = clientWidth,
+            Bottom = clientHeight
+        };
+
+        AdjustWindowRectEx(ref rect, WS_OVERLAPPEDWINDOW, false, WS_EX_OVERLAPPEDWINDOW);
+
+        return rect;
+    }
+
+
 
 
 }

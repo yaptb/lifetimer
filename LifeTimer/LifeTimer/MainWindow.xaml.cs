@@ -11,6 +11,9 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
+using System.Drawing.Text;
+using System.Transactions;
+using Windows.UI.WebUI;
 using WinRT.Interop;
 
 namespace LifeTimer
@@ -59,7 +62,7 @@ namespace LifeTimer
             _logger.LogInformation("MainWindow initialized successfully");
 
             InitializeTransparency();
-
+            
             AppController.OnTimer += AppController_TimerTick;
 
 
@@ -72,6 +75,7 @@ namespace LifeTimer
             if (!_activedFlag)
             {
                 _activedFlag = true;
+                CalcBoundsAdjustment();
                 UpdateDisplay();
                 await AppController.InitialisePostMain();
             }
@@ -91,6 +95,10 @@ namespace LifeTimer
                 int y = sender.Position.Y;
                 int width = sender.Size.Width;
                 int height = sender.Size.Height;
+
+
+                
+
                 AppController.RegisterMainWindowBoundsChange(x, y, width, height);
             }
 
@@ -137,34 +145,78 @@ namespace LifeTimer
         }
 
 
-
+   
 
 
         public void ConfigureForInteractiveMode()
         {
+            ContextInteractive.Text = ResourceHelper.GetString("MainWindow_NotificationBackground");
+
+
             HideNagOverlay();
 
             WindowHelper.RestoreWindowToDefault(this);
             WindowHelper.SetNoActivate(this, false);
             WindowHelper.SetClickThrough(this, false);
+            //TransparentHelper.SetTransparent(this, false);
 
-            ContextInteractive.Text = ResourceHelper.GetString("MainWindow_NotificationBackground");
+
+
+            //resize for framed window
+            int x = AppController.CurrentSettings.WindowPosX;
+            int y = AppController.CurrentSettings.WindowPosY;
+            int width = AppController.CurrentSettings.WindowWidth;
+            int height = AppController.CurrentSettings.WindowHeight;
+
+            int adjustedX = x + BoundsAdjustRect.Left;
+            int adjustedY = y + BoundsAdjustRect.Top;
+            int adjustedWidth = width + BoundsAdjustRect.Right - BoundsAdjustRect.Left;
+            int adjustedHeight = height + BoundsAdjustRect.Bottom - BoundsAdjustRect.Top;
+
+            WindowHelper.SetWindowBounds(AppWindow, adjustedX, adjustedY, adjustedWidth, adjustedHeight);
+
+
+            _interactiveResized = true;
+
+            AppWindow.Resize(new Windows.Graphics.SizeInt32(adjustedWidth, adjustedHeight));
+
 
         }
 
 
         public void ConfigureForBackgroundMode()
         {
-
             HideNagOverlay();
 
             WindowHelper.SetNoActivate(this, true);
             WindowHelper.SetWindowToBorderless(this);
             WindowHelper.SendToBack(this);
-            WindowHelper.RecalcWindowSize(this);
+            // WindowHelper.RecalcWindowSize(this);
 
 
+            // TransparentHelper.SetTransparent(this, true);
             ContextInteractive.Text = ResourceHelper.GetString("MainWindow_NotificationInteractive");
+
+            if (_interactiveResized)
+            {
+                //if we have previously resized, reverse the change
+                int x = AppController.CurrentSettings.WindowPosX;
+                int y = AppController.CurrentSettings.WindowPosY;
+                int width = AppController.CurrentSettings.WindowWidth;
+                int height = AppController.CurrentSettings.WindowHeight;
+
+                int adjustedX = x - BoundsAdjustRect.Left;
+                int adjustedY = y - BoundsAdjustRect.Top;
+                int adjustedWidth = width - BoundsAdjustRect.Right + BoundsAdjustRect.Left;
+                int adjustedHeight = height - BoundsAdjustRect.Bottom + BoundsAdjustRect.Top;
+
+                WindowHelper.SetWindowBounds(AppWindow, adjustedX, adjustedY, adjustedWidth, adjustedHeight);
+
+            }
+
+           // TransparentHelper.SetTransparent(this, true);
+
+
         }
 
 
@@ -287,6 +339,19 @@ namespace LifeTimer
         }
 
 
+        private void CalcBoundsAdjustment()
+        {
+            var width = AppController.CurrentSettings.WindowWidth;
+            var height = AppController.CurrentSettings.WindowHeight;
+
+            WindowHelper.RECT rect = WindowHelper.GetInteractiveWindowBoundsAdjustment(0, 0);
+            Console.WriteLine($"Bounds adjustment LEFT: {rect.Left} TOP:{rect.Top} RIGHT:{rect.Right} BOTTOM:{rect.Bottom} ");
+            BoundsAdjustRect = rect;
+        }
+
+        private WindowHelper.RECT BoundsAdjustRect { get; set; }
+
+        private bool _interactiveResized { get; set; } = false;
 
     }
 }

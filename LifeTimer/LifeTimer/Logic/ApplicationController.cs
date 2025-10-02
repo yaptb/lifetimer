@@ -487,9 +487,18 @@ namespace LifeTimer.Logic
             {
                 //first run - calculate desired pixel size for current DPI
                 //and update
-                var scaled_size = MainWindow.GetFirstRunScaledWindowDimensions(800, 600);
-                CurrentSettings.WindowWidth = scaled_size.Item1;
-                CurrentSettings.WindowHeight = scaled_size.Item2;
+                var width = SettingsViewModel.InitialWindowWidth;
+                var height = SettingsViewModel.InitialWindowHeight;
+                var scaled_size = MainWindow.GetFirstRunScaledWindowDimensions(width,height);
+
+                if(scaled_size!=null && scaled_size.Item1 > width)
+                {
+                    width = scaled_size.Item1;
+                    height = scaled_size.Item2;
+                }
+
+                CurrentSettings.WindowWidth = width;
+                CurrentSettings.WindowHeight = height;
             }
 
             MainWindow.SetWindowBounds(CurrentSettings.WindowPosX, CurrentSettings.WindowPosY,
