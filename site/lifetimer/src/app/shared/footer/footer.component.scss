@@ -1,0 +1,10 @@
+/* Define footer height CSS variable */
+:host {
+  --footer-height: 3rem; /* p-4 + content ≈ 3rem = 48px */
+}
+
+.footer-text {
+  a {
+    font-weight: bold;
+  }
+}

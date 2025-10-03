@@ -1,0 +1,42 @@
+<app-main-layout>
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-surface mb-16" i18n="@@help.title">
+      Help & Support
+    </h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <mat-card class="support-card">
+        <mat-card-content>
+          <h2
+            class="text-2xl font-semibold mb-4 text-surface"
+            i18n="@@help.contact"
+          >
+            Contact Support
+          </h2>
+          <p class="text-surface-variant mb-4" i18n="@@help.contactDescription">
+            Need additional help? <br />
+            Our support team is here to assist you.
+          </p>
+          <div class="space-y-3">
+            <div class="flex items-center text-surface-variant">
+              <svg
+                class="w-5 h-5 text-primary mr-3"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                ></path>
+              </svg>
+              <span>support&#64;parseclifetimer.app</span>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</app-main-layout>

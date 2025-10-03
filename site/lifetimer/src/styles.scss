@@ -1,0 +1,126 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.dev/guide/theming
+@use "@angular/material" as mat;
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+// Define the theme
+$lifetimer-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: dark,
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: (
+      brand-family: "Raleway",
+      plain-family: "Raleway",
+    ),
+    density: (
+      scale: 0,
+    ),
+  )
+);
+
+html {
+  @include mat.theme($lifetimer-theme);
+  & {
+    /* Mobile browser fixes */
+    height: 100%;
+    height: 100dvh; /* Dynamic viewport height support */
+    -webkit-text-size-adjust: 100%; /* Prevent iOS zoom on orientation change */
+    touch-action: manipulation; /* Global touch action */
+    overscroll-behavior: contain; /* Prevent pull-to-refresh */
+  }
+}
+
+body {
+  height: 100%;
+  min-height: 100dvh; /* Dynamic viewport height */
+  overscroll-behavior: contain; /* Prevent scroll chaining */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+}
+
+// Extract theme colors for use throughout the app
+$primary-color: mat.get-theme-color($lifetimer-theme, primary);
+$on-primary-color: mat.get-theme-color($lifetimer-theme, on-primary);
+$surface-color: mat.get-theme-color($lifetimer-theme, surface);
+$on-surface-color: mat.get-theme-color($lifetimer-theme, on-surface);
+$surface-variant-color: mat.get-theme-color($lifetimer-theme, surface-variant);
+$on-surface-variant-color: mat.get-theme-color(
+  $lifetimer-theme,
+  on-surface-variant
+);
+$outline-color: mat.get-theme-color($lifetimer-theme, outline);
+$surface-container-color: mat.get-theme-color(
+  $lifetimer-theme,
+  surface-container
+);
+$surface-container-high-color: mat.get-theme-color(
+  $lifetimer-theme,
+  surface-container-high
+);
+$surface-container-highest-color: mat.get-theme-color(
+  $lifetimer-theme,
+  surface-container-highest
+);
+
+// Define CSS custom properties for use in components
+:root {
+  --mat-theme-primary: #{$primary-color};
+  --mat-theme-on-primary: #{$on-primary-color};
+  --mat-theme-surface: #{$surface-color};
+  --mat-theme-on-surface: #{$on-surface-color};
+  --mat-theme-surface-variant: #{$surface-variant-color};
+  --mat-theme-on-surface-variant: #{$on-surface-variant-color};
+  --mat-theme-outline: #{$outline-color};
+  --mat-theme-surface-container: #{$surface-container-color};
+  --mat-theme-surface-container-high: #{$surface-container-high-color};
+  --mat-theme-surface-container-highest: #{$surface-container-highest-color};
+}
+
+/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  height: 100%;
+  background-color: $surface-color;
+  color: $on-surface-color;
+}
+body {
+  margin: 0;
+  font-family: Raleway, "Helvetica Neue", sans-serif;
+}
+
+// Utility classes for theme colors
+.text-primary {
+  color: $primary-color;
+}
+.text-on-primary {
+  color: $on-primary-color;
+}
+.text-surface {
+  color: $on-surface-color;
+}
+.text-surface-variant {
+  color: $on-surface-variant-color;
+}
+.bg-primary {
+  background-color: $primary-color;
+}
+.bg-surface {
+  background-color: $surface-color;
+}
+.bg-surface-container {
+  background-color: $surface-container-color;
+}
+.bg-surface-container-high {
+  background-color: $surface-container-high-color;
+}
+.bg-surface-container-highest {
+  background-color: $surface-container-highest-color;
+}
+.border-outline {
+  border-color: $outline-color;
+}

@@ -1,0 +1,131 @@
+:host {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(
+    100dvh - var(--header-height, 4rem) - var(--footer-height, 3rem)
+  ); /* Dynamic viewport height */
+  overscroll-behavior: contain; /* Prevent scroll chaining */
+}
+
+.hero-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.carousel-section {
+  /*  display: flex;
+  justify-content: center; 
+  width: var(--carousel-width, 60%); 
+  */
+  width: 90% !important; /* 90% of viewport width directly */
+  margin: 2rem auto;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.cta-button-primary {
+  --mdc-outlined-button-outline-color: var(--mat-theme-primary);
+  --mdc-outlined-button-label-text-color: var(--mat-theme-primary);
+  --mdc-outlined-button-hover-state-layer-color: var(--mat-theme-primary);
+  --mdc-outlined-button-focus-state-layer-color: var(--mat-theme-primary);
+  --mdc-outlined-button-pressed-state-layer-color: var(--mat-theme-primary);
+  --mdc-outlined-button-hover-outline-color: var(--mat-theme-primary);
+  --mdc-outlined-button-focus-outline-color: var(--mat-theme-primary);
+
+  background-color: var(--mat-theme-surface-container) !important;
+  border: 1px solid var(--mat-theme-primary) !important;
+  color: var(--mat-theme-primary) !important;
+  font-weight: 500 !important;
+  transform: scale(0.67);
+}
+
+.cta-button-secondary {
+  --mdc-outlined-button-outline-color: var(--mat-theme-primary);
+  --mdc-outlined-button-label-text-color: var(--mat-theme-primary);
+  --mdc-outlined-button-hover-state-layer-color: var(--mat-theme-primary);
+  --mdc-outlined-button-focus-state-layer-color: var(--mat-theme-primary);
+  --mdc-outlined-button-pressed-state-layer-color: var(--mat-theme-primary);
+  --mdc-outlined-button-hover-outline-color: var(--mat-theme-primary);
+  --mdc-outlined-button-focus-outline-color: var(--mat-theme-primary);
+
+  background-color: var(--mat-theme-surface-container) !important;
+  border: 1px solid var(--mat-theme-primary) !important;
+  color: var(--mat-theme-primary) !important;
+  font-weight: 500 !important;
+  transform: scale(0.67);
+}
+
+/* Responsive adjustments - targeting all mobile devices */
+@media (max-width: 768px), (max-device-width: 768px) {
+  :host {
+    --carousel-width: 100%; /* Set CSS variable for mobile */
+  }
+
+  .hero-section {
+    margin-top: 1rem;
+    padding: 1rem; /* Add padding only to text section */
+  }
+
+  .hero-section h1 {
+    margin-top: 0 !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .cta-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.25rem; /* Reduced from 0.5rem to 50% smaller */
+    margin-top: 1rem !important; /* Push buttons closer to footer */
+    padding: 0 1rem; /* Add horizontal padding to CTA section */
+  }
+
+  .home-subtitle {
+    margin-top: 1rem !important; /* Push buttons closer to footer */
+  }
+
+  .carousel-section {
+    margin-top: 5rem !important;
+    width: 90vw !important; /* 90% of viewport width directly */
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding: 0 !important;
+  }
+
+  .cta-button-primary {
+    transform: scale(1) !important;
+    margin-right: 1rem;
+  }
+
+  .cta-button-secondary {
+    transform: scale(1) !important;
+  }
+}
+
+/* Additional mobile-specific targeting for stubborn devices 
+@media screen and (max-width: 812px) {
+  :host .carousel-section {
+    width: 90% !important;
+    margin: 0 auto !important;
+  }
+
+  :host .hero-container .carousel-section {
+    width: 90% !important;
+    margin: 0 auto !important;
+  }
+  app-home .hero-container .carousel-section {
+    width: 90% !important;
+    margin: 0 auto !important;
+  }
+}
+  */

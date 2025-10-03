@@ -1,0 +1,13 @@
+<mat-card class="toc-card">
+  <mat-card-content>
+    <div class="toc-container">
+      <div class="markdown-content">
+        <markdown
+          [data]="tocContent"
+          ngPreserveWhitespaces
+          (click)="onTocClick($event)"
+        ></markdown>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

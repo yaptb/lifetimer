@@ -1,0 +1,25 @@
+.app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh; /* Dynamic viewport height for mobile */
+  overflow: hidden; /* Keep hidden for overall container */
+  /*  background-color: var(--mat-theme-surface);*/
+  background-image: linear-gradient(
+    to bottom,
+    var(--mat-theme-surface),
+    var(--mat-theme-surface-container)
+  );
+}
+
+/*
+.main-content {
+  flex: 1;
+  background-color: var(--mat-theme-surface);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-image: linear-gradient(to right, red, yellow);
+}
+*/

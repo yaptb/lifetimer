@@ -21,4 +21,4 @@ If future updates introduce features that require data collection or internet co
 
 Contact
 For questions or concerns regarding this Privacy Policy, please contact:
-support@lifetimer.app
+support@parseclifetimer.app

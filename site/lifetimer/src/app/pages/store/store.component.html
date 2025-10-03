@@ -1,0 +1,40 @@
+<app-main-layout>
+  <div class="store-container">
+    <div class="store-section text-center">
+      <h1 class="text-2xl font-bold text-surface mt-8" i18n="@@store.title">
+        LifeTimer is available here:
+      </h1>
+
+      @if(isMobile){
+
+      <div class="store-link-container">
+        <p>Visit the LifeTimer Microsoft Store page</p>
+
+        <!-- Mobile: Show link button -->
+        <button
+          mat-raised-button
+          color="primary"
+          class="mobile-store-button"
+          (click)="openStoreLink()"
+        >
+          <span>Store</span>
+        </button>
+      </div>
+      } @else {
+      <!-- Desktop: Show ms-store-badge -->
+
+      <div class="store-badge-container">
+        <ms-store-badge
+          productid="9MT8BCKRPSSW"
+          window-mode="full"
+          theme="auto"
+          size="small"
+          language="en-us"
+          animation="off"
+        >
+        </ms-store-badge>
+      </div>
+      }
+    </div>
+  </div>
+</app-main-layout>

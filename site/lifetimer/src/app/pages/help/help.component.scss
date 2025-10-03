@@ -1,0 +1,26 @@
+:host {
+  display: flex;
+  flex: 1;
+}
+
+.support-card {
+  height: fit-content;
+  background-color: var(--mat-theme-surface-container-high);
+  border-radius: 1rem;
+  border: 1px solid var(--mat-theme-outline);
+
+  ::ng-deep .mat-mdc-card-content {
+    background-color: var(--mat-theme-surface-container);
+    border-radius: 0.75rem;
+    padding: 1.25rem;
+    margin: 0.25rem;
+  }
+}
+
+@media (max-width: 768px), (max-device-width: 768px) {
+ 
+  .support-card{
+    margin:3rem 1rem;
+
+  }
+}

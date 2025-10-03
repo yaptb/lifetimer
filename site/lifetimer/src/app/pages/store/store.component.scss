@@ -1,0 +1,67 @@
+:host {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+}
+
+.store-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+
+.store-link-container {
+  margin-top: 2rem;
+}
+
+.store-badge-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 2rem;
+}
+
+/*
+.mobile-store-button {
+  font-size: 1rem !important;
+  padding: 0.875rem 1.5rem !important;
+  min-width: 250px;
+  margin-top: 1rem;
+
+  span {
+    font-weight: 600;
+  }
+}
+*/
+
+.mobile-store-button {
+  --mdc-outlined-button-outline-color: var(--mat-theme-primary);
+  --mdc-outlined-button-label-text-color: var(--mat-theme-primary);
+  --mdc-outlined-button-hover-state-layer-color: var(--mat-theme-primary);
+  --mdc-outlined-button-focus-state-layer-color: var(--mat-theme-primary);
+  --mdc-outlined-button-pressed-state-layer-color: var(--mat-theme-primary);
+  --mdc-outlined-button-hover-outline-color: var(--mat-theme-primary);
+  --mdc-outlined-button-focus-outline-color: var(--mat-theme-primary);
+  
+  margin-top: 1rem;
+  background-color: var(--mat-theme-surface-container) !important;
+  border: 1px solid var(--mat-theme-primary) !important;
+  color: var(--mat-theme-primary) !important;
+  font-weight: 500 !important;
+  transform: scale(0.67);
+}
+
+
+/*
+@media (max-width: 768px) {
+  .mobile-store-button {
+    font-size: 0.875rem !important;
+    padding: 0.75rem 1.25rem !important;
+    min-width: 200px;
+  }
+}
+  */
+

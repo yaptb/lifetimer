@@ -1,0 +1,11 @@
+<app-docs-layout>
+  <!-- TOC in sidebar slot -->
+  <div slot="sidebar">
+    <app-toc (tocItemClicked)="onTocItemClicked()"></app-toc>
+  </div>
+
+  <!-- Document content in main slot -->
+  <div slot="main">
+    <router-outlet></router-outlet>
+  </div>
+</app-docs-layout>

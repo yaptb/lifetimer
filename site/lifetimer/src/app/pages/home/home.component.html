@@ -1,0 +1,54 @@
+<app-main-layout>
+  <!-- Hero Text Section -->
+  <div class="hero-container">
+    <div class="hero-section text-center">
+      <h1 class="text-5xl font-bold text-surface mb-2" i18n="@@home.title">
+        Welcome to LifeTimer
+      </h1>
+
+      <div class="home-subtitle">
+        <p
+          class="text-xs text-surface-variant max-w-3xl mx-auto"
+          style="font-style: italic"
+          i18n="@@home.subtitle"
+        >
+          Highly configurable desktop clock with life event tracking
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Screenshot Carousel - Completely outside hero-container -->
+  <div class="carousel-section">
+    <app-image-carousel
+      [images]="carouselImages"
+      [autoplay]="true"
+      [autoplayInterval]="4000"
+      [showIndicators]="true"
+      [showNavigation]="true"
+    >
+    </app-image-carousel>
+  </div>
+
+  <!-- CTA Buttons - Also outside hero-container -->
+  <div class="cta-buttons">
+    <div class="mt-8">
+      <button
+        mat-stroked-button
+        color="primary"
+        class="cta-button-primary"
+        routerLink="/store"
+      >
+        <span i18n="@@home.getStarted">Get Started</span>
+      </button>
+      <button
+        mat-stroked-button
+        color="primary"
+        class="cta-button-secondary"
+        routerLink="/docs"
+      >
+        <span i18n="@@home.learnMore">Learn More</span>
+      </button>
+    </div>
+  </div>
+</app-main-layout>

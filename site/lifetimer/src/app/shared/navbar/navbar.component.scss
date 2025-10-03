@@ -1,0 +1,38 @@
+/* Navigation bar z-index and height definition */
+.navbar {
+  z-index: 1000 !important;
+  position: relative;
+}
+
+/* Define navbar height CSS variable */
+:host {
+  --header-height: 4rem; /* h-16 = 4rem = 64px */
+}
+
+.language-selector {
+  width: 120px;
+
+  ::ng-deep .mat-mdc-form-field {
+    .mat-mdc-text-field-wrapper {
+      height: 40px;
+    }
+
+    .mdc-notched-outline {
+      border-color: var(--mat-theme-outline);
+    }
+
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border-color: var(--mat-theme-outline);
+    }
+
+    .mat-mdc-select-value {
+      color: var(--mat-theme-on-surface);
+    }
+
+    .mat-mdc-select-arrow {
+      color: var(--mat-theme-on-surface-variant);
+    }
+  }
+}

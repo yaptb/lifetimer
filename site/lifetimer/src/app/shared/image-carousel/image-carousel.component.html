@@ -1,0 +1,50 @@
+<div class="carousel-container" 
+     (mouseenter)="onMouseEnter()" 
+     (mouseleave)="onMouseLeave()"
+     *ngIf="images.length > 0">
+  
+  <!-- Caption Area Above Image -->
+  <div class="carousel-caption-area" *ngIf="images[currentIndex]?.caption">
+    <div class="carousel-caption">
+      {{ images[currentIndex].caption }}
+    </div>
+  </div>
+
+  <!-- Image Display -->
+  <div class="carousel-wrapper">
+    <div class="carousel-track" [style.transform]="'translateX(-' + (currentIndex * 100) + '%)'">
+      <div class="carousel-slide" *ngFor="let image of images">
+        <img [src]="image.src" [alt]="image.alt" class="carousel-image" (click)="openImageInNewTab(image.src)" />
+      </div>
+    </div>
+
+    <!-- Navigation Arrows -->
+    <div class="carousel-navigation" *ngIf="showNavigation && images.length > 1">
+      <button mat-fab 
+              color="primary"
+              class="carousel-nav carousel-nav-prev" 
+              (click)="previousSlide()"
+              aria-label="Previous image">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      
+      <button mat-fab 
+              color="primary"
+              class="carousel-nav carousel-nav-next" 
+              (click)="nextSlide()"
+              aria-label="Next image">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <!-- Indicators -->
+  <div class="carousel-indicators" *ngIf="showIndicators && images.length > 1">
+    <button *ngFor="let image of images; let i = index"
+            class="carousel-indicator"
+            [class.active]="i === currentIndex"
+            (click)="goToSlide(i)"
+            [attr.aria-label]="'Go to slide ' + (i + 1)">
+    </button>
+  </div>
+</div>

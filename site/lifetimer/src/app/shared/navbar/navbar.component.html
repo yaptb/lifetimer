@@ -1,0 +1,139 @@
+<nav class="navbar bg-surface-container-high shadow-lg border-b border-outline">
+  <div class="container mx-auto px-4">
+    <div class="flex justify-between items-center h-16">
+      <!-- Logo/Brand -->
+      <a routerLink="/home">
+        <div class="flex row items-center">
+          <img src="logo.png" />
+          <span
+            class="text-2xl font-bold"
+            style="
+              color: cornflowerblue;
+              margin-left: 8px;
+              font-weight: 300;
+              letter-spacing: 0.015em;
+            "
+            >LifeTimer</span
+          >
+        </div>
+      </a>
+
+      <!-- Navigation Links -->
+      <div class="hidden md:flex space-x-8">
+        <a
+          routerLink="/home"
+          routerLinkActive="text-primary border-b-2"
+          [routerLinkActiveOptions]="{ exact: false }"
+          class="text-surface-variant hover:text-primary px-3 py-2 transition-colors duration-200 border-primary"
+        >
+          <span i18n="@@nav.home">Home</span>
+        </a>
+        <a
+          routerLink="/store"
+          routerLinkActive="text-primary border-b-2"
+          [routerLinkActiveOptions]="{ exact: false }"
+          class="text-surface-variant hover:text-primary px-3 py-2 transition-colors duration-200 border-primary"
+        >
+          <span i18n="@@nav.store">Store</span>
+        </a>
+        <a
+          routerLink="/docs"
+          routerLinkActive="text-primary border-b-2"
+          [routerLinkActiveOptions]="{ exact: false }"
+          class="text-surface-variant hover:text-primary px-3 py-2 transition-colors duration-200 border-primary"
+        >
+          <span i18n="@@nav.docs">Docs</span>
+        </a>
+        <a
+          routerLink="/help"
+          routerLinkActive="text-primary border-b-2"
+          [routerLinkActiveOptions]="{ exact: false }"
+          class="text-surface-variant hover:text-primary px-3 py-2 transition-colors duration-200 border-primary"
+        >
+          <span i18n="@@nav.help">Help</span>
+        </a>
+      </div>
+
+      <!-- Language Dropdown 
+      <div class="flex items-center">
+        <mat-form-field appearance="outline" class="language-selector">
+          <mat-select [(value)]="selectedLanguage" (selectionChange)="onLanguageChange($event)">
+            <mat-option value="en">English</mat-option>
+            <mat-option value="es">Español</mat-option>
+            <mat-option value="fr">Français</mat-option>
+            <mat-option value="de">Deutsch</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      -->
+
+      <!-- Mobile menu button -->
+      <div class="md:hidden">
+        <button
+          (click)="toggleMobileMenu()"
+          class="text-surface-variant hover:text-primary focus:outline-none focus:text-primary"
+        >
+          <svg
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              *ngIf="!mobileMenuOpen"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+            <path
+              *ngIf="mobileMenuOpen"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div *ngIf="mobileMenuOpen" class="md:hidden">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <a
+          routerLink="/home"
+          routerLinkActive="bg-surface-container text-primary"
+          (click)="closeMobileMenu()"
+          class="text-surface-variant hover:bg-surface-container hover:text-primary block px-3 py-2 rounded-md text-base font-medium"
+        >
+          <span i18n="@@nav.home">Home</span>
+        </a>
+        <a
+          routerLink="/store"
+          routerLinkActive="bg-surface-container text-primary"
+          (click)="closeMobileMenu()"
+          class="text-surface-variant hover:bg-surface-container hover:text-primary block px-3 py-2 rounded-md text-base font-medium"
+        >
+          <span i18n="@@nav.store">Store</span>
+        </a>
+        <a
+          routerLink="/docs"
+          routerLinkActive="bg-surface-container text-primary"
+          (click)="closeMobileMenu()"
+          class="text-surface-variant hover:bg-surface-container hover:text-primary block px-3 py-2 rounded-md text-base font-medium"
+        >
+          <span i18n="@@nav.docs">Docs</span>
+        </a>
+        <a
+          routerLink="/help"
+          routerLinkActive="bg-surface-container text-primary"
+          (click)="closeMobileMenu()"
+          class="text-surface-variant hover:bg-surface-container hover:text-primary block px-3 py-2 rounded-md text-base font-medium"
+        >
+          <span i18n="@@nav.help">Help</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,28 @@
+<div class="docs-container">
+  <!-- Mobile TOC Button -->
+  <button mat-stroked-button
+          class="mobile-toc-btn"
+          (click)="toggleSidebar()"
+          [disabled]="isTocDisabled()"
+          [attr.aria-label]="isSidebarOpen() ? 'Close table of contents' : 'Open table of contents'">
+    TOC
+  </button>
+
+  <div class="docs-content-wrapper">
+    <!-- Left Sidebar -->
+    <aside class="docs-sidebar"
+           [class.sidebar-open]="sidebarShouldBeOpen()">
+      <ng-content select="[slot=sidebar]"></ng-content>
+    </aside>
+
+    <!-- Overlay for mobile -->
+    <div class="sidebar-overlay"
+         [class.overlay-visible]="sidebarShouldBeOpen()"
+         (click)="toggleSidebar()"></div>
+
+    <!-- Main Content Area -->
+    <main class="docs-main">
+      <ng-content select="[slot=main]"></ng-content>
+    </main>
+  </div>
+</div>

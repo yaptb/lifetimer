@@ -1,0 +1,183 @@
+.docs-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: calc(100vh - var(--header-height, 4rem) - var(--footer-height, 3rem) - 10px);
+  height: calc(100dvh - var(--header-height, 4rem) - var(--footer-height, 3rem) - 10px); /* Dynamic viewport height minus margin */
+  min-height: calc(100dvh - var(--header-height, 4rem) - var(--footer-height, 3rem) - 10px);
+  width: 100vw;
+  width: calc(100vw - env(safe-area-inset-left) - env(safe-area-inset-right)); /* Safe area support */
+  padding: 0 max(2rem, env(safe-area-inset-left)) 0 max(2rem, env(safe-area-inset-right)); /* Safe area padding */
+  margin-top: 10px;
+  position: relative;
+  box-sizing: border-box; /* Ensure padding is included in calculations */
+  overscroll-behavior: contain; /* Prevent scroll chaining */
+}
+
+.mobile-toc-btn {
+  display: none;
+  position: fixed !important;
+  top: calc(var(--header-height, 4rem) - 15px + env(safe-area-inset-top)) !important; /* Safe area support */
+  left: 50% !important;
+  transform: translateX(-50%) translateZ(0) !important; /* Hardware acceleration */
+  z-index: 1100 !important;
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.5px !important;
+  background-color: rgba(var(--md-sys-color-surface), 0.5) !important;
+  backdrop-filter: blur(8px) !important;
+  border-color: rgba(var(--md-sys-color-outline), 0.5) !important;
+  height: 20px !important;
+  min-height: 20px !important;
+  padding: 0 12px !important;
+  line-height: 20px !important;
+  width: auto !important;
+  min-width: 60px !important;
+  max-width: 120px !important;
+  touch-action: manipulation !important; /* Prevent scroll conflicts */
+  will-change: transform !important; /* Optimize for animations */
+}
+
+
+.docs-content-wrapper {
+  display: flex;
+  max-width: 1400px;
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+}
+
+.docs-sidebar {
+  width: 250px;
+  min-width: 250px;
+  height: 100%;
+  overflow-y: auto;
+  background-color: rgb(var(--md-sys-color-surface));
+  border-right: 1px solid rgb(var(--md-sys-color-outline-variant));
+  padding: 1rem;
+  transition: transform 0.3s ease;
+}
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: var(--header-height, 4rem);
+  left: 0;
+  width: 100vw;
+  height: calc(100vh - var(--header-height, 4rem));
+  height: calc(100dvh - var(--header-height, 4rem)); /* Dynamic viewport height */
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 99;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none; /* Don't interfere with scrolling */
+
+  &.overlay-visible {
+    opacity: 1;
+    pointer-events: auto; /* Enable clicks only when visible */
+  }
+}
+
+.docs-main {
+  flex: 1;
+  height: 100%;
+  overflow-y: auto;
+  background-color: rgb(var(--md-sys-color-surface));
+  padding: 2rem;
+  overscroll-behavior-y: contain; /* Prevent scroll chaining */
+  -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  scroll-behavior: smooth; /* Smooth scrolling */
+}
+
+/* Custom scrollbar for webkit browsers */
+.docs-sidebar::-webkit-scrollbar,
+.docs-main::-webkit-scrollbar {
+  width: 8px;
+}
+
+.docs-sidebar::-webkit-scrollbar-track,
+.docs-main::-webkit-scrollbar-track {
+  background: rgb(var(--md-sys-color-surface-variant));
+}
+
+.docs-sidebar::-webkit-scrollbar-thumb,
+.docs-main::-webkit-scrollbar-thumb {
+  background: rgb(var(--md-sys-color-outline));
+  border-radius: 4px;
+}
+
+.docs-sidebar::-webkit-scrollbar-thumb:hover,
+.docs-main::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--md-sys-color-on-surface-variant));
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .docs-container {
+    padding: 0;
+    box-sizing: border-box; /* Ensure consistent box model */
+  }
+
+  .mobile-toc-btn {
+    display: flex;
+
+    &[disabled] {
+      display: none !important;
+    }
+  }
+
+  .docs-content-wrapper {
+    max-width: 100%;
+  }
+
+  .docs-sidebar {
+    position: fixed;
+    top: var(--header-height, 4rem);
+    left: 0;
+    height: calc(100vh - var(--header-height, 4rem));
+    height: calc(100dvh - var(--header-height, 4rem)); /* Dynamic viewport height */
+    z-index: 100;
+    transform: translateX(-100%);
+    border-right: none;
+    box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+
+    &.sidebar-open {
+      transform: translateX(0);
+    }
+  }
+
+  .sidebar-overlay {
+    display: block;
+    top: var(--header-height, 4rem);
+    height: calc(100vh - var(--header-height, 4rem));
+    height: calc(100dvh - var(--header-height, 4rem)); /* Dynamic viewport height */
+    z-index: 99;
+    pointer-events: none; /* Don't interfere with scrolling */
+
+    &.overlay-visible {
+      opacity: 1;
+      pointer-events: auto; /* Enable clicks only when visible */
+    }
+  }
+
+  .docs-main {
+    width: 100%;
+    padding: 1rem;
+  }
+}
+
+/* Mobile landscape specific adjustments */
+@media (max-width: 768px) and (orientation: landscape) {
+  .docs-container {
+    /* Adjust height calculation for landscape mode */
+    max-height: calc(100dvh - var(--header-height, 4rem) - var(--footer-height, 3rem) - 10px);
+    min-height: auto; /* Remove min-height constraint */
+    overflow-y: auto; /* Ensure container can scroll */
+  }
+
+  .docs-main {
+    /* Ensure main content area can scroll properly in landscape */
+    max-height: calc(100dvh - var(--header-height, 4rem) - var(--footer-height, 3rem) - 10px);
+    overflow-y: auto !important;
+  }
+}
