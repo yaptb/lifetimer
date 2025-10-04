@@ -20,9 +20,9 @@ namespace LifeTimer.Logic
 
         private readonly ILogger<WindowsStoreHelper> _logger;
 
-        public const string PRO_LIFE_VERSION_PRODUCT_ID = "XXVDBFPR65XX";
+        public const string PRO_LIFE_VERSION_PRODUCT_ID = "9N1WWH32P6TX";
 
-        public const string PRO_SUB_VERSION_PRODUCT_ID = "XXXXXXXXX";
+        public const string PRO_SUB_VERSION_PRODUCT_ID = "9N22J7L5H53P";
 
         private LifeTimerVersionTypes _productVersion = LifeTimerVersionTypes.Free;
         private bool _useCachedProductValues = false;
@@ -84,7 +84,7 @@ namespace LifeTimer.Logic
                         if (proSubProduct != null)
                         {
                             _proSubIsAvailable = true;
-                            _proSubFormattedPrice = proSubProduct.Price.FormattedPrice;
+                            _proSubFormattedPrice = proSubProduct.Price.FormattedRecurrencePrice;
 
                             if (proSubProduct.Skus != null)
                                 foreach (StoreSku sku in proSubProduct.Skus)

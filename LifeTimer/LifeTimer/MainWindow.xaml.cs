@@ -65,7 +65,6 @@ namespace LifeTimer
             
             AppController.OnTimer += AppController_TimerTick;
 
-
         }
 
 
@@ -207,8 +206,10 @@ namespace LifeTimer
 
             }
 
-           // TransparentHelper.SetTransparent(this, true);
 
+            this.SystemBackdrop = null;
+
+            TransparentHelper.SetTransparent(this, true);
 
         }
 
