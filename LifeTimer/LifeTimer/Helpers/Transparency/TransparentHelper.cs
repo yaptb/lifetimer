@@ -17,7 +17,7 @@ namespace LifeTimer.Transparency
 
             if (isTransparent)
             {
-                var colorBrush = WindowsCompositionHelper.Compositor.CreateColorBrush(Windows.UI.Color.FromArgb(0, 255, 255, 255));
+                var colorBrush = WindowsCompositionHelper.Compositor.CreateColorBrush(Windows.UI.Color.FromArgb(0, 255, 0, 255));
                 brushHolder.SystemBackdrop = colorBrush;
             }
             else

@@ -207,10 +207,6 @@ namespace LifeTimer
             }
 
 
-            this.SystemBackdrop = null;
-
-            TransparentHelper.SetTransparent(this, true);
-
         }
 
 
@@ -327,10 +323,10 @@ namespace LifeTimer
 
 
 
-        private void InitializeTransparency()
-        {
-            TransparentHelper.SetTransparent(this, true);
-        }
+       // private void InitializeTransparency()
+      //  {
+      //      TransparentHelper.SetTransparent(this, true);
+      //  }
 
 
         private void CalcBoundsAdjustment()
@@ -342,6 +338,51 @@ namespace LifeTimer
             Console.WriteLine($"Bounds adjustment LEFT: {rect.Left} TOP:{rect.Top} RIGHT:{rect.Right} BOTTOM:{rect.Bottom} ");
             BoundsAdjustRect = rect;
         }
+
+
+        private void InitializeTransparency()
+        {
+            var windowHandle = new IntPtr((long)this.AppWindow.Id.Value);
+
+            var rgn = TransparencyInterop.CreateRectRgn(-2, -2, -1, -1);
+
+            var blur = new TransparencyInterop.DWM_BLURBEHIND()
+            {
+                dwFlags = TransparencyInterop.DwmBlurBehindFlags.DWM_BB_ENABLE | TransparencyInterop.DwmBlurBehindFlags.DWM_BB_BLURREGION,
+                fEnable = true,
+                hRgnBlur = rgn,
+            };
+
+            TransparencyInterop.DwmEnableBlurBehindWindow(windowHandle, ref blur);
+
+            TransparentHelper.SetTransparent(this, true);
+
+            wndProcHandler = new TransparencyInterop.SUBCLASSPROC(WndProc);
+
+            TransparencyInterop.SetWindowSubclass(windowHandle, wndProcHandler, 1, IntPtr.Zero);
+
+
+            TransparentHelper.SetTransparent(this, true);
+        }
+
+        private IntPtr WndProc(IntPtr hWnd, uint uMsg, IntPtr wParam, IntPtr lParam, IntPtr uIdSubclass, IntPtr dwRefData)
+        {
+            if (uMsg == (uint)TransparencyInterop.WM_PAINT)
+            {
+                var hdc = TransparencyInterop.BeginPaint(hWnd, out var ps);
+
+                if (hdc == 0) return new IntPtr(0);
+
+                var brush = TransparencyInterop.GetStockObject(TransparencyInterop.StockObjectType.BLACK_BRUSH);
+                TransparencyInterop.FillRect(hdc, ref ps.rcPaint, brush);
+                return new IntPtr(1);
+            }
+
+            return TransparencyInterop.DefSubclassProc(hWnd, uMsg, wParam, lParam);
+
+        }
+
+        TransparencyInterop.SUBCLASSPROC wndProcHandler;
 
         private WindowHelper.RECT BoundsAdjustRect { get; set; }
 

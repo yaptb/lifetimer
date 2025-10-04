@@ -9,7 +9,6 @@ namespace LifeTimer.Transparency
 {
     public static class TransparencyInterop
     {
-        /*
         public static uint WM_PAINT = 15;
 
         [StructLayout(LayoutKind.Sequential)]
@@ -113,8 +112,6 @@ namespace LifeTimer.Transparency
         [DllImport("dwmapi.dll")]
         public static extern int DwmEnableBlurBehindWindow(IntPtr hWnd, ref DWM_BLURBEHIND pBlurBehind);
 
-
-        */
     }
 
 }
