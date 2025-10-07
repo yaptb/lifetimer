@@ -11,9 +11,6 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
-using System.Drawing.Text;
-using System.Transactions;
-using Windows.UI.WebUI;
 using WinRT.Interop;
 
 namespace LifeTimer
@@ -62,7 +59,7 @@ namespace LifeTimer
             _logger.LogInformation("MainWindow initialized successfully");
 
             InitializeTransparency();
-            
+
             AppController.OnTimer += AppController_TimerTick;
 
         }
@@ -88,12 +85,12 @@ namespace LifeTimer
         private void _appWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
         {
 
-            if (args.DidPositionChange || args.DidPositionChange)
+            if (args.DidPositionChange || args.DidSizeChange)
             {
                 int x = sender.Position.X;
                 int y = sender.Position.Y;
                 int width = sender.Size.Width;
-                int height = sender.Size.Height;       
+                int height = sender.Size.Height;
 
                 AppController.RegisterMainWindowBoundsChange(x, y, width, height);
             }
@@ -123,7 +120,7 @@ namespace LifeTimer
         {
             var currentTimer = AppController.GetCurrentTimer();
 
-            if(currentTimer == null)
+            if (currentTimer == null)
             {
                 this.NoTimerDefined.Visibility = Visibility.Visible;
                 this.TimerDisplay.Visibility = Visibility.Collapsed;
@@ -133,13 +130,13 @@ namespace LifeTimer
             this.NoTimerDefined.Visibility = Visibility.Collapsed;
             this.TimerDisplay.Visibility = Visibility.Visible;
 
-            var timerText = DateTimeFormatHelper.GetTimeDisplayForTimer(currentTimer);            
-            this.TimerTitle.Text= currentTimer.Title;
+            var timerText = DateTimeFormatHelper.GetTimeDisplayForTimer(currentTimer);
+            this.TimerTitle.Text = currentTimer.Title;
             this.TimerTime.Text = timerText;
         }
 
 
-   
+
 
 
         public void ConfigureForInteractiveMode()
@@ -226,7 +223,7 @@ namespace LifeTimer
             this.TimerTitle.FontWeight = viewModel.TitleFontDefinition.FontWeight;
             this.TimerTitle.FontStyle = viewModel.TitleFontDefinition.FontStyle;
 
-            this.NoTimer.Foreground= new SolidColorBrush(viewModel.ForegroundColor);
+            this.NoTimer.Foreground = new SolidColorBrush(viewModel.ForegroundColor);
             this.NoTimer.FontFamily = viewModel.TitleFontDefinition.GetWinUIFontFamily();
             this.NoTimer.FontSize = viewModel.TitleFontDefinition.FontSize;
             this.NoTimer.FontWeight = viewModel.TitleFontDefinition.FontWeight;
@@ -239,7 +236,7 @@ namespace LifeTimer
             this.TimerTime.FontStyle = viewModel.TimerFontDefinition.FontStyle;
 
             this.WindowBorder.Background = new SolidColorBrush(viewModel.BackgroundColor);
-            this.WindowBorder.BorderThickness = new Thickness( viewModel.BorderThickness );
+            this.WindowBorder.BorderThickness = new Thickness(viewModel.BorderThickness);
             this.WindowBorder.BorderBrush = new SolidColorBrush(viewModel.BorderColor);
             this.WindowBorder.CornerRadius = new CornerRadius(viewModel.BorderRadius);
 
@@ -263,14 +260,20 @@ namespace LifeTimer
         }
 
 
-        public void ShowNagOverlay()
+        public void ShowNagOverlay(string nagText)
         {
 
             this.FreeVersionNagOverlay.Visibility = Visibility.Visible;
+            this.NagText.Text= nagText;
 
             Storyboard fadeIn = (Storyboard)ContentGrid.Resources["FadeInStoryboard"];
             fadeIn.Begin();
 
+        }
+
+        public void ChangeNagText(string nagText)
+        {
+            this.NagText.Text = nagText;
         }
 
         public void HideNagOverlay()
@@ -323,10 +326,10 @@ namespace LifeTimer
 
 
 
-       // private void InitializeTransparency()
-      //  {
-      //      TransparentHelper.SetTransparent(this, true);
-      //  }
+        // private void InitializeTransparency()
+        //  {
+        //      TransparentHelper.SetTransparent(this, true);
+        //  }
 
 
         private void CalcBoundsAdjustment()

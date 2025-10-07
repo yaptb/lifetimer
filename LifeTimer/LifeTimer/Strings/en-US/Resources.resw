@@ -148,7 +148,7 @@
     <value>Save Status</value>
   </data>
   <data name="SettingsPositionControl_BrowserWindowLabel.Text" xml:space="preserve">
-    <value>Browser Window:</value>
+    <value>Timer Window:</value>
   </data>
   <data name="SettingsPositionControl_XLabel.Text" xml:space="preserve">
     <value>X:</value>

@@ -11,7 +11,7 @@
   <Identity
     Name="ParsecXR.LifeTimer"
     Publisher="CN=7BBE1AF8-6D7A-47C1-BAA7-869C6AB3AE01"
-    Version="1.0.5.0" />
+    Version="1.0.6.0" />
 
   <mp:PhoneIdentity PhoneProductId="3a2ae644-4123-4f65-8b01-73184dd30b1e" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

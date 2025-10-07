@@ -1,22 +1,34 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 
 namespace LifeTimer.Logic
 {
     public class NagTimer
     {
+
         private readonly ILogger<NagTimer> _logger;
-        private  ApplicationController _applicationController;
+        private ApplicationController _applicationController;
         private Timer _sleepTimer;
         private Timer _screenTimer;
+        private Timer _textUpdateTimer;
 
         private int _nagSleepInitialIntervalSeconds = 10;
-        private int _nagSleepIntervalSeconds = 5 * 60; //5 minutes
+        private int _nagSleepIntervalSeconds = 3 * 60; //3 minutes
         private int _nagVisibilityIntervalSeconds = 15;
- 
+        private int _textUpdateTimeIntervalSeconds = 10;
+
+
+        private List<string> _overlayText = new() { "LifeTimer Free Version", "Upgrade To Remove" };
+        private int _overlayCount = 0;
+
+
         private bool _isRunning = false;
+
+        private readonly string _nagText = String.Empty;
+
 
         public NagTimer(ILogger<NagTimer> logger)
         {
@@ -26,13 +38,13 @@ namespace LifeTimer.Logic
 
         public void Initialize(ApplicationController controller)
         {
-            this._applicationController= controller;
+            this._applicationController = controller;
             _logger.LogInformation("NagTimer initialized");
         }
 
         public bool IsRunning => _isRunning;
 
- 
+
         public void Restart()
         {
             _logger.LogInformation($"Restarting NagTimer");
@@ -57,15 +69,20 @@ namespace LifeTimer.Logic
 
             _sleepTimer?.Dispose();
             _screenTimer?.Dispose();
+            _textUpdateTimer?.Dispose();
             _isRunning = false;
         }
 
 
         private void OnSleepTimerElapsed(object state)
         {
+
             ShowNagScreen();
+            _overlayCount = 0;
             _screenTimer = new Timer(OnScreenTimerElapsed, null, TimeSpan.FromSeconds(_nagVisibilityIntervalSeconds), Timeout.InfiniteTimeSpan);
-            
+
+            _textUpdateTimer = new Timer(OnTextUpdateTimerElapsed, null, TimeSpan.FromSeconds(_textUpdateTimeIntervalSeconds), Timeout.InfiniteTimeSpan);
+
         }
 
 
@@ -74,11 +91,32 @@ namespace LifeTimer.Logic
             HideNagScreen();
         }
 
-        private void ShowNagScreen()
+
+        private void OnTextUpdateTimerElapsed(object state)
         {
-            _applicationController.RequestShowFreemiumNagScreen();
+            _overlayCount++;
+
+            if (_overlayCount >= _overlayText.Count)
+                _overlayCount = 0;
+
+            string nagText = _overlayText[_overlayCount];
+            ChangeNagText(nagText);
 
         }
+
+
+        private void ShowNagScreen()
+        {
+            string nagText = _overlayText[0];
+            _applicationController.RequestShowFreemiumNagScreen(nagText);
+        }
+
+
+        private void ChangeNagText(string nagText)
+        {
+            _applicationController.RequestChangeNagText(nagText);
+        }
+
 
         private void HideNagScreen()
         {
@@ -91,4 +129,5 @@ namespace LifeTimer.Logic
         }
 
     }
+
 }

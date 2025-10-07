@@ -417,7 +417,7 @@ namespace LifeTimer.Logic
 
         //invoked by the nag timer to show the nag screen
         //note that the nag timer runs on a separate thread
-        public void RequestShowFreemiumNagScreen()
+        public void RequestShowFreemiumNagScreen(string nagText)
         {
 
             if (!CheckIsFreeVersion())
@@ -433,8 +433,18 @@ namespace LifeTimer.Logic
 
             this.MarshallToUIThread(() =>
             {
-                MainWindow.ShowNagOverlay();
+                MainWindow.ShowNagOverlay(nagText);
             });
+        }
+
+
+        public void RequestChangeNagText(string nagText)
+        {
+            this.MarshallToUIThread(() =>
+            {
+                MainWindow.ChangeNagText(nagText);
+            });
+
         }
 
 
