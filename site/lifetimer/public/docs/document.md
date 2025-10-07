@@ -37,6 +37,8 @@ Do you want to know how many days you have been alive? Want to know how long unt
 3. Position and resize the Timer Window
 4. Configure the appearance
 5. Configure your timers
+6. Configure your startup settings
+7. Save your settings
 
 ## Concepts
 
@@ -89,7 +91,7 @@ Each settings page is described in more detail in the following sections
 
 The Command Page provides the Main Menu for the application. This page has the following buttons
 
-1. **Mode Toggle**: Switch the Browser between Interactive and Background modes.
+1. **Mode Toggle**: Switch the Timer Window between Interactive and Background modes.
 2. **Save Settings**: Save the current application settings
 3. **Quit Application**: Shut down and exit the LifeTimer application.
 
@@ -116,8 +118,6 @@ The Timers Page is used to configure the time displays that are shown in the tim
 ### Appearance Page
 
 The Appearance Page is used to configure how the Timer Window looks on your desktop. You can use this page to change the fonts, colors and border settings for the display.
-
-Note: It is recommend to make all appearance changes with the Timer Window set to Background Mode (disable the Interactive Mode toggle on the Command page)
 
 ![LifeTimer Appearance Page](/images/docs/doc_appearance_page.png)
 
@@ -171,10 +171,6 @@ Upgrading LifeTimer from the Free version to the Professional Version provides t
 
 - LifeTimer is a Windows Desktop application and is not available for other operating systems
 
-**Interactive Window Is Not Transparent:**
-
-- This is by design. Making the interactive window transparent makes it harder to locate, move and resize.
-
 **Desktop Icons are Covered:**
 
 - This is by design. Applications that attach to the Windows Desktop and run behind the desktop icons require elevated privileges and can be a security risk. LifeTimer emulates a desktop window but avoids these security concerns. Unfortunately, this means that the LifeTimer browser window will obscure icons on the desktop even when it is running in Background Mode.
@@ -189,7 +185,6 @@ Upgrading LifeTimer from the Free version to the Professional Version provides t
 For additional support:
 
 - Visit the [Help Page](/help)
-- Contact support at support@lifetimer.site
 
 ---
 
