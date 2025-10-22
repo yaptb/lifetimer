@@ -1,4 +1,5 @@
-﻿using LifeTimer.Logic;
+﻿using H.NotifyIcon;
+using LifeTimer.Logic;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -65,6 +66,8 @@ namespace LifeTimer
                     services.AddSingleton<Logic.TimerRotator>();
                     services.AddSingleton<Logic.NagTimer>();
                     services.AddSingleton<Logic.WindowsStoreHelper>();
+                    services.AddSingleton<Logic.ReleaseNotesService>();
+
 
 
                     /*
@@ -108,6 +111,8 @@ namespace LifeTimer
             _window.Closed += _window_Closed;
 
             _window.Activate();
+
+            await CheckAndDisplayReleaseNotes();
         }
 
 
@@ -141,6 +146,38 @@ namespace LifeTimer
             }
             Application.Current.Exit();
         }
+
+
+
+        private async Task CheckAndDisplayReleaseNotes()
+        {
+            var releaseNotesService = Services.GetRequiredService<ReleaseNotesService>();
+
+            if (releaseNotesService.CheckShowReleaseNotes())
+            {
+
+                var releaseNotesText = await releaseNotesService.GetReleaseNotesContent();
+
+                if (releaseNotesText != null)
+                {
+                    _releaseNotesWindow = new ReleaseNotesWindow();
+                    _releaseNotesWindow.SetReleaseNotes(releaseNotesText);
+                    _releaseNotesWindow.Closed += _releaseNotesWindow_Closed;
+                    _releaseNotesWindow.ConfigureWindow();
+                    _releaseNotesWindow.Show();
+                }
+            }
+        }
+
+
+        private void _releaseNotesWindow_Closed(object sender, WindowEventArgs args)
+        {
+            var releaseNotesService = Services.GetRequiredService<ReleaseNotesService>();
+            releaseNotesService.UpdateReleaseNotesStoredVersion();
+        }
+
+
+        private ReleaseNotesWindow _releaseNotesWindow;
 
     }
 }

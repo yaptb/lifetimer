@@ -10,6 +10,7 @@ namespace LifeTimer.Controls
     {
         private readonly ILogger<CommandTabUserControl> _logger;
         private readonly ApplicationController _applicationController;
+        private  bool _isInitialized=false;
 
         public CommandTabUserControl()
         {
@@ -25,6 +26,7 @@ namespace LifeTimer.Controls
         private void CommandTabUserControl_Loaded(object sender, RoutedEventArgs e)
         {
             UpdateState();
+            _isInitialized = true;
         }
 
 
@@ -46,6 +48,9 @@ namespace LifeTimer.Controls
 
         private void OperatingMode_ToggledChanged(object sender, bool e)
         {
+            if (!_isInitialized)
+                return;
+
             var toggled = this.OperatingMode.IsToggled;
 
             if (toggled)

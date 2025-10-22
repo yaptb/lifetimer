@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tb="using:H.NotifyIcon"
+     xmlns:ec="using:LifeTimer.Controls.Buttons"
     mc:Ignorable="d"
     >
 
@@ -62,7 +63,20 @@
 
                 </Grid>
 
-                <Grid x:Name="FreeVersionNagOverlay" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,4,4,0" Background="Transparent" Padding="2">
+
+                <Grid x:Name="InteractiveToolbar" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" 
+                      Margin="0,4,4,0"
+                      >
+                    <ec:EditBarButton Click="InteractiveModeCancelButton_Click" Glyph="&#xE711;" >
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="Cancel"/>
+                        </ToolTipService.ToolTip>
+                    </ec:EditBarButton>
+                </Grid>
+
+
+
+                <Grid x:Name="FreeVersionNagOverlay" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,4,4,0" Background="Transparent" Padding="2">
 
                 <Border CornerRadius="5" Background="Black" BorderBrush="DarkGray" BorderThickness="1" Padding="2"  >
 

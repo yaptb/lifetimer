@@ -11,6 +11,7 @@ namespace LifeTimer.Controls.Settings
     {
         private readonly ILogger<SettingsTimerRotationControl> _logger;
         private readonly ApplicationController _applicationController;
+        private bool _ignoreToggleChanges = false;
 
         public SettingsTimerRotationControl()
         {
@@ -38,6 +39,8 @@ namespace LifeTimer.Controls.Settings
 
         void UpdateControl()
         {
+            _ignoreToggleChanges = true;
+
             this.RotationToggle.IsToggled = _applicationController.CurrentSettings.RotateTimers;
             this.RotationDelay.Value = _applicationController.CurrentSettings.TimerRotationDelaySecs;
 
@@ -51,7 +54,11 @@ namespace LifeTimer.Controls.Settings
                 LinkRotationDisabledUI.Visibility = Visibility.Collapsed;
                 LinkRotationEnabledUI.Visibility = Visibility.Visible;
             }
+
+            _ignoreToggleChanges = false;
         }
+
+
 
         private void RotationDelay_OnValueChanged(object sender, double e)
         {
@@ -62,6 +69,9 @@ namespace LifeTimer.Controls.Settings
 
         private void RotationToggle_ToggledChanged(object sender, bool e)
         {
+            if (_ignoreToggleChanges)
+                return;
+
             bool isToggled = RotationToggle.IsToggled;
             _logger.LogInformation("User {Action} link rotation", isToggled ? "enabled" : "disabled");
             _applicationController.RequestChangeLinkRotationStatus(isToggled);

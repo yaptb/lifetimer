@@ -1,17 +1,29 @@
 using LifeTimer.Logic.Models;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
+using System.Threading;
 using Windows.Storage;
 using Newtonsoft.Json;
 using System;
-using WinRT.LifeTimerVtableClasses;
 
 namespace LifeTimer.Logic;
 
 public class SettingsManager
 {
+
+    private static bool ForceNewSettings = false;
+
+    private static int SaveIntervalMS = 250;
+    private static int DebounceIntervalMS = 500;
+    private Timer _saveTimer;
+    private Timer _debounceTimer;
+    private bool _isSaveRequired = false;
+    private bool _isSaving = false;
+
+
     private readonly ILogger<SettingsManager> _logger;
     private readonly ApplicationDataContainer _localSettings = ApplicationData.Current.LocalSettings;
+    private ApplicationController _applicationController;
 
     public SettingsManager(ILogger<SettingsManager> logger)
     {
@@ -20,19 +32,100 @@ public class SettingsManager
     }
 
     private const string SETTINGS_KEY = "LifeTimerSettings";
+    private const string RELEASE_NOTES_KEY = "ReleaseNoteStoredVersion";
 
 
-    public void SaveSettings(SettingsViewModel settingsModel)
+    public void InitializeAutoSave(ApplicationController appController)
     {
+        _applicationController = appController;
+        _saveTimer = new Timer(CheckSaveRequired, null, TimeSpan.FromSeconds(5), TimeSpan.FromMilliseconds(SaveIntervalMS));
+        _logger.LogInformation("SettingsManager initialized");
+    }
+
+
+    public void RequestSaveAllWithDebounce()
+    {
+        // Cancel any existing timer
+        _debounceTimer?.Dispose();
+
+        // Start a new timer
+        _debounceTimer = new Timer(OnDebounceTimerElapsed, null, DebounceIntervalMS, Timeout.Infinite);
+
+    }
+
+    private void OnDebounceTimerElapsed(object? state)
+    {
+        ScheduleSave();
+    }
+
+
+    public void Shutdown()
+    {
+        _saveTimer?.Dispose();
+        _debounceTimer?.Dispose();
+    }
+
+
+    private void ScheduleSave()
+    {
+        if (_applicationController == null)
+            throw new InvalidOperationException("Settings manager not initialized");
+
+        _isSaveRequired = true;
+    }
+
+
+
+    private void CheckSaveRequired(object? state)
+    {
+        if (_isSaving)
+            return;
+
+        if (!_isSaveRequired)
+            return;
+
+        SaveSettings();
+    }
+
+
+
+
+
+    private void SaveSettings()
+    {
+
         try
         {
+            if (_isSaving)
+                return;
+
+            if (!_isSaveRequired)
+                return;
+
+            _isSaving = true;
+
+            _applicationController.RequestSaveStatusChanged("Saving");
+
+            _logger.LogInformation("SaveSettings() - performing save operation");
+
+            var settingsModel = _applicationController.CurrentSettings;
+
             var serialized = JsonConvert.SerializeObject(settingsModel);
             _localSettings.Values[SETTINGS_KEY] = serialized;
-            _logger.LogInformation("SaveSettings() - settings saved");
+            _logger.LogInformation("SaveSettings() - preferences saved");
+
+
+            _applicationController.RequestSaveStatusChanged("Settings Saved " + DateTime.Now.ToLocalTime());
+            //_applicationController.RequestNotifySettingsSaved();
         }
         catch (Exception ex)
         {
-            _logger.LogError("SaveSettings() - error saving settings "+ex.Message);
+            _logger.LogError("SaveSettings() - error saving settings " + ex.Message);
+        }
+        finally
+        {
+            _isSaving = false;
+            _isSaveRequired = false;
         }
     }
 
@@ -66,6 +159,24 @@ public class SettingsManager
 
     }
 
+
+
+    public int? GetReleaseNotesStoredVersion()
+    {
+        var value = _localSettings.Values[RELEASE_NOTES_KEY];
+
+        if (value == null)
+            return null;
+
+        else
+            return Convert.ToInt32(value);
+    }
+
+
+    public void SetReleaseNotesStoredVersion(int? value)
+    {
+        _localSettings.Values[RELEASE_NOTES_KEY] = value;
+    }
 
 
     /*

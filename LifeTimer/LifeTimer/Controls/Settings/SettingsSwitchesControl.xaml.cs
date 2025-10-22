@@ -13,6 +13,8 @@ namespace LifeTimer.Controls.Settings
         private readonly ApplicationController _applicationController;
 
         private const string StartupTaskID= "LifeTimerStartupId";
+        private bool _ignoreToggleChanges = false;
+
 
         public SettingsSwitchesControl()
         {
@@ -27,10 +29,13 @@ namespace LifeTimer.Controls.Settings
 
         private void ApplyCurrentSettings()
         {
+            _ignoreToggleChanges = true;
             this.InteractiveStartup.IsToggled = _applicationController.CurrentSettings.InteractiveStartup;
             this.SettingsStartup.IsToggled = _applicationController.CurrentSettings.ShowSettingsOnStartup;
 
             GetSystemStartupStatus();
+
+            _ignoreToggleChanges = false;
 
         }
 
@@ -63,6 +68,9 @@ namespace LifeTimer.Controls.Settings
 
         private async void SystemStartup_ToggledChanged(object sender, bool e)
         {
+            if (_ignoreToggleChanges)
+                return;
+
             bool isToggled = this.SystemStartup.IsToggled;
             _applicationController.RequestSettingsStartInteractiveModeChange(isToggled);
 
@@ -91,6 +99,9 @@ namespace LifeTimer.Controls.Settings
 
         private void InteractiveStartup_ToggledChanged(object sender, bool e)
         {
+            if (_ignoreToggleChanges)
+                return;
+
             bool isToggled = this.InteractiveStartup.IsToggled;
             _applicationController.RequestSettingsStartInteractiveModeChange(isToggled);
 
@@ -98,6 +109,10 @@ namespace LifeTimer.Controls.Settings
 
         private void SettingsStartup_ToggledChanged(object sender, bool e)
         {
+            if (_ignoreToggleChanges)
+                return;
+
+
             bool isToggled = this.SettingsStartup.IsToggled;
             _applicationController.RequestSettingsShowSettingsOnStartup(isToggled);
         }

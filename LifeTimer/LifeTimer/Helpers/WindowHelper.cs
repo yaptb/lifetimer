@@ -40,7 +40,7 @@ public static class WindowHelper
     public const int WS_EX_DLGMODALFRAME = 0x00000001;
     public const int WS_EX_CLIENTEDGE = 0x00000200;
     public const int WS_EX_STATICEDGE = 0x00020000;
-
+    private const int WS_EX_TOOLWINDOW = 0x00000080;
 
     private const uint LWA_ALPHA = 0x2;
     private const uint SWP_NOMOVE = 0x2;
@@ -225,6 +225,14 @@ public static class WindowHelper
         SetForegroundWindow(hwnd);
     }
 
+    public static void RemoveCloseButton(Window window)
+    {
+        IntPtr hWnd = WindowNative.GetWindowHandle(window);
+        var style = GetWindowLong(hWnd, GWL_STYLE);
+        style &= ~WS_SYSMENU; // Remove system menu (includes close button)
+        SetWindowLong(hWnd, GWL_STYLE, style);
+    }
+
 
     public static void SetWindowCornerRadius(Window window, DWM_WINDOW_CORNER_PREFERENCE cornerPreference)
     {
@@ -273,7 +281,7 @@ public static class WindowHelper
         SetWindowLong(hWnd, GWL_STYLE, style);
 
         int exStyle = GetWindowLong(hWnd, GWL_EXSTYLE);
-        exStyle |= WS_EX_DLGMODALFRAME |WS_EX_CLIENTEDGE | WS_EX_STATICEDGE ;
+        exStyle |= WS_EX_DLGMODALFRAME |WS_EX_CLIENTEDGE | WS_EX_STATICEDGE | WS_EX_TOOLWINDOW;
         exStyle &= ~WS_EX_LAYERED;
         SetWindowLong(hWnd,GWL_EXSTYLE, exStyle);
 
@@ -365,7 +373,7 @@ public static class WindowHelper
 
 
     public const uint WS_OVERLAPPED = 0x00000000;
-    public const uint WS_SYSMENU = 0x00080000;
+    public const int WS_SYSMENU = 0x00080000;
     public const uint WS_OVERLAPPEDWINDOW = WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU |
                                             WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX;
    

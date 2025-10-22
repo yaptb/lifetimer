@@ -35,13 +35,12 @@
         <StackPanel Grid.Row="0" Grid.Column="0" VerticalAlignment="center" HorizontalAlignment="Stretch" Margin="0,16,16,16">
 
             <!-- define our navigation items. Events are wired up in code behind-->
-            <layoutcontrols:SidenavItemControl x:Name="CommandsItem" x:Uid="SettingsWindow_CommandItem"></layoutcontrols:SidenavItemControl>
             <layoutcontrols:SidenavItemControl x:Name="TimersItem" x:Uid="SettingsWindow_TimersItem" ></layoutcontrols:SidenavItemControl>
             <layoutcontrols:SidenavItemControl x:Name="AppearanceItem" x:Uid="SettingsWindow_AppearanceItem" ></layoutcontrols:SidenavItemControl>
+            <layoutcontrols:SidenavItemControl x:Name="CommandsItem" x:Uid="SettingsWindow_CommandItem"></layoutcontrols:SidenavItemControl>
             <layoutcontrols:SidenavItemControl x:Name="SettingsItem" x:Uid="SettingsWindow_SettingsItem"  ></layoutcontrols:SidenavItemControl>
             <layoutcontrols:SidenavItemControl x:Name="HelpItem"     x:Uid="SettingsWindow_HelpItem"  ></layoutcontrols:SidenavItemControl>
 
-          
         </StackPanel>
 
  

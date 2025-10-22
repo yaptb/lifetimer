@@ -22,6 +22,10 @@ namespace LifeTimer
         private AppWindow _appWindow;
         private bool _activedFlag = false;
 
+        private bool _isInteractiveMode { get; set; } = false;
+        private bool _captureSizeEvents { get; set; } =false;
+        private bool _initializedFlag = false;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -61,6 +65,7 @@ namespace LifeTimer
             InitializeTransparency();
 
             AppController.OnTimer += AppController_TimerTick;
+            this.WindowGrid.DoubleTapped += WindowGrid_DoubleTapped;
 
         }
 
@@ -85,16 +90,29 @@ namespace LifeTimer
         private void _appWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
         {
 
-            if (args.DidPositionChange || args.DidSizeChange)
+
+
+            if (_initializedFlag && _captureSizeEvents)
             {
-                int x = sender.Position.X;
-                int y = sender.Position.Y;
-                int width = sender.Size.Width;
-                int height = sender.Size.Height;
+                if (args.DidPositionChange || args.DidSizeChange)
+                {
+                    //we will be in interactive mode here. Adjust to save 
+                    //background mode sizes
+                    int x = sender.Position.X;
+                    int y = sender.Position.Y;
+                    int width = sender.Size.Width;
+                    int height = sender.Size.Height;
 
-                AppController.RegisterMainWindowBoundsChange(x, y, width, height);
+                    int adjustedX = x - BoundsAdjustRect.Left;
+                    int adjustedY = y - BoundsAdjustRect.Top;
+                    int adjustedWidth = width - BoundsAdjustRect.Right + BoundsAdjustRect.Left;
+                    int adjustedHeight = height - BoundsAdjustRect.Bottom + BoundsAdjustRect.Top;
+
+                    AppController.RegisterMainWindowBoundsChange(adjustedX, adjustedY, adjustedWidth, adjustedHeight);
+
+                }
+
             }
-
         }
 
         public void ShutdownMainWindow()
@@ -141,69 +159,78 @@ namespace LifeTimer
 
         public void ConfigureForInteractiveMode()
         {
+            _captureSizeEvents = false;
+
             ContextInteractive.Text = ResourceHelper.GetString("MainWindow_NotificationBackground");
 
 
             HideNagOverlay();
 
             WindowHelper.RestoreWindowToDefault(this);
+            WindowHelper.RemoveCloseButton(this);
             WindowHelper.SetNoActivate(this, false);
             WindowHelper.SetClickThrough(this, false);
+            WindowHelper.BringToFront(this);
             //TransparentHelper.SetTransparent(this, false);
 
-            //resize for framed window
-            int x = AppController.CurrentSettings.WindowPosX;
-            int y = AppController.CurrentSettings.WindowPosY;
-            int width = AppController.CurrentSettings.WindowWidth;
-            int height = AppController.CurrentSettings.WindowHeight;
 
-            int adjustedX = x + BoundsAdjustRect.Left;
-            int adjustedY = y + BoundsAdjustRect.Top;
-            int adjustedWidth = width + BoundsAdjustRect.Right - BoundsAdjustRect.Left;
-            int adjustedHeight = height + BoundsAdjustRect.Bottom - BoundsAdjustRect.Top;
+            if (!_isInteractiveMode)
+            {
 
-            WindowHelper.SetWindowBounds(AppWindow, adjustedX, adjustedY, adjustedWidth, adjustedHeight);
+                //resize for framed window
+                int x = AppController.CurrentSettings.WindowPosX;
+                int y = AppController.CurrentSettings.WindowPosY;
+                int width = AppController.CurrentSettings.WindowWidth;
+                int height = AppController.CurrentSettings.WindowHeight;
 
+                int adjustedX = x + BoundsAdjustRect.Left;
+                int adjustedY = y + BoundsAdjustRect.Top;
+                int adjustedWidth = width + BoundsAdjustRect.Right - BoundsAdjustRect.Left;
+                int adjustedHeight = height + BoundsAdjustRect.Bottom - BoundsAdjustRect.Top;
 
-            _interactiveResized = true;
+                WindowHelper.SetWindowBounds(AppWindow, adjustedX, adjustedY, adjustedWidth, adjustedHeight);
 
-            AppWindow.Resize(new Windows.Graphics.SizeInt32(adjustedWidth, adjustedHeight));
+                AppWindow.Resize(new Windows.Graphics.SizeInt32(adjustedWidth, adjustedHeight));
 
+            }
+
+            _captureSizeEvents = true;
+            _isInteractiveMode = true;
+            InteractiveToolbar.Visibility = Visibility.Visible;
 
         }
 
 
         public void ConfigureForBackgroundMode()
         {
+            _captureSizeEvents = false;
+            _isInteractiveMode = false;
+
             HideNagOverlay();
 
             WindowHelper.SetNoActivate(this, true);
             WindowHelper.SetWindowToBorderless(this);
-            WindowHelper.SendToBack(this);
+             // WindowHelper.SendToBack(this);
             // WindowHelper.RecalcWindowSize(this);
 
 
             // TransparentHelper.SetTransparent(this, true);
             ContextInteractive.Text = ResourceHelper.GetString("MainWindow_NotificationInteractive");
 
-            if (_interactiveResized)
-            {
-                //if we have previously resized, reverse the change
-                int x = AppController.CurrentSettings.WindowPosX;
-                int y = AppController.CurrentSettings.WindowPosY;
-                int width = AppController.CurrentSettings.WindowWidth;
-                int height = AppController.CurrentSettings.WindowHeight;
+            //set to our standard window size          
+            int x = AppController.CurrentSettings.WindowPosX;
+            int y = AppController.CurrentSettings.WindowPosY;
+            int width = AppController.CurrentSettings.WindowWidth;
+            int height = AppController.CurrentSettings.WindowHeight;
 
-                int adjustedX = x - BoundsAdjustRect.Left;
-                int adjustedY = y - BoundsAdjustRect.Top;
-                int adjustedWidth = width - BoundsAdjustRect.Right + BoundsAdjustRect.Left;
-                int adjustedHeight = height - BoundsAdjustRect.Bottom + BoundsAdjustRect.Top;
+            int adjustedX = x - BoundsAdjustRect.Left;
+            int adjustedY = y - BoundsAdjustRect.Top;
+            int adjustedWidth = width - BoundsAdjustRect.Right + BoundsAdjustRect.Left;
+            int adjustedHeight = height - BoundsAdjustRect.Bottom + BoundsAdjustRect.Top;
 
-                WindowHelper.SetWindowBounds(AppWindow, adjustedX, adjustedY, adjustedWidth, adjustedHeight);
+            WindowHelper.SetWindowBounds(AppWindow, x, y, width, height);
 
-            }
-
-
+            InteractiveToolbar.Visibility = Visibility.Collapsed;
         }
 
 
@@ -281,6 +308,11 @@ namespace LifeTimer
             Storyboard fadeOut = (Storyboard)ContentGrid.Resources["FadeOutStoryboard"];
             fadeOut.Begin();
         }
+
+        public void SetMainWindowInitialized()
+        {
+            _initializedFlag = true;
+        }
         #endregion
 
 
@@ -309,6 +341,21 @@ namespace LifeTimer
         {
             AppController.RequestApplicationExit();
         }
+
+
+        private void WindowGrid_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            if (_isInteractiveMode)
+                AppController.RequestBackgroundMode();
+            else
+                AppController.RequestInteractiveMode();
+        }
+
+        private void InteractiveModeCancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            AppController.RequestBackgroundMode();
+        }
+
 
         private void InitializeNagOverlay()
         {
@@ -389,7 +436,6 @@ namespace LifeTimer
 
         private WindowHelper.RECT BoundsAdjustRect { get; set; }
 
-        private bool _interactiveResized { get; set; } = false;
 
     }
 }

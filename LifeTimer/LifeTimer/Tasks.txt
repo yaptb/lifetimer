@@ -1,0 +1,15 @@
+﻿DONE release notes
+
+TESTING  autosave
+TESTING  add debounce guards to settings controls
+
+DONE  fix resize capture bug
+DONE  set main window to tool window  
+DONE  move main window to front for interaction
+DONE  remove close button from main window
+DONE  remove send to back from main window
+
+DONE add double click interactive
+DONE  add close interactive control bar
+
+  

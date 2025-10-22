@@ -34,6 +34,7 @@ namespace LifeTimer.Logic
 
             //avoid circular dependencies
             _settingsManager = App.Services.GetRequiredService<SettingsManager>();
+            _settingsManager.InitializeAutoSave(this);
 
             _storeHelper = App.Services.GetRequiredService<WindowsStoreHelper>();
 
@@ -58,7 +59,7 @@ namespace LifeTimer.Logic
         #region public api
 
 
-        public event EventHandler<EventArgs> NotifySettingsChange;
+        private event EventHandler<EventArgs> NotifySettingsChange;
         public event EventHandler<EventArgs> NotifyMainWindowBoundsChange;
         public event EventHandler<string> NotifyLinkRotationStatusChange;
         public event EventHandler<string> NotifyLinkRotationTimerChange;
@@ -178,6 +179,7 @@ namespace LifeTimer.Logic
             _globalTimer?.Stop();
             _globalTimer = null;
             _nagTimer.Stop();
+            _settingsManager.Shutdown();
         }
 
 
@@ -193,16 +195,20 @@ namespace LifeTimer.Logic
                 SetToInteractiveMode();
             }
 
+            ProcessSaveSettingsWithDebounce();
         }
+
 
         public void RequestInteractiveMode()
         {
             SetToInteractiveMode();
+            ProcessSaveSettingsWithDebounce();
         }
 
         public void RequestBackgroundMode()
         {
             SetToBackgroundMode();
+            ProcessSaveSettingsWithDebounce();
         }
 
 
@@ -212,9 +218,16 @@ namespace LifeTimer.Logic
         }
 
 
+        public void RequestSaveStatusChanged(string status)
+        {
+            ProcessSettingsStatusChange($"{status}");
+        }
+
+
+
         public void RequestSaveSettings()
         {
-            SaveSettings();
+            ProcessSaveSettingsWithDebounce();
         }
 
 
@@ -225,6 +238,7 @@ namespace LifeTimer.Logic
 
             CurrentSettings.CurrentTimerId=timerGuid;
 
+            ProcessSaveSettingsWithDebounce();
         }
 
 
@@ -267,6 +281,7 @@ namespace LifeTimer.Logic
 
             UpdateLinkRotation();
             ProcessSettingsChange();
+            ProcessSaveSettingsWithDebounce();
         }
 
 
@@ -302,6 +317,7 @@ namespace LifeTimer.Logic
             CurrentSettings.WindowHeight = height;
 
             NotifyMainWindowBoundsChange?.Invoke(this, EventArgs.Empty);
+            ProcessSaveSettingsWithDebounce();
         }
 
 
@@ -310,12 +326,14 @@ namespace LifeTimer.Logic
 
             this.CurrentSettings.InteractiveStartup = interactiveStartup;
             ProcessSettingsChange();
+            ProcessSaveSettingsWithDebounce();
         }
 
         public void RequestSettingsShowSettingsOnStartup(bool showSettingsOnStartup)
         {
             this.CurrentSettings.ShowSettingsOnStartup = showSettingsOnStartup;
             ProcessSettingsChange();
+            ProcessSaveSettingsWithDebounce();
         }
 
 
@@ -325,6 +343,7 @@ namespace LifeTimer.Logic
             this.CurrentSettings.TimerRotationDelaySecs = delaySecs;
             this._timerRotator.IntervalSeconds = delaySecs;
             ProcessSettingsChange();
+            ProcessSaveSettingsWithDebounce();
         }
 
         public void RequestChangeLinkRotationStatus(bool newStatus)
@@ -332,6 +351,7 @@ namespace LifeTimer.Logic
             this.CurrentSettings.RotateTimers = newStatus;
             UpdateLinkRotation();
             ProcessSettingsChange();
+            ProcessSaveSettingsWithDebounce();
         }
 
 
@@ -339,6 +359,7 @@ namespace LifeTimer.Logic
         {
             this.CurrentSettings.Appearance = appearance;
             this.MainWindow.SetWindowAppearance(appearance);
+            ProcessSaveSettingsWithDebounce();
         }
 
 
@@ -474,12 +495,9 @@ namespace LifeTimer.Logic
             CurrentSettings = settings;
         }
 
-        private void SaveSettings()
+        private void ProcessSaveSettingsWithDebounce()
         {
-            string settingsSavedStr = ResourceHelper.GetString("ApplicationController_SettingsSaved");
-            SettingsManager.SaveSettings(CurrentSettings);
-
-            ProcessSettingsStatusChange($"{settingsSavedStr} {DateTime.Now.ToLocalTime()}");
+            SettingsManager.RequestSaveAllWithDebounce();
         }
 
 
@@ -529,6 +547,7 @@ namespace LifeTimer.Logic
                CurrentSettings.WindowWidth, CurrentSettings.WindowHeight);
 
             MainWindow.SetWindowAppearance(CurrentSettings.Appearance);
+            MainWindow.SetMainWindowInitialized();
         }
 
         private void ShowSettingsWindow()
@@ -565,8 +584,13 @@ namespace LifeTimer.Logic
 
         private void ProcessSettingsStatusChange(string status)
         {
-            this.LastSettingsStatus = status;
-            NotifySettingsStatusChange?.Invoke(this, status);
+
+            MarshallToUIThread(() =>
+            {
+                this.LastSettingsStatus = status;
+                NotifySettingsStatusChange?.Invoke(this, status);
+            });
+
         }
 
         private void ProcessTimerStatusChange(string status)

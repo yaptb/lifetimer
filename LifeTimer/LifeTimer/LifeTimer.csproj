@@ -18,6 +18,9 @@
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <Content Include="ReleaseNotes\ReleaseNotes.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\app_icon.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -129,12 +132,27 @@
 </ItemGroup>
 
 <ItemGroup>
+  <None Remove="Controls\Buttons\EditBarButton.xaml" />
   <None Remove="Controls\DummyUserControl.xaml" />
+  <None Remove="ReleaseNotesWIndow.xaml" />
+  <None Remove="ReleaseNotes\ReleaseNotes.txt" />
   <None Remove="Resources\app_icon.ico" />
 </ItemGroup>
 
 <ItemGroup>
+  <Page Update="ReleaseNotesWindow.xaml">
+    <Generator>MSBuild:Compile</Generator>
+  </Page>
+</ItemGroup>
+
+<ItemGroup>
   <Page Update="Controls\DummyUserControl.xaml">
+    <Generator>MSBuild:Compile</Generator>
+  </Page>
+</ItemGroup>
+
+<ItemGroup>
+  <Page Update="Controls\Buttons\EditBarButton.xaml">
     <Generator>MSBuild:Compile</Generator>
   </Page>
 </ItemGroup>
