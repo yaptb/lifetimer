@@ -24,7 +24,8 @@ CHANGES FOR THIS VERSION\par
 \fs20
 \par
 -- Autosave. LifeTimer will now automatically save all changes. It is no longer necessary to manually save after making a settings change\par
--- UI Improvements. You can now double click on a quote window to interact with it  \par
+-- UI Improvements. You can now double click on the timer window to interact with it  \par
+-- Bugfix.Fixed incorrect window size on first run\par
 -- Bugfix.Fixed an issue where the application could be terminated by closing the timer window\par
--- Bugfix.Fixed an issue with quote window size calculation in background mode\par
+-- Bugfix.Fixed an issue with timer window size calculation in background mode\par
 }\par

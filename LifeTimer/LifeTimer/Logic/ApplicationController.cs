@@ -91,6 +91,7 @@ namespace LifeTimer.Logic
 
             _logger.LogInformation($"AppController InitalizePreBrowser - version {version}");
 
+            ApplyCurrentSettingsToMainWindow();
 
             if (CurrentSettings.InteractiveStartup)
             {
@@ -101,7 +102,6 @@ namespace LifeTimer.Logic
                 SetToBackgroundMode();
             }
 
-            ApplyCurrentSettingsToMainWindow();
 
             _logger.LogInformation("AppController InitalizePreBrowser completed.");
 
