@@ -11,6 +11,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
 using System;
+using System.Threading;
 using WinRT.Interop;
 
 namespace LifeTimer
@@ -56,6 +57,7 @@ namespace LifeTimer
             Exit.ExecuteRequested += Exit_ExecuteRequested;
 
             InitializeNagOverlay();
+            InitializeInteractiveHints();
 
             AppController.RegisterMainWindow(this);
             AppController.InitialisePreMain();
@@ -133,6 +135,11 @@ namespace LifeTimer
 
         }
 
+        public void DisplayInteractiveHints()
+        {
+            this.ShowInteractiveHint();
+        }
+
 
         private void UpdateDisplay()
         {
@@ -165,6 +172,7 @@ namespace LifeTimer
 
 
             HideNagOverlay();
+       
 
             WindowHelper.RestoreWindowToDefault(this);
             WindowHelper.RemoveCloseButton(this);
@@ -345,10 +353,15 @@ namespace LifeTimer
 
         private void WindowGrid_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
+            InitializeInteractiveHints();
+
             if (_isInteractiveMode)
                 AppController.RequestBackgroundMode();
             else
                 AppController.RequestInteractiveMode();
+
+
+
         }
 
         private void InteractiveModeCancelButton_Click(object sender, RoutedEventArgs e)
@@ -369,6 +382,44 @@ namespace LifeTimer
         {
             this.FreeVersionNagOverlay.Visibility = Visibility.Collapsed;
         }
+
+
+
+
+        #region interactive hint
+
+        private Timer _interactiveHintTimer;
+
+
+        private void InitializeInteractiveHints()
+        {
+            this.InteractiveHintDisplay.Opacity = 0;
+            this.InteractiveHintDisplay.Visibility = Visibility.Collapsed;
+        }
+
+        private void ShowInteractiveHint()
+        {
+            this.InteractiveHintDisplay.Visibility = Visibility.Visible;
+
+            Storyboard fadeIn = (Storyboard)ContentGrid.Resources["HintFadeInStoryboard"];
+            fadeIn.Begin();
+
+            _interactiveHintTimer = new Timer(HideInteractiveHint, null, TimeSpan.FromSeconds(10), Timeout.InfiniteTimeSpan);
+        }
+
+        private void HideInteractiveHint(object? state)
+        {
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                Storyboard fadeOut = (Storyboard)ContentGrid.Resources["HintFadeOutStoryboard"];
+                fadeOut.Begin();
+                _interactiveHintTimer?.Dispose();
+            });
+        }
+
+
+        #endregion
+
 
 
 

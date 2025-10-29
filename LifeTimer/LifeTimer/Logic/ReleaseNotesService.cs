@@ -17,7 +17,7 @@ namespace LifeTimer.Logic
         public const string ReleaseNotesFile = "ReleaseNotes.txt";
         public const string ReleaseNotesVersionKey = "RELEASE_VERSION";
 
-        public const int ReleaseNotesVersion = 1010;
+        public const int ReleaseNotesVersion = 10010;
 
         private SettingsManager _settingsManager;
         private ILogger<ReleaseNotesService> _logger;

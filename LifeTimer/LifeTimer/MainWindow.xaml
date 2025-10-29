@@ -27,21 +27,37 @@
             </Grid.RowDefinitions>
 
             <Grid.Resources>
-                <!-- Fade In Storyboard -->
+                <!-- Nag Fade In Storyboard -->
                 <Storyboard x:Name="FadeInStoryboard">
                     <DoubleAnimation Storyboard.TargetName="FreeVersionNagOverlay"
                          Storyboard.TargetProperty="Opacity"
                          From="0" To="1" Duration="0:0:1"/>
                 </Storyboard>
 
-                <!-- Fade Out Storyboard -->
+                <!-- Nag Fade Out Storyboard -->
                 <Storyboard x:Name="FadeOutStoryboard">
                     <DoubleAnimation Storyboard.TargetName="FreeVersionNagOverlay"
                          Storyboard.TargetProperty="Opacity"
                          From="1" To="0" Duration="0:0:1"/>
                 </Storyboard>
 
-            </Grid.Resources>
+
+                <!-- Hint Fade In Storyboard -->
+                <Storyboard x:Name="HintFadeInStoryboard">
+                    <DoubleAnimation Storyboard.TargetName="InteractiveHintDisplay"
+                        Storyboard.TargetProperty="Opacity"
+                        From="0" To="1" Duration="0:0:1"/>
+                </Storyboard>
+
+                <!-- Hint Fade Out Storyboard -->
+                <Storyboard x:Name="HintFadeOutStoryboard">
+                    <DoubleAnimation Storyboard.TargetName="InteractiveHintDisplay"
+                        Storyboard.TargetProperty="Opacity"
+                        From="1" To="0" Duration="0:0:1"/>
+                </Storyboard>
+
+
+                </Grid.Resources>
 
                 <Grid Name="TimerRegion" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
 
@@ -78,7 +94,7 @@
 
                 <Grid x:Name="FreeVersionNagOverlay" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,4,4,0" Background="Transparent" Padding="2">
 
-                <Border CornerRadius="5" Background="Black" BorderBrush="DarkGray" BorderThickness="1" Padding="2"  >
+                <Border CornerRadius="5" Background="Black" BorderBrush="DarkGray" BorderThickness="1" Padding="3"  >
 
                         <TextBlock x:Name="NagText"
                            FontSize="8"
@@ -89,7 +105,25 @@
 
             </Grid>
 
-        </Grid>
+
+
+                <Grid x:Name="InteractiveHintDisplay" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,4,4,0" Background="Transparent" Padding="2"
+                      >
+
+                    <Border CornerRadius="5" Background="Black" BorderBrush="{StaticResource AccentFillColorDefaultBrush}" BorderThickness="2" Padding="2"  >
+
+                        <TextBlock x:Name="HintText"
+                           FontSize="12"
+                           Padding="8,0,8,0"
+                           Foreground="{StaticResource AccentFillColorDefaultBrush}"
+                                  Text="Double-click window to interact"
+                            />
+                    </Border>
+
+                </Grid>
+
+
+            </Grid>
         </Border>
 
         <tb:TaskbarIcon

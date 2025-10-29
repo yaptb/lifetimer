@@ -1,7 +1,15 @@
-﻿DONE release notes
+﻿
+DONE Fix Interactive Switch Response
+DONE TESTING Fix Resource Window Icon
+DONE  Fix Color Picker
+DONE TESTING Remove interactive startup
+DONE  (remember window sizing hack)
+DONE TESTING Add operation hints
 
-TESTING  autosave
-TESTING  add debounce guards to settings controls
+
+DONE release notes
+DONE  autosave
+DONE  add debounce guards to settings controls
 
 DONE  fix resize capture bug
 DONE  set main window to tool window  

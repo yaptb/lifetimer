@@ -59,7 +59,8 @@ namespace LifeTimer.Logic
         #region public api
 
 
-        private event EventHandler<EventArgs> NotifySettingsChange;
+        public event EventHandler<EventArgs> NotifyInteractionModeChange;
+        public event EventHandler<EventArgs> NotifySettingsChange;
         public event EventHandler<EventArgs> NotifyMainWindowBoundsChange;
         public event EventHandler<string> NotifyLinkRotationStatusChange;
         public event EventHandler<string> NotifyLinkRotationTimerChange;
@@ -93,16 +94,7 @@ namespace LifeTimer.Logic
 
             ApplyCurrentSettingsToMainWindow();
 
-            if (CurrentSettings.InteractiveStartup)
-            {
-                SetToInteractiveMode();
-            }
-            else
-            {
-                SetToBackgroundMode();
-            }
-
-
+     
             _logger.LogInformation("AppController InitalizePreBrowser completed.");
 
         }
@@ -124,15 +116,8 @@ namespace LifeTimer.Logic
             if (MainWindow == null)
                 throw new InvalidOperationException("MainWindow is null");
 
-
-            if (!CurrentSettings.InteractiveStartup)
-            {
-                //HACK - set to background mode a second time
-                //to overcome the main window popping to the foreground
-                //when first loading
-                SetToBackgroundMode();
-            }
-
+            SetToInteractiveMode(); //necessary to set up window bounds correctly
+            SetToBackgroundMode();
 
             //HACK - ensure settings window is shown after the
             //browser initializes as the browser grabs the focus on startup
@@ -141,6 +126,10 @@ namespace LifeTimer.Logic
                 ShowSettingsWindow();
             }
 
+            if (CurrentSettings.ShowOperationHints)
+            {
+                MainWindow.DisplayInteractiveHints();
+            }
 
             InitializeLinkRotation();
 
@@ -203,12 +192,14 @@ namespace LifeTimer.Logic
         {
             SetToInteractiveMode();
             ProcessSaveSettingsWithDebounce();
+            NotifyInteractionModeChange?.Invoke(this, EventArgs.Empty);
         }
 
         public void RequestBackgroundMode()
         {
             SetToBackgroundMode();
             ProcessSaveSettingsWithDebounce();
+            NotifyInteractionModeChange?.Invoke(this, EventArgs.Empty);
         }
 
 
@@ -324,7 +315,7 @@ namespace LifeTimer.Logic
         public void RequestSettingsStartInteractiveModeChange(bool interactiveStartup)
         {
 
-            this.CurrentSettings.InteractiveStartup = interactiveStartup;
+            this.CurrentSettings.ShowOperationHints= interactiveStartup;
             ProcessSettingsChange();
             ProcessSaveSettingsWithDebounce();
         }
@@ -495,9 +486,12 @@ namespace LifeTimer.Logic
             CurrentSettings = settings;
         }
 
+        
         private void ProcessSaveSettingsWithDebounce()
         {
+        
             SettingsManager.RequestSaveAllWithDebounce();
+        
         }
 
 
@@ -579,7 +573,7 @@ namespace LifeTimer.Logic
 
         private void ProcessSettingsChange()
         {
-            NotifySettingsChange?.Invoke(this, EventArgs.Empty);
+             NotifySettingsChange?.Invoke(this, EventArgs.Empty);
         }
 
         private void ProcessSettingsStatusChange(string status)

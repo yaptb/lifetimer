@@ -23,14 +23,21 @@ namespace LifeTimer.Controls.Settings
             _logger = App.Services.GetRequiredService<ILogger<SettingsSwitchesControl>>();
             _applicationController = App.Services.GetRequiredService<ApplicationController>();
 
+            _applicationController.NotifySettingsStatusChange += _applicationController_NotifySettingsStatusChange;
+
             ApplyCurrentSettings();
             _logger.LogDebug("SettingsSwitchesControl initialized");
+        }
+
+        private void _applicationController_NotifySettingsStatusChange(object? sender, string e)
+        {
+            ApplyCurrentSettings();
         }
 
         private void ApplyCurrentSettings()
         {
             _ignoreToggleChanges = true;
-            this.InteractiveStartup.IsToggled = _applicationController.CurrentSettings.InteractiveStartup;
+            this.OperationHints.IsToggled = _applicationController.CurrentSettings.ShowOperationHints;
             this.SettingsStartup.IsToggled = _applicationController.CurrentSettings.ShowSettingsOnStartup;
 
             GetSystemStartupStatus();
@@ -97,12 +104,12 @@ namespace LifeTimer.Controls.Settings
         }
 
 
-        private void InteractiveStartup_ToggledChanged(object sender, bool e)
+        private void OperationHints_ToggledChanged(object sender, bool e)
         {
             if (_ignoreToggleChanges)
                 return;
 
-            bool isToggled = this.InteractiveStartup.IsToggled;
+            bool isToggled = this.OperationHints.IsToggled;
             _applicationController.RequestSettingsStartInteractiveModeChange(isToggled);
 
         }

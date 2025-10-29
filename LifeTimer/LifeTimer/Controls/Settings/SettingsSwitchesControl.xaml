@@ -26,9 +26,10 @@
 
 
                 <componentcontrols:SettingsToggleControl 
-                        x:Name="InteractiveStartup"
-                        x:Uid="SettingsSwitchesControl_InteractiveStartup"
-                        ToggledChanged="InteractiveStartup_ToggledChanged"
+                        x:Name="OperationHints"
+                        Title="Operation Hints"
+                        Description="Enable the display of operating hints"
+                        ToggledChanged="OperationHints_ToggledChanged"
                         >
                 </componentcontrols:SettingsToggleControl>
 

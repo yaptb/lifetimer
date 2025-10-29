@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "LifeTimerPro (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "LifeTimerPro (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

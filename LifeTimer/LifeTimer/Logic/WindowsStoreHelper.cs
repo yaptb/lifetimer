@@ -15,9 +15,10 @@ namespace LifeTimer.Logic
     }
 
 
-    internal class WindowsStoreHelper
+   public class WindowsStoreHelper
     {
 
+        private const bool TestModeOverrideStore = false;
         private readonly ILogger<WindowsStoreHelper> _logger;
 
         public const string PRO_LIFE_VERSION_PRODUCT_ID = "9N1WWH32P6TX";
@@ -201,8 +202,11 @@ namespace LifeTimer.Logic
                 _productVersion = LifeTimerVersionTypes.Free;
             }
 
+            finally
+            {
+                SetupTestModeStoreOverrides();
 
-            SetupTestModeStoreOverrides();
+            }
 
         }
 
@@ -280,7 +284,11 @@ namespace LifeTimer.Logic
 
         private void SetupTestModeStoreOverrides()
         {
-            /*
+            if (!TestModeOverrideStore)
+                return;
+#if DEBUG
+
+
             _logger.LogWarning("***** STORE TEST MODE ENABLED ******");
 
             _productVersion = LifeTimerVersionTypes.Free;
@@ -292,7 +300,9 @@ namespace LifeTimer.Logic
             _proSubFormattedPrice = "$3.99";
             _proSubRenewalPeriod = "12";
             _proSubRenewalUnits = "months";
-            */
+
+#endif
+
         }
 
 

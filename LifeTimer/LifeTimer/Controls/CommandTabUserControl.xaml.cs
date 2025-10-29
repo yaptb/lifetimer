@@ -10,7 +10,7 @@ namespace LifeTimer.Controls
     {
         private readonly ILogger<CommandTabUserControl> _logger;
         private readonly ApplicationController _applicationController;
-        private  bool _isInitialized=false;
+        private bool _ignoreToggleEvents =false;
 
         public CommandTabUserControl()
         {
@@ -18,20 +18,28 @@ namespace LifeTimer.Controls
             
             _logger = App.Services.GetRequiredService<ILogger<CommandTabUserControl>>();
             _applicationController = App.Services.GetRequiredService<ApplicationController>();
+            _applicationController.NotifyInteractionModeChange += _applicationController_NotifyInteractionModeChange;
             
             Loaded += CommandTabUserControl_Loaded;
             _logger.LogDebug("CommandTabUserControl initialized");
         }
 
+        private void _applicationController_NotifyInteractionModeChange(object? sender, System.EventArgs e)
+        {
+            UpdateState();
+        }
+
+
         private void CommandTabUserControl_Loaded(object sender, RoutedEventArgs e)
         {
             UpdateState();
-            _isInitialized = true;
         }
 
 
         private void UpdateState()
         {
+            _ignoreToggleEvents = true;
+
             if (_applicationController.IsInteractiveMode)
             {
                 this.OperatingMode.IsToggled = true;
@@ -41,6 +49,7 @@ namespace LifeTimer.Controls
                 this.OperatingMode.IsToggled = false;
             }
 
+            _ignoreToggleEvents=false;
         }
 
    
@@ -48,7 +57,9 @@ namespace LifeTimer.Controls
 
         private void OperatingMode_ToggledChanged(object sender, bool e)
         {
-            if (!_isInitialized)
+           
+
+            if (_ignoreToggleEvents)
                 return;
 
             var toggled = this.OperatingMode.IsToggled;

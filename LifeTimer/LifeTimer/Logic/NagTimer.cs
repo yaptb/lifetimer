@@ -15,13 +15,13 @@ namespace LifeTimer.Logic
         private Timer _screenTimer;
         private Timer _textUpdateTimer;
 
-        private int _nagSleepInitialIntervalSeconds = 10;
+        private int _nagSleepInitialIntervalSeconds = 30;
         private int _nagSleepIntervalSeconds = 3 * 60; //3 minutes
         private int _nagVisibilityIntervalSeconds = 15;
         private int _textUpdateTimeIntervalSeconds = 10;
 
 
-        private List<string> _overlayText = new() { "LifeTimer Free Version", "Upgrade To Remove" };
+        private List<string> _overlayText = new() { "LifeTimer Free Version", "Use Help Page To Upgrade" };
         private int _overlayCount = 0;
 
 

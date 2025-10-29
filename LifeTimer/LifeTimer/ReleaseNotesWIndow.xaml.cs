@@ -23,6 +23,15 @@ namespace LifeTimer
         {
             InitializeComponent();
 
+            // Get the AppWindow for this window
+            var hWnd = WindowNative.GetWindowHandle(this);
+            var windowId = Win32Interop.GetWindowIdFromWindow(hWnd);
+
+            //set the icon
+            var appWindow = AppWindow.GetFromWindowId(windowId);
+            appWindow.SetIcon("Resources\\app_icon.ico");
+
+
             //disable release notes rich text viewer flyouts
             this.ReleaseNotesViewer.ContextFlyout = null;
             this.ReleaseNotesViewer.SelectionFlyout = null;

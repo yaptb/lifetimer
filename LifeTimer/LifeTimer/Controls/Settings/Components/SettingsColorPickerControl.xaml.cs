@@ -32,7 +32,7 @@ namespace LifeTimer.Controls.Settings.Components
 
         public event EventHandler<Color> ColorChanged;
 
-  
+
 
         public Color SelectedColor
         {
@@ -44,19 +44,13 @@ namespace LifeTimer.Controls.Settings.Components
         {
             this.InitializeComponent();
 
-            // Initialize with red color (Hue=0, Saturation=1, Value=1, Alpha=1)
-            _currentHue = 0;
-            _currentSaturation = 1;
-            _currentValue = 1;
-            _currentAlpha = 1;
-
-            var rgb = ColorHelperUtil.HsvToRgb(_currentHue, _currentSaturation, _currentValue);
-            var color = Color.FromArgb((byte)(_currentAlpha * 255), rgb.R, rgb.G, rgb.B);
-            UpdateUI(color);
-            UpdateSelectorPositions();
-
-     
-
+            // Ensure UI is updated after control is fully loaded
+            this.Loaded += (s, e) =>
+            {
+                var color = SelectedColor;
+                UpdateUI(color);
+                UpdateSelectorPositions();
+            };
         }
 
 
@@ -108,7 +102,7 @@ namespace LifeTimer.Controls.Settings.Components
                 // Update selector positions
                 UpdateSelectorPositions();
 
-           
+
 
 
             }
@@ -117,7 +111,7 @@ namespace LifeTimer.Controls.Settings.Components
                 _isUpdating = false;
             }
 
-         
+
         }
 
         private void UpdateSelectorPositions()

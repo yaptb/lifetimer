@@ -16,11 +16,11 @@ public class SettingsViewModel : INotifyPropertyChanged
     private AppearanceViewModel _appearance = new AppearanceViewModel();
 
 
+    private bool _operationHints = true;
     private bool _rotateTimers = false;
     private int _timerRotationDelaySecs = 30;
     private Color _windowColor = Colors.Black;
     private int _windowOpacity = 128;
-    private bool _interactiveStartup = true;
     private bool _showSettingsOnStartup = true;
     private int _windowPosX = 100;
     private int _windowPosY = 100;
@@ -70,10 +70,10 @@ public class SettingsViewModel : INotifyPropertyChanged
     }
     */
 
-    public bool InteractiveStartup
+    public bool ShowOperationHints
     {
-        get => _interactiveStartup;
-        set => SetProperty(ref _interactiveStartup, value);
+        get => _operationHints;
+        set => SetProperty(ref _operationHints, value);
     }
 
     public bool ShowSettingsOnStartup

@@ -25,7 +25,10 @@ CHANGES FOR THIS VERSION\par
 \par
 -- Autosave. LifeTimer will now automatically save all changes. It is no longer necessary to manually save after making a settings change\par
 -- UI Improvements. You can now double click on the timer window to interact with it  \par
+-- UI Improvements. Replaced Interactive Startup option with Operation Hints option to simplify first run configuration
+-- UI Improvements. Fixed missing icon on Release Notes window.
 -- Bugfix.Fixed incorrect window size on first run\par
 -- Bugfix.Fixed an issue where the application could be terminated by closing the timer window\par
 -- Bugfix.Fixed an issue with timer window size calculation in background mode\par
+-- Bugfix.Fixed a selection issue with the color picker dialog
 }\par
