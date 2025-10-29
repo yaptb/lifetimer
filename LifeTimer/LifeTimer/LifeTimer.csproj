@@ -199,7 +199,7 @@
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <ApplicationIcon>Resources\app_icon.ico</ApplicationIcon>
     <PlatformTarget>x64</PlatformTarget>
-    <AppxPackageDir>C:\_dev\_github\lifetimer\Builds\</AppxPackageDir>
+    <AppxPackageDir>E:\_dev\_github\lifetimer\Builds\</AppxPackageDir>
 <!--    <PackageCertificateKeyFile>LifeTimer_TemporaryKey.pfx</PackageCertificateKeyFile> -->
   </PropertyGroup>
 </Project>
