@@ -199,8 +199,7 @@ namespace LifeTimer.Logic
         {
             SetToBackgroundMode();
             ProcessSaveSettingsWithDebounce();
-            NotifyInteractionModeChange?.Invoke(this, EventArgs.Empty);
-        }
+            NotifyInteractionModeChange?.Invoke(this, EventArgs.Empty);        }
 
 
         public void RequestShowSettingsWindow()
