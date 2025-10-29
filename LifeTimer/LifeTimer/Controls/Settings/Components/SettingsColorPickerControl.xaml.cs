@@ -64,6 +64,8 @@ namespace LifeTimer.Controls.Settings.Components
             }
         }
 
+        private bool _updateValuesFromColor = true;
+
         private void UpdateUI(Color color)
         {
             if (_isUpdating) return;
@@ -76,11 +78,14 @@ namespace LifeTimer.Controls.Settings.Components
                 PreviewColorBrush.Color = color;
 
                 // Update HSV values from color
-                var (hue, saturation, value) = ColorHelperUtil.RgbToHsv(color);
-                _currentHue = hue;
-                _currentSaturation = saturation;
-                _currentValue = value;
-                _currentAlpha = color.A / 255.0;
+                if (_updateValuesFromColor)
+                {
+                    var (hue, saturation, value) = ColorHelperUtil.RgbToHsv(color);
+                    _currentHue = hue;
+                    _currentSaturation = saturation;
+                    _currentValue = value;
+                    _currentAlpha = color.A / 255.0;
+                }
 
                 // Update SV panel hue color
                 SvHueStop.Color = ColorHelperUtil.GetHueColor(_currentHue);
@@ -135,9 +140,13 @@ namespace LifeTimer.Controls.Settings.Components
 
         private void UpdateColorFromHsv()
         {
+            _updateValuesFromColor = false;
+
             var rgb = ColorHelperUtil.HsvToRgb(_currentHue, _currentSaturation, _currentValue);
             var newColor = Color.FromArgb((byte)(_currentAlpha * 255), rgb.R, rgb.G, rgb.B);
             SelectedColor = newColor;
+
+            _updateValuesFromColor = true;
         }
 
         // Hue bar pointer events
@@ -228,6 +237,7 @@ namespace LifeTimer.Controls.Settings.Components
 
         private void UpdateHueFromPosition(double y)
         {
+
             // Clamp y to canvas bounds
             y = Math.Max(0, Math.Min(150, y));
 
@@ -248,10 +258,12 @@ namespace LifeTimer.Controls.Settings.Components
 
             // Update the final color
             UpdateColorFromHsv();
+
         }
 
         private void UpdateSvFromPosition(double x, double y)
         {
+
             // Clamp to canvas bounds
             x = Math.Max(0, Math.Min(200, x));
             y = Math.Max(0, Math.Min(150, y));
@@ -292,11 +304,11 @@ namespace LifeTimer.Controls.Settings.Components
 
             // Update the final color
             UpdateColorFromHsv();
+
         }
 
         private void RgbaNumberBox_ValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
         {
-            if (_isUpdating) return;
 
             try
             {
