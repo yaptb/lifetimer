@@ -147,21 +147,13 @@ If it is set to On, then the Settings Window will be automatically displayed whe
 
 ### Help Page
 
-The Help Page provides a convenient way to link to this web site, and to upgrade the application to the Professional Version.
+The Help Page provides a convenient way to link to this web site.
 
 Click the lifetimer site link to open a regular browser window to this site.
 
 Choose an option and click the upgrade button to upgrade the application to the Professional version.
 
 ![LifeTimer Help Page](/images/docs/doc_help_page.png)
-
-## Professional Version Benefits
-
-Upgrading LifeTimer from the Free version to the Professional Version provides the following benefits:
-
-- The free version overlay message is removed and will no longer display
-- The number of URL links that can be added is raised from 3 to 15
-- Highest priority user support
 
 ## Troubleshooting
 
@@ -188,4 +180,4 @@ For additional support:
 
 ---
 
-_Last updated: October 2025_
+_Last updated: November 2025_

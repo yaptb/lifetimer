@@ -1,12 +1,23 @@
 <footer class="bg-gray-800 text-white">
-  <div class="container mx-auto px-4">
+  <div class="border-t border-gray-700">
     <!-- Bottom Section -->
-    <div class="border-t border-gray-700 p-4">
-      <div class="flex flex-col md:flex-row justify-center items-center">
+
+    <div class="footer-contents">
+      <div class="footer-copyright">
         <p class="text-gray-400 text-xs footer-text" i18n="@@footer.copyright">
           LifeTimer © 2025
           <a href="https://parsecxr.com">ParsecXR</a> All rights reserved.
         </p>
+      </div>
+      <div class="products">
+        @for(product of products();track product.title){
+        <span
+          ><a class="text-gray-300 text-xs footer-text" [href]="product.url">{{
+            product.title
+          }}</a
+          >&nbsp;</span
+        >
+        }
       </div>
     </div>
   </div>
