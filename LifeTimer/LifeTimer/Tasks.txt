@@ -1,4 +1,15 @@
 ﻿
+Add settings button to main screen
+remove release notes
+
+Add first run
+set default colors
+force to pro
+
+FUTURE - pomodoro mode?
+
+
+
 DONE Fix Interactive Switch Response
 DONE TESTING Fix Resource Window Icon
 DONE  Fix Color Picker

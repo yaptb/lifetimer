@@ -27,7 +27,7 @@ namespace LifeTimer.Controls.Settings
         public TimerEditDialog()
         {
             this.InitializeComponent();
-            _applicationController = App.Services.GetRequiredService<ApplicationController>();
+            _applicationController = AppManager.Services.GetRequiredService<ApplicationController>();
             _applicationController.OnTimer += OnGlobalTimer;
             this.Closed += TimerEditDialog_Closed;
             UpdateValidation();

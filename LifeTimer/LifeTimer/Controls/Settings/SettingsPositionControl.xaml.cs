@@ -16,8 +16,8 @@ namespace LifeTimer.Controls.Settings
         {
             InitializeComponent();
             
-            _logger = App.Services.GetRequiredService<ILogger<SettingsPositionControl>>();
-            _applicationController = App.Services.GetRequiredService<ApplicationController>();
+            _logger = AppManager.Services.GetRequiredService<ILogger<SettingsPositionControl>>();
+            _applicationController = AppManager.Services.GetRequiredService<ApplicationController>();
 
             UpdateBoundsDisplay();
             _applicationController.NotifyMainWindowBoundsChange += Instance_NotifyBrowserBoundsChange;

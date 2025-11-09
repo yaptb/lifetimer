@@ -33,21 +33,26 @@ namespace LifeTimer.Logic
             _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
             //avoid circular dependencies
-            _settingsManager = App.Services.GetRequiredService<SettingsManager>();
+            _settingsManager = AppManager.Services.GetRequiredService<SettingsManager>();
             _settingsManager.InitializeAutoSave(this);
 
-            _storeHelper = App.Services.GetRequiredService<WindowsStoreHelper>();
+            _storeHelper = AppManager.Services.GetRequiredService<WindowsStoreHelper>();
 
-            _timerRotator = App.Services.GetRequiredService<TimerRotator>();
+            _timerRotator = AppManager.Services.GetRequiredService<TimerRotator>();
             _timerRotator.Initialize(this);
 
-            _nagTimer = App.Services.GetRequiredService<NagTimer>();
+            _nagTimer = AppManager.Services.GetRequiredService<NagTimer>();
             _nagTimer.Initialize(this);
 
-            LoadSettings();
+         
             _logger.LogInformation("ApplicationController initialized");
         }
 
+
+        public async Task Initialize()
+        {
+            LoadSettings();
+        }
 
 
         public void RegisterMainWindow(MainWindow window)

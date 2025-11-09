@@ -16,8 +16,8 @@ namespace LifeTimer.Controls
         {
             InitializeComponent();
             
-            _logger = App.Services.GetRequiredService<ILogger<CommandTabUserControl>>();
-            _applicationController = App.Services.GetRequiredService<ApplicationController>();
+            _logger = AppManager.Services.GetRequiredService<ILogger<CommandTabUserControl>>();
+            _applicationController = AppManager.Services.GetRequiredService<ApplicationController>();
             _applicationController.NotifyInteractionModeChange += _applicationController_NotifyInteractionModeChange;
             
             Loaded += CommandTabUserControl_Loaded;

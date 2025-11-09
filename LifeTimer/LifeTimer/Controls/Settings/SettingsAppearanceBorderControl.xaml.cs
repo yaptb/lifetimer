@@ -22,8 +22,8 @@ namespace LifeTimer.Controls.Settings
         {
             this.InitializeComponent();
 
-            _logger = App.Services.GetRequiredService<ILogger<SettingsAppearanceBorderControl>>();
-            _applicationController = App.Services.GetRequiredService<ApplicationController>();
+            _logger = AppManager.Services.GetRequiredService<ILogger<SettingsAppearanceBorderControl>>();
+            _applicationController = AppManager.Services.GetRequiredService<ApplicationController>();
 
             _appearanceViewModel = _applicationController.CurrentSettings.Appearance;
 

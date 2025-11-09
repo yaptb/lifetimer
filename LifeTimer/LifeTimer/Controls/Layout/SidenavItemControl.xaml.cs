@@ -69,9 +69,9 @@ public sealed partial class SidenavItemControl : UserControl
     {
         if (_isSelected)
         {
-            NavigationButton.Resources["ButtonBorderBrushPointerOver"] = (Brush)App.Current.Resources["AccentFillColorDefaultBrush"];
-            NavigationButton.BorderBrush = (Brush)App.Current.Resources["AccentFillColorDefaultBrush"];
-          //  TitleTextBlock.Foreground = (Brush)App.Current.Resources["AccentFillColorDefaultBrush"];
+            NavigationButton.Resources["ButtonBorderBrushPointerOver"] = (Brush)AppManager.Current.Resources["AccentFillColorDefaultBrush"];
+            NavigationButton.BorderBrush = (Brush)AppManager.Current.Resources["AccentFillColorDefaultBrush"];
+          //  TitleTextBlock.Foreground = (Brush)AppManager.Current.Resources["AccentFillColorDefaultBrush"];
           //  TitleTextBlock.FontWeight = Microsoft.UI.Text.FontWeights.SemiBold;
         }
         else
@@ -80,8 +80,8 @@ public sealed partial class SidenavItemControl : UserControl
          //   TitleTextBlock.FontWeight = Microsoft.UI.Text.FontWeights.Normal;
           //  TitleTextBlock.ClearValue(TextBlock.ForegroundProperty);
 
-            NavigationButton.Resources["ButtonForegroundPressed"] = App.Current.Resources["AccentFillColorDefaultBrush"];
-            NavigationButton.Resources["ButtonBorderBrushPointerOver"] = App.Current.Resources["ButtonBorderBrushPointerOver"];
+            NavigationButton.Resources["ButtonForegroundPressed"] = AppManager.Current.Resources["AccentFillColorDefaultBrush"];
+            NavigationButton.Resources["ButtonBorderBrushPointerOver"] = AppManager.Current.Resources["ButtonBorderBrushPointerOver"];
 
         }
     }
@@ -90,13 +90,13 @@ public sealed partial class SidenavItemControl : UserControl
     {
 
         /*
-                NavigationButton.Resources["ButtonBorderBrushPressed"] = App.Current.Resources["AccentFillColorDefaultBrush"];
-                NavigationButton.Resources["ButtonForegroundPressed"] = App.Current.Resources["AccentFillColorDefaultBrush"];
+                NavigationButton.Resources["ButtonBorderBrushPressed"] = AppManager.Current.Resources["AccentFillColorDefaultBrush"];
+                NavigationButton.Resources["ButtonForegroundPressed"] = AppManager.Current.Resources["AccentFillColorDefaultBrush"];
 
-                NavigationButton.Resources["ButtonBorderBrushPointerOver"] = App.Current.Resources["AccentFillColorDefaultBrush"];
-                NavigationButton.Resources["ButtonForegroundPointerOver"] = App.Current.Resources["AccentFillColorDefaultBrush"];
+                NavigationButton.Resources["ButtonBorderBrushPointerOver"] = AppManager.Current.Resources["AccentFillColorDefaultBrush"];
+                NavigationButton.Resources["ButtonForegroundPointerOver"] = AppManager.Current.Resources["AccentFillColorDefaultBrush"];
         */
-        //   NavigationButton.BorderBrush = (Brush)App.Current.Resources["AccentFillColorDefaultBrush"];
+        //   NavigationButton.BorderBrush = (Brush)AppManager.Current.Resources["AccentFillColorDefaultBrush"];
   
 
     }

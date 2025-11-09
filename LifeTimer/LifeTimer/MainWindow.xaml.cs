@@ -34,8 +34,8 @@ namespace LifeTimer
             this.Activated += MainWindow_ActivatedHandler;
 
 
-            _logger = App.Services.GetRequiredService<ILogger<MainWindow>>();
-            AppController = App.Services.GetRequiredService<ApplicationController>();
+            _logger = AppManager.Services.GetRequiredService<ILogger<MainWindow>>();
+            AppController = AppManager.Services.GetRequiredService<ApplicationController>();
 
             _logger.LogInformation("MainWindow initializing...");
 
@@ -173,12 +173,12 @@ namespace LifeTimer
 
             HideNagOverlay();
        
-
+            WindowHelper.HideWindow(this);
             WindowHelper.RestoreWindowToDefault(this);
             WindowHelper.RemoveCloseButton(this);
             WindowHelper.SetNoActivate(this, false);
             WindowHelper.SetClickThrough(this, false);
-            WindowHelper.BringToFront(this);
+
             //TransparentHelper.SetTransparent(this, false);
 
 
@@ -206,6 +206,10 @@ namespace LifeTimer
             _isInteractiveMode = true;
             InteractiveToolbar.Visibility = Visibility.Visible;
 
+
+            WindowHelper.ShowWindow(this);
+            WindowHelper.BringToFront(this);
+
         }
 
 
@@ -215,7 +219,8 @@ namespace LifeTimer
             _isInteractiveMode = false;
 
             HideNagOverlay();
-
+ 
+            WindowHelper.HideWindow(this);
             WindowHelper.SetNoActivate(this, true);
             WindowHelper.SetWindowToBorderless(this);
              // WindowHelper.SendToBack(this);
@@ -239,7 +244,10 @@ namespace LifeTimer
             WindowHelper.SetWindowBounds(AppWindow, x, y, width, height);
 
             InteractiveToolbar.Visibility = Visibility.Collapsed;
+            WindowHelper.ShowWindow(this);
         }
+
+
 
 
         public void SetWindowBounds(int x, int y, int width, int height)
@@ -370,6 +378,12 @@ namespace LifeTimer
         }
 
 
+        private void InteractiveModeSettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            AppController.RequestShowSettingsWindow();
+        }
+
+
         private void InitializeNagOverlay()
         {
             this.FreeVersionNagOverlay.Opacity = 0;
@@ -404,7 +418,7 @@ namespace LifeTimer
             Storyboard fadeIn = (Storyboard)ContentGrid.Resources["HintFadeInStoryboard"];
             fadeIn.Begin();
 
-            _interactiveHintTimer = new Timer(HideInteractiveHint, null, TimeSpan.FromSeconds(10), Timeout.InfiniteTimeSpan);
+            _interactiveHintTimer = new Timer(HideInteractiveHint, null, TimeSpan.FromSeconds(3), Timeout.InfiniteTimeSpan);
         }
 
         private void HideInteractiveHint(object? state)

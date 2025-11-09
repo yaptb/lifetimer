@@ -17,8 +17,8 @@ namespace LifeTimer.Controls.Settings
         {
             this.InitializeComponent();
             
-            _logger = App.Services.GetRequiredService<ILogger<SettingsTimerRotationControl>>();
-            _applicationController = App.Services.GetRequiredService<ApplicationController>();
+            _logger = AppManager.Services.GetRequiredService<ILogger<SettingsTimerRotationControl>>();
+            _applicationController = AppManager.Services.GetRequiredService<ApplicationController>();
             
             //_applicationController.NotifySettingsChange += Instance_NotifySettingsChange;
             _applicationController.NotifyLinkRotationStatusChange += _applicationController_NotifyLinkRotationStatusChange;

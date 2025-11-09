@@ -33,7 +33,7 @@ public class SettingsManager
 
     private const string SETTINGS_KEY = "LifeTimerSettings";
     private const string RELEASE_NOTES_KEY = "ReleaseNoteStoredVersion";
-
+    private const string FIRST_RUN_KEY = "FirstRunDisplayedFlag";
 
     public void InitializeAutoSave(ApplicationController appController)
     {
@@ -136,6 +136,11 @@ public class SettingsManager
 
         //var settingsString = String.Empty;
 
+#if DEBUG
+        if (ForceNewSettings)
+            settingsString = String.Empty;
+#endif
+
         if (!string.IsNullOrEmpty(settingsString))
         {
             try
@@ -176,6 +181,24 @@ public class SettingsManager
     public void SetReleaseNotesStoredVersion(int? value)
     {
         _localSettings.Values[RELEASE_NOTES_KEY] = value;
+    }
+
+
+    public int? GetFirstRunVersion()
+    {
+        var value = _localSettings.Values[FIRST_RUN_KEY];
+
+        if (value == null)
+            return null;
+
+        else
+            return Convert.ToInt32(value);
+    }
+
+
+    public void SetFirstRunVersion(int? value)
+    {
+        _localSettings.Values[FIRST_RUN_KEY] = value;
     }
 
 

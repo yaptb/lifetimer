@@ -9,19 +9,18 @@ namespace LifeTimer.Logic.Models;
 
 public class SettingsViewModel : INotifyPropertyChanged
 {
-    public static int InitialWindowWidth = 500;
-    public static int InitialWindowHeight = 200;
+    public static int InitialWindowWidth = 350;
+    public static int InitialWindowHeight = 100;
 
     private List<TimerDefinition> _timers = new List<TimerDefinition>() { };
     private AppearanceViewModel _appearance = new AppearanceViewModel();
-
 
     private bool _operationHints = true;
     private bool _rotateTimers = false;
     private int _timerRotationDelaySecs = 30;
     private Color _windowColor = Colors.Black;
     private int _windowOpacity = 128;
-    private bool _showSettingsOnStartup = true;
+    private bool _showSettingsOnStartup = false;
     private int _windowPosX = 100;
     private int _windowPosY = 100;
     private int _windowWidth = -1; //we want this calculated for current dpi on first run

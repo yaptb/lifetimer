@@ -14,8 +14,8 @@ namespace LifeTimer.Controls.Settings
         {
             InitializeComponent();
             
-            _logger = App.Services.GetRequiredService<ILogger<SettingsStatusControl>>();
-            _applicationController = App.Services.GetRequiredService<ApplicationController>();
+            _logger = AppManager.Services.GetRequiredService<ILogger<SettingsStatusControl>>();
+            _applicationController = AppManager.Services.GetRequiredService<ApplicationController>();
 
             SetSettingsStatus(_applicationController.LastSettingsStatus);
             SetBrowserStatus(_applicationController.LastBrowserStatus);

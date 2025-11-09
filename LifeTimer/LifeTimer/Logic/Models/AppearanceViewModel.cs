@@ -18,10 +18,12 @@ namespace LifeTimer.Logic.Models
             var model = new AppearanceViewModel
             {
                 TitleFontDefinition = FontDefinitionViewModel.CreateDefault("Segoe UI", 18),
-                TimerFontDefinition = FontDefinitionViewModel.CreateDefault("Segoe UI", 40),
-                ForegroundColor = Color.FromArgb(255, 255, 255, 255),
-                BackgroundColor = Color.FromArgb(255, 0, 0, 0),
-            };
+                TimerFontDefinition = FontDefinitionViewModel.CreateDefault("Segoe UI", 36),
+                ForegroundColor = Color.FromArgb(255, 0, 128, 255),
+                BackgroundColor = Color.FromArgb(200, 0, 0, 0),
+                BorderColor = Color.FromArgb(255,0,127,255),
+             };
+
             return model;
         }
     }

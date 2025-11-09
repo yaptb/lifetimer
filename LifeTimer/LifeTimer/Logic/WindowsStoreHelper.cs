@@ -11,7 +11,8 @@ namespace LifeTimer.Logic
     {
         Free,
         ProLifetime,
-        ProSubscription
+        ProSubscription,
+        Plus
     }
 
 
@@ -48,8 +49,13 @@ namespace LifeTimer.Logic
 
 
 
+
         public async Task CheckAndCacheProductAvailability()
         {
+
+            if (IsPlusVersion)
+                return;
+
 
             //            var renewalString=ResourceHelper.GetString("WindowsStoreHelper_RenewalText");
 
@@ -123,6 +129,8 @@ namespace LifeTimer.Logic
 
         public async Task CheckAndCacheProductVersionAsync()
         {
+            if (IsPlusVersion)
+                return;
 
             if (_storeContext == null)
                 throw new InvalidOperationException("_storeContext is not initialized");
@@ -218,6 +226,9 @@ namespace LifeTimer.Logic
         /// </summary>
         public async Task<StorePurchaseResult?> PeformStorePurchaseInWindow(Window window, string productID)
         {
+           
+
+
             try
             {
                 _logger.LogInformation($"WindowsHelper: PerformStorePurchaseInWindow - attempting purchase of {productID}");
@@ -257,6 +268,13 @@ namespace LifeTimer.Logic
         }
 
 
+        public void ForcePlusVersion()
+        {
+            _productVersion = LifeTimerVersionTypes.Plus;
+        }
+
+
+
         public void InvalidateCache()
         {
             this._useCachedProductValues = false;
@@ -264,6 +282,9 @@ namespace LifeTimer.Logic
 
 
         public bool IsFreeVersion { get { return _productVersion == LifeTimerVersionTypes.Free; } }
+
+        public bool IsPlusVersion { get { return _productVersion == LifeTimerVersionTypes.Plus; } }
+
 
         public bool IsProSubVersion { get { return _productVersion == LifeTimerVersionTypes.ProSubscription; } }
 

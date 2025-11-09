@@ -18,6 +18,27 @@
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <Content Include="FirstRun\Images\appearance_page.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FirstRun\Images\help_page.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FirstRun\Images\interactive.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FirstRun\Images\settings.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FirstRun\Images\settings_page.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FirstRun\Images\system_tray_icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FirstRun\Images\timers_page.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="ReleaseNotes\ReleaseNotes.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -134,6 +155,16 @@
 <ItemGroup>
   <None Remove="Controls\Buttons\EditBarButton.xaml" />
   <None Remove="Controls\DummyUserControl.xaml" />
+  <None Remove="FirstRun\Images\appearance_page.png" />
+  <None Remove="FirstRun\Images\doubleclick.gif" />
+  <None Remove="FirstRun\Images\help_page.png" />
+  <None Remove="FirstRun\Images\help_page_plus.png" />
+  <None Remove="FirstRun\Images\interactive.gif" />
+  <None Remove="FirstRun\Images\notes_page.png" />
+  <None Remove="FirstRun\Images\settings.gif" />
+  <None Remove="FirstRun\Images\settings_page.png" />
+  <None Remove="FirstRun\Images\system_tray_icon.png" />
+  <None Remove="FirstRun\Images\timers_page.png" />
   <None Remove="ReleaseNotesWIndow.xaml" />
   <None Remove="ReleaseNotes\ReleaseNotes.txt" />
   <None Remove="Resources\app_icon.ico" />

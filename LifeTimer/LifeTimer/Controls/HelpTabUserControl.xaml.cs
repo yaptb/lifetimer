@@ -1,9 +1,10 @@
+using LifeTimer.Logic;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using LifeTimer.Logic;
+using Windows.ApplicationModel;
 
 
 
@@ -25,13 +26,13 @@ namespace LifeTimer.Controls
         {
             InitializeComponent();
 
-            _logger = App.Services.GetRequiredService<ILogger<HelpTabUserControl>>();
-            _applicationController = App.Services.GetRequiredService<ApplicationController>();
-            _storeHelper = App.Services.GetRequiredService<WindowsStoreHelper>();
+            _logger = AppManager.Services.GetRequiredService<ILogger<HelpTabUserControl>>();
+            _applicationController = AppManager.Services.GetRequiredService<ApplicationController>();
+            _storeHelper = AppManager.Services.GetRequiredService<WindowsStoreHelper>();
             _applicationController.NotifyVersionChange += _applicationController_NotifyVersionChange;
 
-            this.SubOption.Checked += SubOption_Checked;
-            this.LifeOption.Checked += LifeOption_Checked;
+            //this.SubOption.Checked += SubOption_Checked;
+            //this.LifeOption.Checked += LifeOption_Checked;
 
             UpdateControls();
         }
@@ -45,7 +46,7 @@ namespace LifeTimer.Controls
 
         private void UpdateControls()
         {
-
+            /*
             var isFreeVersion = _applicationController.CheckIsFreeVersion();
 
             //setup panels
@@ -60,10 +61,13 @@ namespace LifeTimer.Controls
                 this.UpgradePanel.Visibility=Visibility.Collapsed;
                 this.ProVersionPanel.Visibility=Visibility.Visible;
             }
+            */
+
+            SetupProVersionPanel();
 
         }
 
-
+        /*
         private void SetupUpgradePanel()
         {
 
@@ -133,17 +137,12 @@ namespace LifeTimer.Controls
             this._selectedProductId = WindowsStoreHelper.PRO_SUB_VERSION_PRODUCT_ID;
             this.UpgradeButton.IsEnabled = true;
         }
+        */
 
 
         private void SetupProVersionPanel()
         {
-            var versionString = "LifeTimer Pro ";
-
-            if(_storeHelper.IsProLifetimeVersion) 
-                versionString += "Perpetual License";
-
-            if (_storeHelper.IsProSubVersion)
-                versionString += "Subscription License";
+             string versionString = $"LifeTimer {Package.Current.Id.Version.Major}.{Package.Current.Id.Version.Minor}.{Package.Current.Id.Version.Build}.{Package.Current.Id.Version.Revision}";
 
             ProVersionTitle.Text = versionString;
         }

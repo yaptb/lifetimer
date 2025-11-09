@@ -83,11 +83,24 @@
                 <Grid x:Name="InteractiveToolbar" Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" 
                       Margin="0,4,4,0"
                       >
+
+                    <StackPanel Orientation="Horizontal">
+                        
+                    
+                    <ec:EditBarButton Click="InteractiveModeSettingsButton_Click" Glyph="&#xE713;" >
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="Settings"/>
+                        </ToolTipService.ToolTip>
+                    </ec:EditBarButton>
+
                     <ec:EditBarButton Click="InteractiveModeCancelButton_Click" Glyph="&#xE711;" >
                         <ToolTipService.ToolTip>
                             <ToolTip Content="Cancel"/>
                         </ToolTipService.ToolTip>
                     </ec:EditBarButton>
+
+                    </StackPanel>
+
                 </Grid>
 
 

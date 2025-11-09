@@ -21,10 +21,10 @@ namespace LifeTimer.Controls.Settings
         {
             this.InitializeComponent();
 
-            _logger = App.Services.GetRequiredService<ILogger<SettingsTimerListControl>>();
+            _logger = AppManager.Services.GetRequiredService<ILogger<SettingsTimerListControl>>();
             _logger.LogInformation("SettingsTimerListControl Initializing");
 
-            _applicationController = App.Services.GetRequiredService<ApplicationController>();
+            _applicationController = AppManager.Services.GetRequiredService<ApplicationController>();
             _applicationController.NotifyVersionChange += _applicationController_NotifyVersionChange;
 
             InitializeTimerListFromSettings();

@@ -57,7 +57,7 @@
 
 
 
-                    <!-- upgrade button -->
+                    <!-- upgrade button 
                     <StackPanel x:Name="UpgradePanel" HorizontalAlignment="Center">
 
                         <TextBlock x:Name="UpgradeTitle"
@@ -99,7 +99,7 @@
                         
                     </StackPanel>
 
-
+                    -->
                         
                         
                     <StackPanel x:Name="ProVersionPanel" >
@@ -112,13 +112,24 @@
 
                         <TextBlock 
                             x:Name="ProVersionSubtitle"
-                                    x:Uid="HelpTabUserControl_ProVersionSubtitle"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                FontSize="10"
                            Margin="2,0,8,0"
+                           Text="Thankyou for purchasing LifeTimer!"
                          >
 
                         </TextBlock>
+
+                        <TextBlock 
+                            x:Name="ProVersionCTA"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                               FontSize="10"
+                           Margin="2,0,8,0"
+                           Text="Please consider leaving a store review to support future development."
+                         >
+
+                        </TextBlock>
+
 
                     </StackPanel>
                                                 

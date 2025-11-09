@@ -45,6 +45,10 @@ namespace LifeTimer
             appWindow.SetIcon("Resources\\app_icon.ico");
             appWindow.Resize(new SizeInt32(width, height));
 
+    #if DEBUG
+            appWindow.Move(new PointInt32(150, 150));
+    #endif
+
             SetUpNavigation();
 
         }
@@ -75,8 +79,8 @@ namespace LifeTimer
             }
 
             //select our default tab
-            CommandsItem.Select();
-            CommandsTab.Visibility = Visibility.Visible;
+            TimersItem.Select();
+            TimersTab.Visibility = Visibility.Visible;
 
             //wire up event handlers
             foreach (var kvp in _tabMapping)
@@ -128,7 +132,7 @@ namespace LifeTimer
         public async Task<StorePurchaseResult> PeformStorePurchaseInSettingsUI(string productId)
         {
 
-            var storeHelper = App.Services.GetRequiredService<WindowsStoreHelper>();
+            var storeHelper = AppManager.Services.GetRequiredService<WindowsStoreHelper>();
 
             var result = await storeHelper.PeformStorePurchaseInWindow(this, productId);
 

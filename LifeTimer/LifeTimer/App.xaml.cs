@@ -1,4 +1,5 @@
 ﻿using H.NotifyIcon;
+using LifeTimer.FirstRun;
 using LifeTimer.Logic;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -7,6 +8,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
 using Serilog;
 using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading.Tasks;
 //using Windows.ApplicationModel;
@@ -16,166 +18,35 @@ namespace LifeTimer
 {
     public partial class App : Application
     {
-        private IHost _host;
-        private Window? _window;
-        public static IServiceProvider Services { get; private set; }
+        private AppManager _manager;
+
+
+        private ObservableCollection<WizardStep> _firstRunSteps = new ObservableCollection<WizardStep>
+        {
+            new WizardStep { StepText = "(1/7)", ImagePath = "ms-appx:///FirstRun/Images/interactive.gif", Description = "Double-click to interact" },
+            new WizardStep { StepText = "(2/7)", ImagePath = "ms-appx:///FirstRun/Images/settings.gif", Description = "Use the Settings Window to configure" },
+            new WizardStep { StepText = "(3/7)", ImagePath = "ms-appx:///FirstRun/Images/timers_page.png", Description = "Use the Timers page to create and manage timers" },
+            new WizardStep { StepText = "(4/7)", ImagePath = "ms-appx:///FirstRun/Images/appearance_page.png", Description = " Use the Appearance page to configure fonts and colors" },
+            new WizardStep { StepText = "(5/7)", ImagePath = "ms-appx:///FirstRun/Images/settings_page.png", Description = "Use the Settings page to configure startup options" },
+            new WizardStep { StepText = "(6/7)", ImagePath = "ms-appx:///FirstRun/Images/help_page.png", Description = "Use the Help page to access our website" },
+            new WizardStep { StepText = "(7/7)", ImagePath = "ms-appx:///FirstRun/Images/system_tray_icon.png", Description = "Use the System Tray icon for fast access" },
+        };
+
 
         public App()
         {
             InitializeComponent();
 
-            ConfigureServices();
-
-            //configure exception handler of last resort
-            this.UnhandledException += App_UnhandledException;
+            _manager = new AppManager(this);
+            _manager.InitializeApplication(false); //standard version
+            _manager.ConfigureFirstWizard(_firstRunSteps, "LifeTimer");
         }
 
-        private void ConfigureServices()
-        {
-            // Configure Serilog for file logging
-            var logPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "logs", "lifetimer-.log");
-
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Information()
-                .WriteTo.File(
-                    logPath,
-                    rollingInterval: Serilog.RollingInterval.Day,
-                    retainedFileCountLimit: 30,
-                    fileSizeLimitBytes: 10_000_000, // 10MB
-                    rollOnFileSizeLimit: true,
-                    shared: true,
-                    flushToDiskInterval: TimeSpan.FromSeconds(1))
-                .WriteTo.Debug()
-                .CreateLogger();
-
-            // Build host with services
-            _host = Host.CreateDefaultBuilder()
-                .ConfigureServices((context, services) =>
-                {
-                    // Add logging
-                    services.AddLogging(builder =>
-                    {
-                        builder.ClearProviders();
-                        builder.AddSerilog(Log.Logger);
-                    });
-
-                    // Register application services in dependency order
-
-                    services.AddSingleton<Logic.ApplicationController>();
-                    services.AddSingleton<Logic.SettingsManager>();
-                    services.AddSingleton<Logic.TimerRotator>();
-                    services.AddSingleton<Logic.NagTimer>();
-                    services.AddSingleton<Logic.WindowsStoreHelper>();
-
-
-                    /*
-                    services.AddSingleton<Logic.Logger>();
-                    services.AddSingleton<Logic.WindowStore>();
-                    services.AddSingleton<Logic.FreemiumNagTimer>();
-                    */
-                })
-                .Build();
-
-            Services = _host.Services;
-        }
 
         protected override async void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-
-            var logger = Services.GetRequiredService<ILogger<App>>();
-            logger.LogInformation("LifeTimer application starting...");
-
-            //Uniqueness test
-            //------------------------------
-            // Unique key for your app instance
-            string instanceKey = "main";
-
-            // Try to register this instance
-            AppInstance instance = AppInstance.FindOrRegisterForKey(instanceKey);
-
-            if (!instance.IsCurrent)
-            {
-                logger.LogInformation("Found duplicate instance. Redirecting");
-
-                // Redirect activation to the existing instance and exit
-                instance.RedirectActivationToAsync(AppInstance.GetCurrent().GetActivatedEventArgs()).AsTask().Wait();
-                Environment.Exit(0);
-            }
-
-            await GetAvailableProductsandStoreVersion();
-
-            _window = new MainWindow();
-
-            _window.Closed += _window_Closed;
-
-            _window.Activate();
-
-            await CheckAndDisplayReleaseNotes();
+            await _manager.OnApplicationLaunched();
         }
-
-
-
-        private async Task GetAvailableProductsandStoreVersion()
-        {
-                var logger = Services.GetRequiredService<ILogger<App>>();
-                var storeHelper = Services.GetRequiredService<WindowsStoreHelper>();
-
-                await storeHelper.CheckAndCacheProductAvailability();
-                await storeHelper.CheckAndCacheProductVersionAsync();
-
-        }
-
-
-        private void _window_Closed(object sender, WindowEventArgs args)
-        {
-            Application.Current.Exit();
-        }
-
-
-        private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
-        {
-            // Log the exception or show a dialog
-            var logger = Services.GetRequiredService<ILogger<App>>();
-            logger.LogError("Unexpected Exception: " + e.Message);
-
-            if (e.Exception != null && e.Exception.StackTrace != null)
-            {
-                logger.LogError("Stack Trace: " + e.Exception.StackTrace.ToString());
-            }
-            Application.Current.Exit();
-        }
-
-
-
-        private async Task CheckAndDisplayReleaseNotes()
-        {
-            var releaseNotesService = Services.GetRequiredService<ReleaseNotesService>();
-
-            if (releaseNotesService.CheckShowReleaseNotes())
-            {
-
-                var releaseNotesText = await releaseNotesService.GetReleaseNotesContent();
-
-                if (releaseNotesText != null)
-                {
-                    _releaseNotesWindow = new ReleaseNotesWindow();
-                    _releaseNotesWindow.SetReleaseNotes(releaseNotesText);
-                    _releaseNotesWindow.Closed += _releaseNotesWindow_Closed;
-                    _releaseNotesWindow.ConfigureWindow();
-                    _releaseNotesWindow.Show();
-                }
-            }
-        }
-
-
-        private void _releaseNotesWindow_Closed(object sender, WindowEventArgs args)
-        {
-            var releaseNotesService = Services.GetRequiredService<ReleaseNotesService>();
-            releaseNotesService.UpdateReleaseNotesStoredVersion();
-        }
-
-
-        private ReleaseNotesWindow _releaseNotesWindow;
 
     }
 }

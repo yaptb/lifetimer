@@ -20,8 +20,8 @@ namespace LifeTimer.Controls.Settings
         {
             InitializeComponent();
 
-            _logger = App.Services.GetRequiredService<ILogger<SettingsSwitchesControl>>();
-            _applicationController = App.Services.GetRequiredService<ApplicationController>();
+            _logger = AppManager.Services.GetRequiredService<ILogger<SettingsSwitchesControl>>();
+            _applicationController = AppManager.Services.GetRequiredService<ApplicationController>();
 
             _applicationController.NotifySettingsStatusChange += _applicationController_NotifySettingsStatusChange;
 
