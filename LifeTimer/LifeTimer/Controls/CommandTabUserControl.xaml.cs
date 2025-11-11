@@ -19,9 +19,15 @@ namespace LifeTimer.Controls
             _logger = AppManager.Services.GetRequiredService<ILogger<CommandTabUserControl>>();
             _applicationController = AppManager.Services.GetRequiredService<ApplicationController>();
             _applicationController.NotifyInteractionModeChange += _applicationController_NotifyInteractionModeChange;
+            _applicationController.NotifyOperatingModeChange += _applicationController_NotifyOperatingModeChange;
             
             Loaded += CommandTabUserControl_Loaded;
             _logger.LogDebug("CommandTabUserControl initialized");
+        }
+
+        private void _applicationController_NotifyOperatingModeChange(object? sender, System.EventArgs e)
+        {
+            UpdateState();
         }
 
         private void _applicationController_NotifyInteractionModeChange(object? sender, System.EventArgs e)
@@ -42,6 +48,15 @@ namespace LifeTimer.Controls
 
             if (_applicationController.IsInteractiveMode)
             {
+                this.InteractiveMode.IsToggled = true;
+            }
+            else
+            {
+                this.InteractiveMode.IsToggled = false;
+            }
+
+            if (_applicationController.IsPomodoroMode)
+            {
                 this.OperatingMode.IsToggled = true;
             }
             else
@@ -49,20 +64,21 @@ namespace LifeTimer.Controls
                 this.OperatingMode.IsToggled = false;
             }
 
-            _ignoreToggleEvents=false;
+
+            _ignoreToggleEvents = false;
         }
 
    
 
 
-        private void OperatingMode_ToggledChanged(object sender, bool e)
+        private void InteractiveMode_ToggledChanged(object sender, bool e)
         {
            
 
             if (_ignoreToggleEvents)
                 return;
 
-            var toggled = this.OperatingMode.IsToggled;
+            var toggled = this.InteractiveMode.IsToggled;
 
             if (toggled)
             {
@@ -78,6 +94,25 @@ namespace LifeTimer.Controls
             }
         }
 
+
+        private void OperatingMode_ToggledChanged(object sender, bool e)
+        {
+
+
+            if (_ignoreToggleEvents)
+                return;
+
+            var toggled = this.OperatingMode.IsToggled;
+
+            if (toggled)
+            {
+                _applicationController.RequestPomodoroMode();
+            }
+            else
+            {
+                _applicationController.RequestTimerMode();
+            }
+        }
 
 
         private void SaveSettings_Click(object sender, RoutedEventArgs e)

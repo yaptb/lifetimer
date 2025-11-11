@@ -65,6 +65,7 @@ namespace LifeTimer.Logic
 
 
         public event EventHandler<EventArgs> NotifyInteractionModeChange;
+        public event EventHandler<EventArgs> NotifyOperatingModeChange;
         public event EventHandler<EventArgs> NotifySettingsChange;
         public event EventHandler<EventArgs> NotifyMainWindowBoundsChange;
         public event EventHandler<string> NotifyLinkRotationStatusChange;
@@ -99,7 +100,6 @@ namespace LifeTimer.Logic
 
             ApplyCurrentSettingsToMainWindow();
 
-     
             _logger.LogInformation("AppController InitalizePreBrowser completed.");
 
         }
@@ -121,6 +121,7 @@ namespace LifeTimer.Logic
             if (MainWindow == null)
                 throw new InvalidOperationException("MainWindow is null");
 
+            SetMainWindowOperatingMode();
             SetToInteractiveMode(); //necessary to set up window bounds correctly
             SetToBackgroundMode();
 
@@ -357,6 +358,12 @@ namespace LifeTimer.Logic
             ProcessSaveSettingsWithDebounce();
         }
 
+        public void RequestChangePomodoroMinutes(int minutes)
+        {
+            this.CurrentSettings.Pomodoro.PomodoroMinutes = minutes;
+            ProcessSaveSettingsWithDebounce();
+            ProcessSettingsChange();
+        }
 
         public void MarshallToUIThread(Action action)
         {
@@ -370,7 +377,21 @@ namespace LifeTimer.Logic
         }
 
 
+        public void RequestTimerMode()
+        {
+            this.CurrentSettings.OperatingMode = OperatingMode.Timer;
+            this.SetMainWindowOperatingMode();
+            this.ProcessSaveSettingsWithDebounce();
 
+        }
+
+
+        public void RequestPomodoroMode()
+        {
+            this.CurrentSettings.OperatingMode = OperatingMode.Pomodoro;
+            this.SetMainWindowOperatingMode();
+            this.ProcessSaveSettingsWithDebounce();
+        }
 
 
         public async void RequestVersionUpgrade(string productID)
@@ -544,9 +565,32 @@ namespace LifeTimer.Logic
             MainWindow.SetWindowBounds(CurrentSettings.WindowPosX, CurrentSettings.WindowPosY,
                CurrentSettings.WindowWidth, CurrentSettings.WindowHeight);
 
+
+
             MainWindow.SetWindowAppearance(CurrentSettings.Appearance);
+
+
+
             MainWindow.SetMainWindowInitialized();
         }
+
+
+
+        private void SetMainWindowOperatingMode()
+        {
+            switch (CurrentSettings.OperatingMode)
+            {
+                case OperatingMode.Timer:
+                    MainWindow.ConfigureForTimerMode(); break;
+
+                case OperatingMode.Pomodoro:
+                    MainWindow.ConfigureForPomodoroMode(); break;
+            }
+
+            this.NotifyOperatingModeChange?.Invoke(this,EventArgs.Empty);
+        }
+
+
 
         private void ShowSettingsWindow()
         {
@@ -685,6 +729,6 @@ namespace LifeTimer.Logic
 
         public bool IsTimerRotationDisabled { get; private set; } = true;
         public bool IsTimerRotationActive { get { return _timerRotator.IsRunning; } }
-
+        public bool IsPomodoroMode { get { return CurrentSettings.OperatingMode == OperatingMode.Pomodoro; } }
     }
 }

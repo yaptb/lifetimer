@@ -23,13 +23,14 @@ namespace LifeTimer
 
         private ObservableCollection<WizardStep> _firstRunSteps = new ObservableCollection<WizardStep>
         {
-            new WizardStep { StepText = "(1/7)", ImagePath = "ms-appx:///FirstRun/Images/interactive.gif", Description = "Double-click to interact" },
-            new WizardStep { StepText = "(2/7)", ImagePath = "ms-appx:///FirstRun/Images/settings.gif", Description = "Use the Settings Window to configure" },
-            new WizardStep { StepText = "(3/7)", ImagePath = "ms-appx:///FirstRun/Images/timers_page.png", Description = "Use the Timers page to create and manage timers" },
-            new WizardStep { StepText = "(4/7)", ImagePath = "ms-appx:///FirstRun/Images/appearance_page.png", Description = " Use the Appearance page to configure fonts and colors" },
-            new WizardStep { StepText = "(5/7)", ImagePath = "ms-appx:///FirstRun/Images/settings_page.png", Description = "Use the Settings page to configure startup options" },
-            new WizardStep { StepText = "(6/7)", ImagePath = "ms-appx:///FirstRun/Images/help_page.png", Description = "Use the Help page to access our website" },
-            new WizardStep { StepText = "(7/7)", ImagePath = "ms-appx:///FirstRun/Images/system_tray_icon.png", Description = "Use the System Tray icon for fast access" },
+            new WizardStep { StepText = "(1/8)", ImagePath = "ms-appx:///FirstRun/Images/interactive.gif", Description = "Double-click to interact" },
+            new WizardStep { StepText = "(2/8)", ImagePath = "ms-appx:///FirstRun/Images/settings.gif", Description = "Use the Settings Window to configure" },
+            new WizardStep { StepText = "(3/8)", ImagePath = "ms-appx:///FirstRun/Images/pomodoro.gif", Description = "Switch between Timer and Pomodoro modes" },
+            new WizardStep { StepText = "(4/8)", ImagePath = "ms-appx:///FirstRun/Images/timers_page.png", Description = "Use the Timers page to create and manage timers" },
+            new WizardStep { StepText = "(5/8)", ImagePath = "ms-appx:///FirstRun/Images/appearance_page.png", Description = " Use the Appearance page to configure fonts and colors" },
+            new WizardStep { StepText = "(6/8)", ImagePath = "ms-appx:///FirstRun/Images/settings_page.png", Description = "Use the Settings page to configure startup and Pomodoro options" },
+            new WizardStep { StepText = "(7/8)", ImagePath = "ms-appx:///FirstRun/Images/help_page.png", Description = "Use the Help page to access our website" },
+            new WizardStep { StepText = "(8/8)", ImagePath = "ms-appx:///FirstRun/Images/system_tray_icon.png", Description = "Use the System Tray icon for fast access" },
         };
 
 

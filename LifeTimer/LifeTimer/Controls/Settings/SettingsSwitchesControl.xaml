@@ -40,8 +40,6 @@
                         >
                 </componentcontrols:SettingsToggleControl>
 
-         
-
             </StackPanel>
 
         </layoutcontrols:SettingsGroupControl.CustomContent>

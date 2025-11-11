@@ -286,9 +286,15 @@
     <value>Timers</value>
   </data>
   <data name="CommandTabUserControl_OperatingModeToggle.Title" xml:space="preserve">
-    <value>Interactive Mode</value>
+    <value>Pomodoro Mode</value>
   </data>
   <data name="CommandTabUserControl_OperatingModeToggle.Description" xml:space="preserve">
+    <value>Switch the application to pomodoro mode</value>
+  </data>
+  <data name="CommandTabUserControl_InteractiveModeToggle.Title" xml:space="preserve">
+    <value>Interactive Mode</value>
+  </data>
+  <data name="CommandTabUserControl_InteractiveModeToggle.Description" xml:space="preserve">
     <value>Switch the application to interactive mode</value>
   </data>
 </root>

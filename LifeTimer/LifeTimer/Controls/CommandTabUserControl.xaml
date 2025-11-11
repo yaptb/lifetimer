@@ -19,6 +19,15 @@
                 <StackPanel HorizontalAlignment="Center" Spacing="16"  >
 
                     <componentcontrols:SettingsToggleControl 
+                     x:Name="InteractiveMode"
+                     x:Uid="CommandTabUserControl_InteractiveModeToggle"
+                     ToggledChanged="InteractiveMode_ToggledChanged"  
+                     >
+                    </componentcontrols:SettingsToggleControl>
+
+
+
+                    <componentcontrols:SettingsToggleControl 
                      x:Name="OperatingMode"
                      x:Uid="CommandTabUserControl_OperatingModeToggle"
                      ToggledChanged="OperatingMode_ToggledChanged"  

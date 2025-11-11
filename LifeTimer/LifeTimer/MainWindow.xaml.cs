@@ -133,6 +133,8 @@ namespace LifeTimer
 
             UpdateDisplay();
 
+            PomodoroControl.UpdateDisplay();
+
         }
 
         public void DisplayInteractiveHints()
@@ -248,6 +250,28 @@ namespace LifeTimer
         }
 
 
+        public void ConfigureForTimerMode()
+        {
+
+            this.TimerButton.Visibility = Visibility.Collapsed;
+            this.PomodoroButton.Visibility = Visibility.Visible;
+            this.TimerRegion.Visibility=Visibility.Visible;
+            this.PomodoroRegion.Visibility=Visibility.Collapsed;
+
+
+        }
+
+
+        public void ConfigureForPomodoroMode()
+        {
+            this.TimerButton.Visibility = Visibility.Visible;
+            this.PomodoroButton.Visibility = Visibility.Collapsed;
+
+            this.TimerRegion.Visibility = Visibility.Collapsed;
+            this.PomodoroRegion.Visibility = Visibility.Visible;
+
+        }
+
 
 
         public void SetWindowBounds(int x, int y, int width, int height)
@@ -283,6 +307,7 @@ namespace LifeTimer
             this.WindowBorder.BorderBrush = new SolidColorBrush(viewModel.BorderColor);
             this.WindowBorder.CornerRadius = new CornerRadius(viewModel.BorderRadius);
 
+            this.PomodoroControl.SetAppearance(viewModel);
 
         }
 
@@ -382,6 +407,19 @@ namespace LifeTimer
         {
             AppController.RequestShowSettingsWindow();
         }
+
+
+        private void InteractiveModeTimerButton_Click(object sender, RoutedEventArgs e)
+        {
+            AppController.RequestTimerMode();
+        }
+
+
+        private void InteractiveModePomodoroButton_Click(object sender, RoutedEventArgs e)
+        {
+            AppController.RequestPomodoroMode();
+        }
+
 
 
         private void InitializeNagOverlay()

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="LifeTimer.Controls.Pomodoro.PomodoroUserControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LifeTimer.Controls.Pomodoro"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ec="using:LifeTimer.Controls.Buttons"
+    mc:Ignorable="d">
+
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+
+
+        <Grid x:Name="InteractiveToolbar" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" 
+              Margin="0,4,4,0"
+           >
+
+            <StackPanel Orientation="Horizontal">
+
+                <ec:EditBarButton 
+                 x:Name="StartButton"
+                 Click="StartButton_Click" Glyph="&#xedb5;" >
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="Start"/>
+                    </ToolTipService.ToolTip>
+                </ec:EditBarButton>
+
+                <ec:EditBarButton 
+               x:Name="StopButton"
+               Click="StopButton_Click" Glyph="&#xe769;" >
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="Stop"/>
+                    </ToolTipService.ToolTip>
+                </ec:EditBarButton>
+
+                <ec:EditBarButton 
+              x:Name="ResetButton"
+              Click="ResetButton_Click" Glyph="&#xE777;" >
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="Stop"/>
+                    </ToolTipService.ToolTip>
+                </ec:EditBarButton>
+
+            </StackPanel>
+
+            </Grid>
+
+
+        <StackPanel x:Name="PomodoroDisplay"  HorizontalAlignment="Center" VerticalAlignment="Center" >
+            <TextBlock x:Name="PomodoroTitle" HorizontalAlignment="Center">
+                            Pomodoro
+            </TextBlock>
+            <TextBlock x:Name="PomodoroTime" HorizontalAlignment="Center">
+                            00 : 00 : 00
+            </TextBlock>
+        </StackPanel>
+
+    </Grid>
+</UserControl>

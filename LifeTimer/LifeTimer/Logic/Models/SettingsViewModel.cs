@@ -7,6 +7,14 @@ using Windows.UI;
 
 namespace LifeTimer.Logic.Models;
 
+
+public enum OperatingMode
+{
+    Timer =0,
+    Pomodoro=1
+}
+
+
 public class SettingsViewModel : INotifyPropertyChanged
 {
     public static int InitialWindowWidth = 350;
@@ -14,6 +22,7 @@ public class SettingsViewModel : INotifyPropertyChanged
 
     private List<TimerDefinition> _timers = new List<TimerDefinition>() { };
     private AppearanceViewModel _appearance = new AppearanceViewModel();
+    private PomodoroViewModel _pomodoroModel = new PomodoroViewModel();
 
     private bool _operationHints = true;
     private bool _rotateTimers = false;
@@ -30,6 +39,7 @@ public class SettingsViewModel : INotifyPropertyChanged
     private string? _currentTimerId= null;
     private int? _currentRotationIndex = null;
 
+    private OperatingMode _operatingMode = OperatingMode.Timer;
 
     public List<TimerDefinition> Timers
     {
@@ -41,6 +51,12 @@ public class SettingsViewModel : INotifyPropertyChanged
     {
         get => _appearance;
         set => SetProperty(ref _appearance, value);
+    }
+
+    public PomodoroViewModel Pomodoro
+    {
+        get => _pomodoroModel;
+        set => SetProperty(ref _pomodoroModel, value);
     }
 
     public bool RotateTimers
@@ -123,6 +139,13 @@ public class SettingsViewModel : INotifyPropertyChanged
         get => _currentRotationIndex;
         set => SetProperty(ref _currentRotationIndex, value);
     }
+
+    public OperatingMode OperatingMode
+    {
+        get => _operatingMode;
+        set => SetProperty(ref _operatingMode, value);
+    }
+
 
     public event PropertyChangedEventHandler PropertyChanged;
 

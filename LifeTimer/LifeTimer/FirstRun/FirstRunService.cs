@@ -21,7 +21,7 @@ namespace LifeTimer.FirstRun
     {
 
         private readonly bool ForceFirstRun =false;
-        public const int FirstRunVersion = 1000;
+        public const int FirstRunVersion = 1015;
 
 
         private SettingsManager _settingsManager;

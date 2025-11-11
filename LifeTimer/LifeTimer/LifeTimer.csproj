@@ -21,10 +21,16 @@
     <Content Include="FirstRun\Images\appearance_page.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="FirstRun\Images\commands_page.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="FirstRun\Images\help_page.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="FirstRun\Images\interactive.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="FirstRun\Images\pomodoro.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="FirstRun\Images\settings.gif">
@@ -155,12 +161,15 @@
 <ItemGroup>
   <None Remove="Controls\Buttons\EditBarButton.xaml" />
   <None Remove="Controls\DummyUserControl.xaml" />
+  <None Remove="Controls\Pomodoro\PomodoroUserControl.xaml" />
   <None Remove="FirstRun\Images\appearance_page.png" />
+  <None Remove="FirstRun\Images\commands_page.png" />
   <None Remove="FirstRun\Images\doubleclick.gif" />
   <None Remove="FirstRun\Images\help_page.png" />
   <None Remove="FirstRun\Images\help_page_plus.png" />
   <None Remove="FirstRun\Images\interactive.gif" />
   <None Remove="FirstRun\Images\notes_page.png" />
+  <None Remove="FirstRun\Images\pomodoro.gif" />
   <None Remove="FirstRun\Images\settings.gif" />
   <None Remove="FirstRun\Images\settings_page.png" />
   <None Remove="FirstRun\Images\system_tray_icon.png" />
@@ -184,6 +193,12 @@
 
 <ItemGroup>
   <Page Update="Controls\Buttons\EditBarButton.xaml">
+    <Generator>MSBuild:Compile</Generator>
+  </Page>
+</ItemGroup>
+
+<ItemGroup>
+  <Page Update="Controls\Pomodoro\PomodoroUserControl.xaml">
     <Generator>MSBuild:Compile</Generator>
   </Page>
 </ItemGroup>
