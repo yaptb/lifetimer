@@ -68,6 +68,7 @@ namespace LifeTimer
 
             AppController.OnTimer += AppController_TimerTick;
             this.WindowGrid.DoubleTapped += WindowGrid_DoubleTapped;
+            InteractiveToolbar.Visibility = Visibility.Visible;
 
         }
 
@@ -206,7 +207,7 @@ namespace LifeTimer
 
             _captureSizeEvents = true;
             _isInteractiveMode = true;
-            InteractiveToolbar.Visibility = Visibility.Visible;
+            InteractiveCancelButton.Visibility = Visibility.Visible;
 
 
             WindowHelper.ShowWindow(this);
@@ -245,7 +246,7 @@ namespace LifeTimer
 
             WindowHelper.SetWindowBounds(AppWindow, x, y, width, height);
 
-            InteractiveToolbar.Visibility = Visibility.Collapsed;
+            InteractiveCancelButton.Visibility = Visibility.Collapsed;
             WindowHelper.ShowWindow(this);
         }
 

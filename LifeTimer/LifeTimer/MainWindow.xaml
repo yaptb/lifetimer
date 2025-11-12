@@ -114,7 +114,8 @@
                         </ToolTipService.ToolTip>
                     </ec:EditBarButton>
 
-                    <ec:EditBarButton Click="InteractiveModeCancelButton_Click" Glyph="&#xE711;" >
+                    <ec:EditBarButton Click="InteractiveModeCancelButton_Click" Glyph="&#xE711;"
+                          x:Name="InteractiveCancelButton">
                         <ToolTipService.ToolTip>
                             <ToolTip Content="Cancel"/>
                         </ToolTipService.ToolTip>
