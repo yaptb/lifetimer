@@ -9,7 +9,7 @@
     xmlns:ec="using:LifeTimer.Controls.Buttons"
     mc:Ignorable="d">
 
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
+    <Grid x:Name="PomodoroContent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
 
 
         <Grid x:Name="InteractiveToolbar" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Top" 

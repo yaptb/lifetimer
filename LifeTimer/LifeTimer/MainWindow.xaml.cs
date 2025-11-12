@@ -68,11 +68,27 @@ namespace LifeTimer
 
             AppController.OnTimer += AppController_TimerTick;
             this.WindowGrid.DoubleTapped += WindowGrid_DoubleTapped;
-            InteractiveToolbar.Visibility = Visibility.Visible;
+
+
+            InteractiveToolbar.Visibility = Visibility.Collapsed;
+
+            WindowGrid.PointerEntered += WindowGrid_PointerEntered;
+            WindowGrid.PointerExited += WindowGrid_PointerExited;
 
         }
 
+        private void WindowGrid_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            InteractiveToolbar.Visibility = Visibility.Collapsed;
+            PomodoroControl.HideToolbar();
+        }
+        
 
+        private void WindowGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            InteractiveToolbar.Visibility = Visibility.Visible;
+            PomodoroControl.ShowToolbar();
+        }
 
         private async void MainWindow_ActivatedHandler(object sender, WindowActivatedEventArgs args)
         {

@@ -36,6 +36,18 @@ namespace LifeTimer.Controls.Pomodoro
             State = PomodoroState.Idle;
             UpdateIdleState();
 
+            InteractiveToolbar.Visibility=Visibility.Collapsed;
+        }
+
+  
+        public void ShowToolbar()
+        {
+            InteractiveToolbar.Visibility = Visibility.Visible;
+        }
+
+        public void HideToolbar()
+        {
+            InteractiveToolbar.Visibility = Visibility.Collapsed;
         }
 
 
