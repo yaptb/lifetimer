@@ -19,7 +19,7 @@
 
                 <componentcontrols:SettingsToggleControl 
               x:Name="SystemStartup"
-              x:Uid="SettingsSwitchesControl_SystemStartup"
+              x:Uid="/LifetimerResources/Resources/SettingsSwitchesControl_SystemStartup"
               ToggledChanged="SystemStartup_ToggledChanged"
               >
                 </componentcontrols:SettingsToggleControl>
@@ -35,7 +35,7 @@
 
                 <componentcontrols:SettingsToggleControl 
                         x:Name="SettingsStartup"
-                        x:Uid="SettingsSwitchesControl_SettingsStartup"
+                        x:Uid="/LifetimerResources/Resources/SettingsSwitchesControl_SettingsStartup"
                         ToggledChanged="SettingsStartup_ToggledChanged"
                         >
                 </componentcontrols:SettingsToggleControl>

@@ -48,24 +48,24 @@
                 <TextBlock Grid.Row="0" Grid.ColumnSpan="8" HorizontalAlignment="Left"
                            FontSize="12"
                            FontWeight="Medium"
-                           x:Uid="SettingsPositionControl_BrowserWindowLabel"/>
+                           x:Uid="/LifetimerResources/Resources/SettingsPositionControl_BrowserWindowLabel"/>
 
-                <TextBlock Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Right" x:Uid="SettingsPositionControl_XLabel"/>
+                <TextBlock Grid.Row="1" Grid.Column="0"  HorizontalAlignment="Right" x:Uid="/LifetimerResources/Resources/SettingsPositionControl_XLabel"/>
 
                 <TextBlock Grid.Row="1" Grid.Column="1" x:Name="XPos"
                              Foreground="{ThemeResource TextFillColorSecondaryBrush}">9999</TextBlock>
 
-                <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" x:Uid="SettingsPositionControl_YLabel"/>
+                <TextBlock Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" x:Uid="/LifetimerResources/Resources/SettingsPositionControl_YLabel"/>
 
                 <TextBlock Grid.Row="1" Grid.Column="3" x:Name="YPos"
                            Foreground="{ThemeResource TextFillColorSecondaryBrush}">9999</TextBlock>
 
-                <TextBlock Grid.Row="1" Grid.Column="4" HorizontalAlignment="Right" x:Uid="SettingsPositionControl_WidthLabel"/>
+                <TextBlock Grid.Row="1" Grid.Column="4" HorizontalAlignment="Right" x:Uid="/LifetimerResources/Resources/SettingsPositionControl_WidthLabel"/>
 
                 <TextBlock Grid.Row="1" Grid.Column="5" x:Name="Width"
                            Foreground="{ThemeResource TextFillColorSecondaryBrush}">9999</TextBlock>
 
-                <TextBlock Grid.Row="1" Grid.Column="6" HorizontalAlignment="Right" x:Uid="SettingsPositionControl_HeightLabel"/>
+                <TextBlock Grid.Row="1" Grid.Column="6" HorizontalAlignment="Right" x:Uid="/LifetimerResources/Resources/SettingsPositionControl_HeightLabel"/>
 
                 <TextBlock Grid.Row="1" Grid.Column="7" x:Name="Height"
                            Foreground="{ThemeResource TextFillColorSecondaryBrush}">9999</TextBlock>

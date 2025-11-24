@@ -21,15 +21,15 @@
         </Grid.ColumnDefinitions>   
              <TextBlock
                  FontSize="10"
-                 x:Name="BrowserStatus" x:Uid="SettingsStatusControl_BrowserStatus" Grid.Column="0"  HorizontalAlignment="Left"/>
+                 x:Name="BrowserStatus" x:Uid="/LifetimerResources/Resources/SettingsStatusControl_BrowserStatus" Grid.Column="0"  HorizontalAlignment="Left"/>
 
         <TextBlock 
                  FontSize="10"
-                 x:Name="RotationStatus" x:Uid="SettingsStatusControl_RotationStatus" Grid.Column="1" HorizontalAlignment="Center"/>
+                 x:Name="RotationStatus" x:Uid="/LifetimerResources/Resources/SettingsStatusControl_RotationStatus" Grid.Column="1" HorizontalAlignment="Center"/>
 
         <TextBlock 
                  FontSize="10"
-                 x:Name="SettingsStatus" x:Uid="SettingsStatusControl_SettingsStatus" Grid.Column="2" HorizontalAlignment="Right"/>
+                 x:Name="SettingsStatus" x:Uid="/LifetimerResources/Resources/SettingsStatusControl_SettingsStatus" Grid.Column="2" HorizontalAlignment="Right"/>
         </Grid>
 
 </UserControl>

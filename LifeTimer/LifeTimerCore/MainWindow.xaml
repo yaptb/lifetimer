@@ -171,9 +171,9 @@
                 <MenuFlyout AreOpenCloseAnimationsEnabled="False">
                     <MenuFlyoutItem x:Name="ContextInteractive" Command="{x:Bind Interactive}"  />
                     <MenuFlyoutSeparator />
-                    <MenuFlyoutItem Command="{x:Bind Settings}" x:Uid="MainWindow_NotificationSettings" />
+                    <MenuFlyoutItem Command="{x:Bind Settings}" x:Uid="/LifetimerResources/Resources/MainWindow_NotificationSettings" />
                     <MenuFlyoutSeparator />
-                    <MenuFlyoutItem Command="{x:Bind Exit}"  x:Uid="MainWindow_NotificationExit" />
+                    <MenuFlyoutItem Command="{x:Bind Exit}"  x:Uid="/LifetimerResources/Resources/MainWindow_NotificationExit" />
                 </MenuFlyout>
             </tb:TaskbarIcon.ContextFlyout>
 

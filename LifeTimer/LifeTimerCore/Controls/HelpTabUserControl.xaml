@@ -33,13 +33,13 @@
                     <!--help button -->
                     <StackPanel >
 
-                        <TextBlock x:Name="HelpTitle" x:Uid="HelpTabUserControl_HelpTitle" 
+                        <TextBlock x:Name="HelpTitle" x:Uid="/LifetimerResources/Resources/HelpTabUserControl_HelpTitle" 
                                          FontWeight="Medium"
                                >
                             </TextBlock>
 
                             <TextBlock x:Name="HelpSubtitle"
-                               x:Uid="HelpTabUserControl_HelpSubtitle"
+                               x:Uid="/LifetimerResources/Resources/HelpTabUserControl_HelpSubtitle"
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                FontSize="10"
                                Margin="2,0,8,0"
@@ -61,7 +61,7 @@
                     <StackPanel x:Name="UpgradePanel" HorizontalAlignment="Center">
 
                         <TextBlock x:Name="UpgradeTitle"
-                                   x:Uid="HelpTabUserControl_UpgradeTitle"
+                                   x:Uid="/LifetimerResources/Resources/HelpTabUserControl_UpgradeTitle"
                                    VerticalAlignment="Center"
                                    FontWeight="Medium"
                                >
@@ -69,7 +69,7 @@
 
                         <TextBlock 
                             x:Name="UpgradeSubtitle"
-                                    x:Uid="HelpTabUserControl_UpgradeSubtitle"
+                                    x:Uid="/LifetimerResources/Resources/HelpTabUserControl_UpgradeSubtitle"
  
                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                FontSize="10"
@@ -86,7 +86,7 @@
 
                         <Button 
                             x:Name="UpgradeButton"
-                            x:Uid="HelpTabUserControl_UpgradeButton"
+                            x:Uid="/LifetimerResources/Resources/HelpTabUserControl_UpgradeButton"
                              BorderThickness="1"
                              HorizontalAlignment="Center" Margin="12" Padding="8" Click="UpgradeButton_Click">
 

@@ -5,6 +5,18 @@ VisualStudioVersion = 17.14.36414.22
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LifeTimer", "LifeTimer\LifeTimer.csproj", "{55A1E24E-7B93-C041-24EF-562A414FD93D}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LifeTimerCore", "LifeTimerCore\LifeTimerCore.csproj", "{A9B231E5-0270-4599-8539-D79B88BFF34E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LifeTimerResources", "LifeTimerResources\LifeTimerResources.csproj", "{2443F819-2306-4317-9595-4AB6D74FCACB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		SolutionShared\PrivacyPolicy.txt = SolutionShared\PrivacyPolicy.txt
+		SolutionShared\Tasks.txt = SolutionShared\Tasks.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -33,9 +45,37 @@ Global
 		{55A1E24E-7B93-C041-24EF-562A414FD93D}.Release|x86.ActiveCfg = Release|x86
 		{55A1E24E-7B93-C041-24EF-562A414FD93D}.Release|x86.Build.0 = Release|x86
 		{55A1E24E-7B93-C041-24EF-562A414FD93D}.Release|x86.Deploy.0 = Release|x86
+		{A9B231E5-0270-4599-8539-D79B88BFF34E}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{A9B231E5-0270-4599-8539-D79B88BFF34E}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{A9B231E5-0270-4599-8539-D79B88BFF34E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{A9B231E5-0270-4599-8539-D79B88BFF34E}.Debug|x64.Build.0 = Debug|Any CPU
+		{A9B231E5-0270-4599-8539-D79B88BFF34E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A9B231E5-0270-4599-8539-D79B88BFF34E}.Debug|x86.Build.0 = Debug|Any CPU
+		{A9B231E5-0270-4599-8539-D79B88BFF34E}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{A9B231E5-0270-4599-8539-D79B88BFF34E}.Release|ARM64.Build.0 = Release|Any CPU
+		{A9B231E5-0270-4599-8539-D79B88BFF34E}.Release|x64.ActiveCfg = Release|Any CPU
+		{A9B231E5-0270-4599-8539-D79B88BFF34E}.Release|x64.Build.0 = Release|Any CPU
+		{A9B231E5-0270-4599-8539-D79B88BFF34E}.Release|x86.ActiveCfg = Release|Any CPU
+		{A9B231E5-0270-4599-8539-D79B88BFF34E}.Release|x86.Build.0 = Release|Any CPU
+		{2443F819-2306-4317-9595-4AB6D74FCACB}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{2443F819-2306-4317-9595-4AB6D74FCACB}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{2443F819-2306-4317-9595-4AB6D74FCACB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{2443F819-2306-4317-9595-4AB6D74FCACB}.Debug|x64.Build.0 = Debug|Any CPU
+		{2443F819-2306-4317-9595-4AB6D74FCACB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2443F819-2306-4317-9595-4AB6D74FCACB}.Debug|x86.Build.0 = Debug|Any CPU
+		{2443F819-2306-4317-9595-4AB6D74FCACB}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{2443F819-2306-4317-9595-4AB6D74FCACB}.Release|ARM64.Build.0 = Release|Any CPU
+		{2443F819-2306-4317-9595-4AB6D74FCACB}.Release|x64.ActiveCfg = Release|Any CPU
+		{2443F819-2306-4317-9595-4AB6D74FCACB}.Release|x64.Build.0 = Release|Any CPU
+		{2443F819-2306-4317-9595-4AB6D74FCACB}.Release|x86.ActiveCfg = Release|Any CPU
+		{2443F819-2306-4317-9595-4AB6D74FCACB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A9B231E5-0270-4599-8539-D79B88BFF34E} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{2443F819-2306-4317-9595-4AB6D74FCACB} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0F4583AC-8FD7-48A4-8379-A4D233AC0BBB}

@@ -20,7 +20,7 @@
 
                     <componentcontrols:SettingsToggleControl 
                      x:Name="InteractiveMode"
-                     x:Uid="CommandTabUserControl_InteractiveModeToggle"
+                     x:Uid="/LifetimerResources/Resources/CommandTabUserControl_InteractiveModeToggle"
                      ToggledChanged="InteractiveMode_ToggledChanged"  
                      >
                     </componentcontrols:SettingsToggleControl>
@@ -29,7 +29,7 @@
 
                     <componentcontrols:SettingsToggleControl 
                      x:Name="OperatingMode"
-                     x:Uid="CommandTabUserControl_OperatingModeToggle"
+                     x:Uid="/LifetimerResources/Resources/CommandTabUserControl_OperatingModeToggle"
                      ToggledChanged="OperatingMode_ToggledChanged"  
                      >
                     </componentcontrols:SettingsToggleControl>
@@ -41,8 +41,8 @@
                 <StackPanel HorizontalAlignment="Center" Spacing="16" VerticalAlignment="Center" Width="150" Margin="0,24,0,0">
 
                     
-                    <Button x:Name="SaveSettings" x:Uid="CommandTabUserControl_SaveSettings" Click="SaveSettings_Click" HorizontalAlignment="Stretch"/>
-                <Button x:Name="ApplicationExit" x:Uid="CommandTabUserControl_ApplicationExit" Click="ApplicationExit_Click" HorizontalAlignment="Stretch"/>
+                    <Button x:Name="SaveSettings" x:Uid="/LifetimerResources/Resources/CommandTabUserControl_SaveSettings" Click="SaveSettings_Click" HorizontalAlignment="Stretch"/>
+                <Button x:Name="ApplicationExit" x:Uid="/LifetimerResources/Resources/CommandTabUserControl_ApplicationExit" Click="ApplicationExit_Click" HorizontalAlignment="Stretch"/>
             </StackPanel>
             </StackPanel>
 

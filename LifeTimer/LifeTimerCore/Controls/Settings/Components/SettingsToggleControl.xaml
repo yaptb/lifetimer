@@ -11,13 +11,13 @@
         
         <StackPanel Grid.Column="0" VerticalAlignment="Center" Margin="4">
             <TextBlock x:Name="TitleTextBlock"
-                       x:Uid="SettingsToggleControl_TitleTextBlock"
+                       x:Uid="/LifetimerResources/Resources/SettingsToggleControl_TitleTextBlock"
                        FontWeight="Medium" 
                        FontSize="12"
                        Margin="0"
                        />
             <TextBlock x:Name="DescriptionTextBlock"
-                       x:Uid="SettingsToggleControl_DescriptionTextBlock"
+                       x:Uid="/LifetimerResources/Resources/SettingsToggleControl_DescriptionTextBlock"
                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                        FontSize="10"
                        Margin="2,0,8,0"

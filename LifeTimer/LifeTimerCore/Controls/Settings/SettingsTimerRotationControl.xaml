@@ -10,8 +10,8 @@
         
         <Grid x:Name="LinkRotationDisabledUI" HorizontalAlignment="Stretch" >
             <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                <TextBlock  FontWeight="Medium" x:Uid="SettingsTimerRotationControl_LinkRotationDisabledText" HorizontalAlignment="Center"/>
-                <TextBlock FontSize="10" x:Uid="SettingsTimerRotationControl_LinkRotationDisabledSubtext" HorizontalAlignment="Center"/>
+                <TextBlock  FontWeight="Medium" x:Uid="/LifetimerResources/Resources/SettingsTimerRotationControl_LinkRotationDisabledText" HorizontalAlignment="Center"/>
+                <TextBlock FontSize="10" x:Uid="/LifetimerResources/Resources/SettingsTimerRotationControl_LinkRotationDisabledSubtext" HorizontalAlignment="Center"/>
             </StackPanel>
         </Grid>
 
@@ -26,7 +26,7 @@
         <componentcontrols:SettingsToggleControl 
             Grid.Column="0"
             x:Name="RotationToggle"
-            x:Uid="SettingsTimerRotationControl_RotationToggle"
+            x:Uid="/LifetimerResources/Resources/SettingsTimerRotationControl_RotationToggle"
             ToggledChanged="RotationToggle_ToggledChanged"  
             >
             
@@ -35,7 +35,7 @@
         <componentcontrols:SettingsNumericFieldControl 
    Grid.Column="1"
             x:Name="RotationDelay"
-            x:Uid="SettingsTimerRotationControl_RotationDelay"
+            x:Uid="/LifetimerResources/Resources/SettingsTimerRotationControl_RotationDelay"
             Minimum="0"
             Maximum="86400"
             OnValueChanged="RotationDelay_OnValueChanged"

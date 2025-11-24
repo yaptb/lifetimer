@@ -11,13 +11,13 @@
         
         <StackPanel Grid.Row="0" Margin="0,0,0,0">
             <TextBlock x:Name="TitleTextBlock"
-                       x:Uid="SettingsSliderControl_TitleTextBlock"
+                       x:Uid="/LifetimerResources/Resources/SettingsSliderControl_TitleTextBlock"
                        FontWeight="Medium"
                        FontSize="12"
                         Margin="0"
                        />
             <TextBlock x:Name="SubtitleTextBlock"
-                       x:Uid="SettingsSliderControl_SubtitleTextBlock"
+                       x:Uid="/LifetimerResources/Resources/SettingsSliderControl_SubtitleTextBlock"
                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                        FontSize="10"
                        Margin="2,0,8,0"
