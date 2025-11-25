@@ -1,12 +1,11 @@
 ﻿using LifeTimer.Logic;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using Windows.Devices.Bluetooth.Advertisement;
 
 namespace LifeTimer.FirstRun
 {
+
 
     public class WizardStep
     {
@@ -17,20 +16,37 @@ namespace LifeTimer.FirstRun
     }
 
 
+    public class FirstRunWizardDefinition
+    {
+        public ObservableCollection<WizardStep> WizardSteps { get; set; } = new ObservableCollection<WizardStep>();
+        public string Title { get; set; }
+        public bool ShowCTAScreen { get;set; } //true if we want to show the CTA screen after the wizard steps
+    }
+
+
+
     public class FirstRunService
     {
 
-        private readonly bool ForceFirstRun =false;
-        public const int FirstRunVersion = 1015;
+        private readonly bool ForceFirstRun = false;
+        public const int FirstRunVersion = 1016;
 
 
+        private ApplicationController _appController;
         private SettingsManager _settingsManager;
         private ILogger<FirstRunService> _logger;
+        private FirstRunWizardDefinition _definition { get; set; }
+        private FirstRunViewModel _model { get; set; }
+
+
 
 
         public FirstRunService(SettingsManager settingsManager, ILogger<FirstRunService> logger) {
+            _appController = AppManager.Services.GetRequiredService<ApplicationController>();
             _settingsManager = settingsManager;
             _logger = logger;
+
+
         }
 
 
@@ -70,22 +86,30 @@ namespace LifeTimer.FirstRun
         }
 
 
-        public void ConfigureFirstRunWizard(ObservableCollection<WizardStep> steps, string title)
+        public void ConfigureFirstRunWizard(FirstRunWizardDefinition definition)
         {
-            _model = new FirstRunViewModel(this,steps, title);
+            _definition = definition;
         }
+
+
 
 
         public FirstRunViewModel GetFirstRunViewModel()
         {
-            if (_model == null)
+            if (_definition == null)
                 throw new System.InvalidOperationException("First Run Wizard Not Configured");
+
+            if (_model == null)
+            {
+                //lazy init view model so that we can determine which product version we have
+                var isFreeVersion = _appController.CheckIsFreeVersion();
+                _model = new FirstRunViewModel(_definition, isFreeVersion);
+            }
 
             return _model;
         }
 
 
-        private FirstRunViewModel _model { get; set; }
         
 
     }

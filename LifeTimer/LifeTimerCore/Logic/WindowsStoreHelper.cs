@@ -224,16 +224,16 @@ namespace LifeTimer.Logic
         /// this method must be called from the context of a UI windows to be able to
         /// display the store purchasing UI
         /// </summary>
-        public async Task<StorePurchaseResult?> PeformStorePurchaseInWindow(Window window, string productID)
+        public async Task<StorePurchaseResult?> PeformStorePurchaseInWindow(string productID)
         {
-           
-
-
             try
             {
+                if (UpgradeContextWindow == null)
+                    throw new InvalidOperationException("Upgrade context window not set");
+
                 _logger.LogInformation($"WindowsHelper: PerformStorePurchaseInWindow - attempting purchase of {productID}");
 
-                var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(window);
+                var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(UpgradeContextWindow);
 
                 //Note - we update the cached store context here
                 var _storeContext = StoreContext.GetDefault();
@@ -262,6 +262,7 @@ namespace LifeTimer.Logic
         }
 
 
+
         public void ForceFreeVersion()
         {
             _productVersion = LifeTimerVersionTypes.Free;
@@ -278,6 +279,12 @@ namespace LifeTimer.Logic
         public void InvalidateCache()
         {
             this._useCachedProductValues = false;
+        }
+
+        public void SetUpgradeContextWindow(Window w)
+        {
+            this.UpgradeContextWindow = w;
+
         }
 
 
@@ -303,6 +310,10 @@ namespace LifeTimer.Logic
         public string ProSubRenewalUnits { get { return _proSubRenewalUnits; } }
 
 
+        public Window UpgradeContextWindow { get; set; }
+
+
+
         private void SetupTestModeStoreOverrides()
         {
             if (!TestModeOverrideStore)
@@ -314,10 +325,10 @@ namespace LifeTimer.Logic
 
             _productVersion = LifeTimerVersionTypes.Free;
             
-            _proLifeIsAvailable = false;
+            _proLifeIsAvailable = true;
             _proLifeFormattedPrice = "$14.99";
 
-            _proSubIsAvailable = false;
+            _proSubIsAvailable = true;
             _proSubFormattedPrice = "$3.99";
             _proSubRenewalPeriod = "12";
             _proSubRenewalUnits = "months";

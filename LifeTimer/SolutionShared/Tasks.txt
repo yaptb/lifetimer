@@ -1,13 +1,12 @@
 ﻿
-Add settings button to main screen
-remove release notes
 
-Add first run
-set default colors
-force to pro
-
-FUTURE - pomodoro mode?
-
+DONE - split projects
+TEST revert to freemium
+upgrade first run to deskquote model
+DONE review nagtimer frequency
+DONE sensible default (colors/screen size)
+update assets (new logo)
+better hero screen.
 
 
 DONE Fix Interactive Switch Response

@@ -138,8 +138,8 @@ namespace LifeTimer.Logic
             }
 
             InitializeLinkRotation();
-
             InitializeGlobalTimer();
+
 
             _logger.LogInformation("AppController InitalizePostBrowser Finished");
             _logger.LogInformation("AppController *** Initialization Complete ***");
@@ -400,14 +400,16 @@ namespace LifeTimer.Logic
             if (String.IsNullOrEmpty(productID))
                 throw new InvalidOperationException("productID is null");
 
-            if (_settingsManager == null)
-                throw new InvalidOperationException("Setting window is null");
+
+            if (_storeHelper.UpgradeContextWindow == null)
+                throw new InvalidOperationException("No upgrade content window");
+
 
             try
             {
 
                 _logger.LogInformation($"Attempting store purchase upgrade");
-                var result = await (((SettingsWindow)_settingsWindow).PeformStorePurchaseInSettingsUI(productID));
+                var result = await _storeHelper.PeformStorePurchaseInWindow(productID);
 
                 if (result != null)
                 {

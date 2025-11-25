@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<UserControl
+    x:Class="LifeTimer.FirstRun.FirstRunCTAControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LifeTimer.FirstRun"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="80"></RowDefinition>
+        </Grid.RowDefinitions>
+
+
+        <StackPanel Grid.Row="1" HorizontalAlignment="Center" Width="600">
+
+
+            <!-- upgrade button -->
+            <StackPanel x:Name="UpgradePanel" HorizontalAlignment="Center">
+
+                <TextBlock x:Name="UpgradeTitle"
+                           Text="Upgrade Now to LifeTimer Pro"
+                            VerticalAlignment="Center"
+                            FontWeight="Medium"
+                           FontSize="16"
+                        >
+                </TextBlock>
+
+                <TextBlock 
+                     x:Name="UpgradeSubtitle"
+                       Text="Upgrading to LifeTimer Pro unlocks additional timers and removes all upgrade notifications."
+ 
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        FontSize="14"
+                    TextWrapping="Wrap"
+                       Margin="4,16,4,0"
+                  >
+
+                </TextBlock>
+
+
+                <RadioButtons x:Name="UpgradeOptionRadionGroup" Header="Select Upgrade Option"   FontWeight="Medium" FontSize="14" Margin="24">
+                    <RadioButton x:Name="SubOption"  FontSize="12" Margin="16,0,0,0" />
+                    <RadioButton x:Name="LifeOption"  FontSize="12" Margin="16,0,0,0"/>
+                </RadioButtons>
+
+                <Button 
+                     x:Name="UpgradeButton"
+                     x:Uid="/LifetimerResources/Resources/HelpTabUserControl_UpgradeButton"
+                      BorderThickness="2"
+                      HorizontalAlignment="Center" Margin="12" Padding="8" Click="UpgradeButton_Click">
+
+                    <Button.Resources>
+                        <StaticResource x:Key="ButtonBorderBrush" ResourceKey="AccentFillColorDefaultBrush"/>
+                        <StaticResource x:Key="ButtonBorderBrushPointerOver" ResourceKey="AccentAAFillColorSecondaryBrush"/>
+                    </Button.Resources>
+
+                </Button>
+
+
+            </StackPanel>
+
+
+            <StackPanel x:Name="ProVersionPanel" >
+
+                <TextBlock x:Name="ProVersionTitle"
+                            VerticalAlignment="Center"
+                            FontWeight="Medium"
+                                TextWrapping="Wrap"
+                            FontSize="16"
+                        >
+                </TextBlock>
+
+                <TextBlock 
+                     x:Name="ProVersionSubtitle"
+                          Text="Thank you for supporting LifeTimer! Your purchase will greatly help support the future development of this application."
+                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        FontSize="14"
+                 TextWrapping="Wrap"
+                 Margin="8,16,4,0"
+                  >
+                </TextBlock>
+                <TextBlock 
+            x:Name="ReviewCTA"
+                 Text="Please also consider leaving a store review if you find LifeTimer to be useful. A store review will help other users to discover the app."
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+               FontSize="14"
+        TextWrapping="Wrap"
+        Margin="8,16,4,0"
+         >
+                </TextBlock>
+
+
+                <TextBlock 
+         x:Name="ReviewCTA2"
+              Text="Thanks again,"
+             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+            FontSize="14"
+     TextWrapping="Wrap"
+     Margin="8,16,4,0"
+      >
+                </TextBlock>
+
+                <TextBlock 
+       x:Name="Byline"
+            Text="Keith - Founder - ParsecXR"
+           Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+          FontSize="14"
+                    FontStyle="Italic"
+   TextWrapping="Wrap"
+   Margin="8,16,4,0"
+    >
+                    
+                    
+                </TextBlock>
+
+            </StackPanel>
+
+        </StackPanel>
+
+    </Grid>
+
+
+</UserControl>

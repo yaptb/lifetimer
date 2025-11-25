@@ -60,9 +60,9 @@
 
 
 
-            <firstrun:FirstRunWizardStepControl Grid.Row="1"  Step="{Binding CurrentStep}" />
-
-
+            
+            <firstrun:FirstRunWizardStepControl x:Name="StepControl" Grid.Row="1"  Step="{Binding CurrentStep}" />
+            <firstrun:FirstRunCTAControl x:Name="CTAControl"  Grid.Row="1"  Visibility="Collapsed"/>
 
 
             <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Center"  VerticalAlignment="Center" Spacing="10" Margin="0,20,0,0">
@@ -111,7 +111,7 @@
                 HorizontalAlignment="Center"
                 FontStyle="Italic"
                 FontSize="12"
-                Text="{Binding CurrentStep.StepText}"
+                Text="{Binding StepProgress}"
                 >
                 </TextBlock>
             </StackPanel>

@@ -57,7 +57,7 @@
 
 
 
-                    <!-- upgrade button 
+                    <!-- upgrade button -->
                     <StackPanel x:Name="UpgradePanel" HorizontalAlignment="Center">
 
                         <TextBlock x:Name="UpgradeTitle"
@@ -99,7 +99,6 @@
                         
                     </StackPanel>
 
-                    -->
                         
                         
                     <StackPanel x:Name="ProVersionPanel" >

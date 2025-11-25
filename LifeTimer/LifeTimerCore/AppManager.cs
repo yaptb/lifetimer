@@ -48,10 +48,10 @@ namespace LifeTimer
         }
 
 
-        public void ConfigureFirstWizard(ObservableCollection<WizardStep> steps, string title)
+        public void ConfigureFirstWizard(FirstRunWizardDefinition definition)
         {
             var firstRunService = Services.GetRequiredService<FirstRunService>();
-            firstRunService.ConfigureFirstRunWizard(steps, title);
+            firstRunService.ConfigureFirstRunWizard(definition);
         }
 
 
@@ -99,7 +99,6 @@ namespace LifeTimer
                     /*
                     services.AddSingleton<Logic.Logger>();
                     services.AddSingleton<Logic.WindowStore>();
-                    services.AddSingleton<Logic.FreemiumNagTimer>();
                     */
                 })
                 .Build();

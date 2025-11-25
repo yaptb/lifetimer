@@ -31,8 +31,8 @@ namespace LifeTimer.Controls
             _storeHelper = AppManager.Services.GetRequiredService<WindowsStoreHelper>();
             _applicationController.NotifyVersionChange += _applicationController_NotifyVersionChange;
 
-            //this.SubOption.Checked += SubOption_Checked;
-            //this.LifeOption.Checked += LifeOption_Checked;
+            this.SubOption.Checked += SubOption_Checked;
+            this.LifeOption.Checked += LifeOption_Checked;
 
             UpdateControls();
         }
@@ -46,7 +46,6 @@ namespace LifeTimer.Controls
 
         private void UpdateControls()
         {
-            /*
             var isFreeVersion = _applicationController.CheckIsFreeVersion();
 
             //setup panels
@@ -61,13 +60,11 @@ namespace LifeTimer.Controls
                 this.UpgradePanel.Visibility=Visibility.Collapsed;
                 this.ProVersionPanel.Visibility=Visibility.Visible;
             }
-            */
 
             SetupProVersionPanel();
 
         }
 
-        /*
         private void SetupUpgradePanel()
         {
 
@@ -137,7 +134,6 @@ namespace LifeTimer.Controls
             this._selectedProductId = WindowsStoreHelper.PRO_SUB_VERSION_PRODUCT_ID;
             this.UpgradeButton.IsEnabled = true;
         }
-        */
 
 
         private void SetupProVersionPanel()

@@ -45,9 +45,12 @@ namespace LifeTimer
             appWindow.SetIcon("Resources\\app_icon.ico");
             appWindow.Resize(new SizeInt32(width, height));
 
-    #if DEBUG
-            appWindow.Move(new PointInt32(150, 150));
-    #endif
+            var storeHelper = AppManager.Services.GetRequiredService<WindowsStoreHelper>();
+            storeHelper.SetUpgradeContextWindow(this);
+
+#if DEBUG
+            AppWindow.Move(new PointInt32(150, 150));
+#endif 
 
             SetUpNavigation();
 
@@ -125,19 +128,6 @@ namespace LifeTimer
         }
 
 
-        /// <summary>
-        /// this is invoked from the application controller to perform a store upgrade
-        /// in the context of the settings window UI
-        /// </summary>
-        public async Task<StorePurchaseResult> PeformStorePurchaseInSettingsUI(string productId)
-        {
-
-            var storeHelper = AppManager.Services.GetRequiredService<WindowsStoreHelper>();
-
-            var result = await storeHelper.PeformStorePurchaseInWindow(this, productId);
-
-            return result;
-        }
 
 
     }

@@ -127,12 +127,17 @@
 
 
 
-                <Grid x:Name="FreeVersionNagOverlay" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,4,4,0" Background="Transparent" Padding="2">
+                <Grid x:Name="FreeVersionNagOverlay" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,4,4,0" Background="Transparent" Padding="2"
+                     
+                      >
 
-                <Border CornerRadius="5" Background="Black" BorderBrush="DarkGray" BorderThickness="1" Padding="3"  >
+                <Border CornerRadius="5" Background="Black"  BorderThickness="1" Padding="4" 
+                        BorderBrush="{StaticResource AccentFillColorDefaultBrush}"
+                         Opacity="0.75"
+                        >
 
                         <TextBlock x:Name="NagText"
-                           FontSize="8"
+                           FontSize="12"
                            Padding="8,0,8,0"
                            Foreground="White"
                             />

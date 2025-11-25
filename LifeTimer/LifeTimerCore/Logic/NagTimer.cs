@@ -16,7 +16,8 @@ namespace LifeTimer.Logic
         private Timer _textUpdateTimer;
 
         private int _nagSleepInitialIntervalSeconds = 30;
-        private int _nagSleepIntervalSeconds = 3 * 60; //3 minutes
+        private int _nagSleepIntervalSeconds = 60; 
+        // private int _nagSleepIntervalSeconds = 3 * 60; //3 minutes
         private int _nagVisibilityIntervalSeconds = 15;
         private int _textUpdateTimeIntervalSeconds = 10;
 
