@@ -1,13 +1,12 @@
 ﻿
 
 DONE - split projects
-TEST revert to freemium
-upgrade first run to deskquote model
+DONE revert to freemium
+DONE upgrade first run to deskquote model
 DONE review nagtimer frequency
 DONE sensible default (colors/screen size)
-update assets (new logo)
+DONE update assets (new logo)
 better hero screen.
-
 
 DONE Fix Interactive Switch Response
 DONE TESTING Fix Resource Window Icon
